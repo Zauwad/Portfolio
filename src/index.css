@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui" {
+    themes: dark --default, light;
+}
+
+@plugin "flowbite/plugin";
+
+
+.small-text {
+    color: #9CA3AF;
+}
