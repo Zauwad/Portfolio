@@ -1,10 +1,9 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router';
 import { AtSign } from 'lucide-react';
 import { TbFileStack } from 'react-icons/tb';
 import { FaGithub, FaLinkedin } from "react-icons/fa";
 import { GoProjectSymlink } from 'react-icons/go';
-import gsap from 'gsap';
 import Banner from './Banner';
 import emailjs from "emailjs-com";
 import Swal from 'sweetalert2';

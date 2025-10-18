@@ -11,6 +11,7 @@ import Projects from './Components/Projects/Projects';
 import Contacts from './Components/Contacts/Contact';
 import Aos from 'aos';
 import 'aos/dist/aos.css';
+import ProjectDetails from './Components/Projects/ProjectDetails';
 
 
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
       {
         path: '/projects',
         Component: Projects
+      },
+      {
+        path: '/projects/:id',
+        Component: ProjectDetails
       },
       {
         path: '/contacts',
