@@ -10,7 +10,7 @@ const Projects = () => {
     {
       id: 1,
       title: 'Fitness Tracker',
-      img: '/assets/fitnessTracker.jpg',
+      img: '/assets/fitnessTracker.png',
       desc: 'A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.',
       link: 'https://fitness-tracker-d03b6.web.app/'
     },
@@ -31,7 +31,7 @@ const Projects = () => {
     {
       id: 4,
       title: 'Plant Care Tracker',
-      img: '/assets/Plant-Track.jpg',
+      img: '/assets/Plant-Track.png',
       desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
       link: 'https://plant-track-4558e.web.app/'
     },
@@ -64,7 +64,7 @@ const Projects = () => {
               {/* Image */}
               <div className="overflow-hidden">
                 <img
-                  className="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-500 hover:scale-150"
+                  className="w-full h-[300px] md:h-[400px] object-cover object-top  transition-transform duration-500 hover:scale-150"
                   src={p.img}
                   alt={p.title}
                 />
@@ -112,7 +112,7 @@ const Projects = () => {
             <div key={i} className="bg-gray-900 text-white shadow-lg rounded-lg overflow-hidden flex flex-col">
               <div className="overflow-hidden">
                 <img
-                  className="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-500 hover:scale-150"
+                  className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150"
                   src={p.img}
                   alt={p.title}
                 />
@@ -156,7 +156,7 @@ const Projects = () => {
           <div className="bg-gray-900 text-white shadow-lg rounded-lg overflow-hidden flex flex-col">
             <div className="overflow-hidden">
               <img
-                className="w-full h-[300px] md:h-[400px] object-cover transition-transform duration-500 hover:scale-150"
+                className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150"
                 src={projects[4].img}
                 alt={projects[4].title}
               />

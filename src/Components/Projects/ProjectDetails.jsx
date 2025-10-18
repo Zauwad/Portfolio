@@ -31,7 +31,7 @@ const ProjectDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-black text-gray-200 px-6 md:px-16 py-16 flex flex-col lg:flex-row gap-10">
+    <div className="min-h-screen bg-black text-gray-200 px-4 sm:px-8 md:px-16 py-12 flex flex-col lg:flex-row gap-10">
       {/* LEFT - Back Button + Image Slider */}
       <div className="w-full lg:w-2/3 flex flex-col gap-4">
         {/* 🔹 Back to Projects Button */}
@@ -46,35 +46,48 @@ const ProjectDetails = () => {
           </div>
         </Link>
 
-        <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-4 shadow-xl">
+        {/* 🔹 Swiper Image Slider */}
+        <div className="bg-gradient-to-b from-gray-900 to-black rounded-2xl p-4 shadow-xl flex flex-col items-center">
           <Swiper
             modules={[Navigation, Pagination]}
-            navigation
+            navigation={{
+              nextEl: ".custom-next",
+              prevEl: ".custom-prev",
+            }}
             pagination={{ clickable: true }}
-            className="rounded-lg overflow-hidden"
+            className="rounded-lg overflow-hidden w-full max-w-4xl"
           >
             {project.images.map((img, idx) => (
               <SwiperSlide key={idx}>
                 <img
                   src={img}
                   alt={project.title}
-                  className="w-full h-[450px] object-cover rounded-lg"
+                  className="w-full h-[500px] sm:h-[550px] md:h-[600px] lg:h-[620px] object-cover object-top rounded-lg"
                 />
               </SwiperSlide>
             ))}
           </Swiper>
+
+          {/* Navigation Arrows Centered Below */}
+          <div className="flex justify-between w-full px-20 mt-4">
+            <div className="custom-prev bg-[#09090B] text-white p-2 rounded-full cursor-pointer hover:scale-110 transition flex items-center justify-center shadow-md size-10 md:mx-20">
+              ❮
+            </div>
+            <div className="custom-next bg-[#09090B] text-white p-2 rounded-full cursor-pointer hover:scale-110 transition flex items-center justify-center shadow-md size-10 md:mx-20">
+              ❯
+            </div>
+          </div>
+
+          {/* Pagination Dots Below Arrows */}
+          <div className="swiper-pagination !flex !justify-center !gap-2 mt-4"></div>
         </div>
       </div>
 
       {/* RIGHT - Details */}
       <div className="w-full lg:w-1/3 space-y-6">
         <div>
-          <h1 className="text-4xl font-bold text-white mb-2">
-            {project.title}
-          </h1>
-          <h2 className="text-lg text-gray-400">
-            {project.subtitle || "A complete web platform"}
-          </h2>
+          <h1 className="text-4xl font-bold text-white mb-2">{project.title}</h1>
+          <h2 className="text-lg text-gray-400">{project.subtitle || "A complete web platform"}</h2>
         </div>
 
         <div>
@@ -83,15 +96,10 @@ const ProjectDetails = () => {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-white mb-2">
-            Tools & Technologies
-          </h3>
+          <h3 className="text-xl font-semibold text-white mb-2">Tools & Technologies</h3>
           <div className="flex flex-wrap gap-2">
             {project.stack.map((tech, idx) => (
-              <span
-                key={idx}
-                className="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm"
-              >
+              <span key={idx} className="bg-gray-800 text-gray-200 px-3 py-1 rounded-full text-sm">
                 {tech}
               </span>
             ))}
@@ -99,16 +107,12 @@ const ProjectDetails = () => {
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-white mb-2">
-            Difficulty Faced
-          </h3>
+          <h3 className="text-xl font-semibold text-white mb-2">Difficulty Faced</h3>
           <p className="text-gray-300 leading-relaxed">{project.difficulty}</p>
         </div>
 
         <div>
-          <h3 className="text-xl font-semibold text-white mb-2">
-            Future Plan
-          </h3>
+          <h3 className="text-xl font-semibold text-white mb-2">Future Plan</h3>
           <p className="text-gray-300 leading-relaxed">{project.futurePlan}</p>
         </div>
 

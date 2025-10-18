@@ -6,7 +6,7 @@ export const projects = [
         desc: "A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.",
         link: "https://fitness-tracker-d03b6.web.app/",
         images: [
-            "/assets/fitnessTracker.jpg",
+            "/assets/fitnessTracker.png",
             "/assets/fitnessTracker1.png",
             "/assets/fitnessTracker2.png",
         ],
@@ -68,7 +68,7 @@ export const projects = [
         desc: "A platform that enables users to track daily plant care tasks, set reminders, and maintain health records for each plant.",
         link: "https://plant-track-4558e.web.app/",
         images: [
-            "/assets/Plant-Track.jpg",
+            "/assets/Plant-Track.png",
             "/assets/Plant-Track2.png",
             "/assets/Plant-Track3.png",
         ],
