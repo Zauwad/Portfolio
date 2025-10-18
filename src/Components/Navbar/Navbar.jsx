@@ -18,7 +18,7 @@ const Navbar = () => {
     };
 
     return (
-        <div className='pt-5 bg-black  pb-5 px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40'>
+        <div className='pt-5 bg-black pb-5 px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40'>
             {/* Desktop and Mobile Header */}
             <div className="flex justify-between items-center">
                 <div className="left-part flex items-center gap-2 md:gap-4">
@@ -30,19 +30,19 @@ const Navbar = () => {
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex gap-2 lg:gap-4">
                         <Link to={'/'}>
-                            <button className='btn btn-ghost dark:text-white hover:bg-gray-600 hover:text-white text-sm lg:text-base'>
+                            <button className='btn btn-ghost dark:text-white  hover:text-purple-500 text-sm lg:text-base'>
                                 Home
                             </button>
                         </Link>
 
                         <Link to={'/projects'}>
-                            <button className='btn btn-ghost dark:text-white hover:bg-gray-600 hover:text-white text-sm lg:text-base'>
+                            <button className='btn btn-ghost dark:text-white  hover:text-purple-500 text-sm lg:text-base'>
                                 Projects
                             </button>
                         </Link>
 
                         <Link to={'/contacts'}>
-                            <button className='btn btn-ghost dark:text-white hover:bg-gray-600 hover:text-white text-sm lg:text-base'>
+                            <button className='btn btn-ghost dark:text-white  hover:text-purple-500 text-sm lg:text-base'>
                                 Contact
                             </button>
                         </Link>
@@ -81,19 +81,19 @@ const Navbar = () => {
                 <div className="md:hidden mt-4 pb-4 border-t border-gray-300 pt-4">
                     <div className="flex flex-col space-y-2">
                         <Link to={'/'} onClick={closeMobileMenu}>
-                            <button className='btn btn-ghost hover:bg-gray-600 hover:text-white w-full text-left justify-start'>
+                            <button className='btn btn-ghost  hover:text-purple-500 w-full text-left justify-start'>
                                 Home
                             </button>
                         </Link>
 
                         <Link to={'/projects'} onClick={closeMobileMenu}>
-                            <button className='btn btn-ghost hover:bg-gray-600 hover:text-white w-full text-left justify-start'>
+                            <button className='btn btn-ghost  hover:text-purple-500 w-full text-left justify-start'>
                                 Projects
                             </button>
                         </Link>
 
                         <Link to={'/contacts'} onClick={closeMobileMenu}>
-                            <button className='btn btn-ghost hover:bg-gray-600 hover:text-white w-full text-left justify-start'>
+                            <button className='btn btn-ghost  hover:text-purple-500 w-full text-left justify-start'>
                                 Contact
                             </button>
                         </Link>

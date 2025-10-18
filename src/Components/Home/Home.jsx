@@ -9,6 +9,7 @@ import Banner from './Banner';
 import emailjs from "emailjs-com";
 import Swal from 'sweetalert2';
 import { Helmet } from 'react-helmet';
+import AboutMe from './AboutMe';
 
 
 
@@ -60,6 +61,8 @@ const Home = () => {
 
             <Banner></Banner>
 
+            <AboutMe></AboutMe>
+
 
             {/* Experiences */}
             <div className='bg-black'>
@@ -95,7 +98,7 @@ const Home = () => {
 
                             <ul className='list-disc mx-4 md:mx-8 text-sm md:text-base'>
                                 <li className='font-bold'>Frontend:
-                                    <p className='small-text textsm font-normal'>HTML, CSS, JavaScript, Tailwind CSS, React</p>
+                                    <p className='small-text textsm font-normal'>HTML, CSS, React, Next Js, JavaScript, Tailwind CSS </p>
                                 </li>
                                 <li className='font-bold'>Backend:
                                     <p className='small-text font-normal'>
@@ -144,12 +147,12 @@ const Home = () => {
                 </div>
             </div>
 
-
+            {/* Connect w me */}
             <div className="bg-black">
                 <div
                     data-aos="fade-up"
                     data-aos-duration="3000"
-                    className="contact-form flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-32 xl:px-50 gap-10 md:gap-20 border border-gray-500 p rounded-2xl md:rounded-4xl md:py-10 py-10 md:py-30"
+                    className="contact-form flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-32 xl:px-50 gap-10 md:gap-20 border border-gray-500 p rounded-2xl md:rounded-4xl py-10 md:py-30"
                 >
                     <div className="left-side space-y-5 text-center lg:text-left">
                         <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-purple-400">
