@@ -11,55 +11,39 @@ const AboutMe = () => {
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      // Heading animation
       gsap.from(".about-heading", {
         y: 40,
         opacity: 0,
         duration: 1,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".about-heading",
-          start: "top 85%",
-        },
+        scrollTrigger: { trigger: ".about-heading", start: "top 85%" },
       });
 
-      // Paragraph fade-in stagger
       gsap.from(".about-text p", {
         y: 30,
         opacity: 0,
         duration: 0.8,
         stagger: 0.2,
         ease: "power2.out",
-        scrollTrigger: {
-          trigger: ".about-text",
-          start: "top 80%",
-        },
+        scrollTrigger: { trigger: ".about-text", start: "top 80%" },
       });
 
-      // Icons animation
       gsap.from(".about-icons div", {
         scale: 0.8,
         opacity: 0,
         duration: 0.6,
         stagger: 0.15,
         ease: "back.out(1.7)",
-        scrollTrigger: {
-          trigger: ".about-icons",
-          start: "top 85%",
-        },
+        scrollTrigger: { trigger: ".about-icons", start: "top 85%" },
       });
 
-      // Button animation
       gsap.from(".about-btn", {
         y: 20,
         opacity: 0,
         duration: 0.7,
         delay: 0.2,
         ease: "power3.out",
-        scrollTrigger: {
-          trigger: ".about-btn",
-          start: "top 85%",
-        },
+        scrollTrigger: { trigger: ".about-btn", start: "top 85%" },
       });
     }, aboutRef);
 
@@ -86,15 +70,14 @@ const AboutMe = () => {
         </div>
 
         {/* Content */}
-        <div className="about-text space-y-6 text-lg leading-relaxed">
+        <div className="about-text space-y-6 text-lg leading-relaxed text-left md:text-justify">
           <p>
             Hey there! I’m{" "}
-            <span className="font-bold text-white">Ridwanul Azim Zawad</span>, born in
-            2003 and currently living in{" "}
-            <span className="font-bold">Mirpur</span>. My fascination with technology
-            started long before I could even write a line of code — whether it was a
-            mobile phone or a computer, I was always curious about how things worked
-            behind the screen. That curiosity naturally led me to pursue a{" "}
+            <span className="font-bold text-white">Ridwanul Azim Zawad</span>{" "}
+            currently living in <span className="font-bold">Mirpur</span>. My fascination
+            with technology started long before I could even write a line of code —
+            whether it was a mobile phone or a computer, I was always curious about how
+            things worked behind the screen. That curiosity naturally led me to pursue a{" "}
             <span className="font-bold">Bachelor’s degree in Computer Science</span>,
             where my programming journey truly began.
           </p>
@@ -134,7 +117,7 @@ const AboutMe = () => {
               href="https://fitness-tracker-d03b6.web.app"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-pink-400 hover:underline"
+              className="text-pink-400 underline hover:underline"
             >
               Fitness Tracker
             </a>
@@ -147,7 +130,7 @@ const AboutMe = () => {
             Outside of coding, I enjoy exploring new tech trends (and occasionally
             sharing opinions — like how Apple’s “Liquid Glass” design isn’t as
             revolutionary as people think 😄). I’m comfortable working{" "}
-            <span className="font-bold">2–3 days a week in an hybrid office</span> setup and
+            <span className="font-bold">2–3 days a week in a hybrid office</span> setup and
             always open to learning from real-world experiences.
           </p>
 
@@ -176,16 +159,6 @@ const AboutMe = () => {
             <p>Passionate About Code</p>
           </div>
         </div>
-
-        {/* Button
-        <div className="about-btn mt-10 text-center">
-          <Link
-            to="/projects"
-            className="inline-block px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-md shadow-md hover:scale-105 transition-all duration-300"
-          >
-            View My Work
-          </Link>
-        </div> */}
       </div>
     </section>
   );
