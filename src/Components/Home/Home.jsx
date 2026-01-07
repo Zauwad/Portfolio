@@ -60,8 +60,6 @@ const Home = () => {
 
             <Banner></Banner>
 
-            <AboutMe></AboutMe>
-
 
             {/* Experiences */}
             <div className='bg-black'>
@@ -146,6 +144,9 @@ const Home = () => {
                 </div>
             </div>
 
+            {/* <AboutMe></AboutMe> */}
+
+
             {/* Connect w me */}
             <div className="bg-black">
                 <div
@@ -162,7 +163,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div className="Right-side bg-gray-950 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5">
+                    <div className="Right-side bg-gray-950 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5 ">
                         <section>
                             <div className="py-4 md:py-8 px-2 md:px-4 mx-auto max-w-screen-md">
                                 <form

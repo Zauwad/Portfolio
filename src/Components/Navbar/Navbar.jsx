@@ -18,19 +18,18 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`sticky top-0 z-50 ${
-        isScrolled
+      className={`sticky top-0 z-50 ${isScrolled
           ? 'backdrop-blur-md bg-black/60 border-b border-gray-700/40 shadow-md'
           : 'bg-black'
-      }`}
+        }`}
     >
       <div className="pt-5 pb-5 px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
         <div className="flex justify-between items-center">
           {/* Left Part */}
           <div className="left-part flex items-center gap-2 md:gap-4">
             <Link className="flex items-center gap-1" to="/">
-              <SiCodeblocks className="size-6 md:size-7 text-purple-400" />
-              <h1 className="text-xl sm:text-2xl md:text-3xl bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent font-bold">
+              <SiCodeblocks className="size-6 md:size-7" />
+              <h1 className="text-xl sm:text-2xl md:text-3xl  font-bold">
                 Ridwanul.dev
               </h1>
             </Link>
@@ -45,7 +44,10 @@ const Navbar = () => {
 
           {/* Right Part */}
           <div className="right-part flex items-center gap-3">
-            <DownloadResume />
+
+            <div className='hidden md:inline'>
+              <DownloadResume />
+            </div>
 
             {/* Mobile Menu Button */}
             <button
@@ -66,17 +68,18 @@ const Navbar = () => {
 
         {/* Mobile Navigation Menu */}
         <div
-          className={`md:hidden overflow-hidden transition-all duration-500 ${
-            isMobileMenuOpen
+          className={`md:hidden overflow-hidden transition-all duration-500 ${isMobileMenuOpen
               ? 'max-h-96 opacity-100 mt-4 pb-4 border-t border-gray-700/50 pt-4 rounded-b-lg shadow-lg'
               : 'max-h-0 opacity-0 mt-0 pb-0 border-none pt-0 shadow-none'
-          }`}
-          
+            }`}
+
         >
           <div className="flex flex-col space-y-2 px-2">
             <Link to="/" onClick={closeMobileMenu}><button className="btn btn-ghost hover:text-purple-400 w-full text-left justify-start">Home</button></Link>
             <Link to="/projects" onClick={closeMobileMenu}><button className="btn btn-ghost hover:text-purple-400 w-full text-left justify-start">Projects</button></Link>
             <Link to="/contacts" onClick={closeMobileMenu}><button className="btn btn-ghost hover:text-purple-400 w-full text-left justify-start">Contact</button></Link>
+
+            <DownloadResume />
           </div>
         </div>
       </div>

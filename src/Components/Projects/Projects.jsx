@@ -7,42 +7,43 @@ import { Link } from 'react-router';
 
 const Projects = () => {
   const projects = [
-    {
-      id: 1,
-      title: 'Fitness Tracker',
-      img: '/assets/fitnessTracker.png',
-      desc: 'A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.',
-      link: 'https://fitness-tracker-d03b6.web.app/'
-    },
-    {
-      id: 2,
-      title: 'Job Portal',
-      img: '/assets/Screenshot (501).png',
-      desc: 'JobTrack is an innovative, user-friendly job portal website designed to help job seekers find career opportunities across a wide variety of companies.',
-      link: 'https://job-track-by-zawad.netlify.app/'
-    },
-    {
-      id: 3,
-      title: 'English Janala',
-      img: '/assets/EnglishJanala.jpg',
-      desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
-      link: 'https://english-janala-by-zawad.netlify.app/'
-    },
-    {
-      id: 4,
-      title: 'Plant Care Tracker',
-      img: '/assets/Plant-Track.png',
-      desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
-      link: 'https://plant-track-4558e.web.app/'
-    },
-    {
-      id: 5,
-      title: 'Find a Doctor',
-      img: '/assets/Doctor-phudu.jpg',
-      desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
-      link: 'https://doc-talk-bd-by-zawad.netlify.app/home'
-    }
-  ];
+  {
+    id: 1,
+    title: 'Fitness Tracker',
+    img: '/assets/fitnessTracker.png',
+    desc: 'A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.',
+    link: 'https://fitness-tracker-d03b6.web.app/'
+  },
+  {
+    id: 2,
+    title: 'Plant Care Tracker',
+    img: '/assets/Plant-Track.png',
+    desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
+    link: 'https://plant-track-4558e.web.app/'
+  },
+  {
+    id: 3,
+    title: 'Find a Doctor',
+    img: '/assets/Doctor-phudu.jpg',
+    desc: 'This platform connects patients with verified doctors, allowing appointment booking, online consultation, and access to medical information.',
+    link: 'https://doc-talk-bd-by-zawad.netlify.app/home'
+  },
+  {
+    id: 4,
+    title: 'English Janala',
+    img: '/assets/EnglishJanala.jpg',
+    desc: 'An interactive English learning platform designed to help users improve grammar, vocabulary, and speaking skills through fun exercises and lessons.',
+    link: 'https://english-janala-by-zawad.netlify.app/'
+  },
+  {
+    id: 5,
+    title: 'Job Portal',
+    img: '/assets/Screenshot (501).png',
+    desc: 'JobTrack is an innovative, user-friendly job portal website designed to help job seekers find career opportunities across a wide variety of companies.',
+    link: 'https://job-track-by-zawad.netlify.app/'
+  }
+];
+
 
   return (
     <div className="px-4 bg-black md:px-10 lg:px-20 p-4 md:p-10 lg:p-20 space-y-6 md:space-y-8 lg:space-y-10">
