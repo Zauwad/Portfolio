@@ -32,9 +32,9 @@ const DownloadResume = () => {
   };
 
   return (
-    <div ref={containerRef} className="inline-block group select-none relative">
+    <div ref={containerRef} className="flex group select-none relative border border-[#c4c4c4] rounded-sm btn btn-primary items-center justify-center shadow-[0_0_40px_20px_rgba(255,255,255,0.6)] transition duration-300 ">
       <div
-        className="inline-flex items-center gap-2 p-3 text-white bg-black rounded-sm shadow-md transition-all duration-300 group-hover:bg-gray-950 overflow-hidden relative"
+        className="inline-flex items-center gap-2 text-white bg-black rounded-sm shadow-md transition-all duration-300 group-hover:bg-gray-950 overflow-hidden relative"
         onClick={handleTap}
       >
         {/* Default Label */}
@@ -58,7 +58,7 @@ const DownloadResume = () => {
             target="_blank"
             rel="noopener noreferrer"
             onClick={(e) => e.stopPropagation()} // prevent toggle
-            className="flex items-center gap-1 hover:text-purple-400"
+            className="flex items-center gap-1 hover:text-[#6e6e6e]"
           >
             <FaEye />
           </a>
@@ -69,7 +69,7 @@ const DownloadResume = () => {
             href="/Ridwanul_Azim_Resume.pdf"
             download="Ridwanul_Azim_Resume.pdf"
             onClick={(e) => e.stopPropagation()} // prevent toggle
-            className="flex items-center gap-1 hover:text-purple-400"
+            className="flex items-center gap-1 hover:text-[#6e6e6e]"
           >
             <FaDownload />
           </a>

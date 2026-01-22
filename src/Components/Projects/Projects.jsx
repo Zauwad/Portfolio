@@ -31,7 +31,7 @@ const Projects = () => {
   {
     id: 4,
     title: 'English Janala',
-    img: '/assets/EnglishJanala.jpg',
+    img: '/assets/EnglishJanala.png',
     desc: 'An interactive English learning platform designed to help users improve grammar, vocabulary, and speaking skills through fun exercises and lessons.',
     link: 'https://english-janala-by-zawad.netlify.app/'
   },

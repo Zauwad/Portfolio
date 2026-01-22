@@ -71,7 +71,7 @@ const Home = () => {
                     </div>
 
                     <div className='Cards flex flex-col lg:flex-row gap-6 md:gap-10'>
-                        <div className="first-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg shadow-purple-500">
+                        <div className="first-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
                             <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>What I Can Do</h1>
                             <p className='text-gray-400'>I can help develop solutions that will help you grow your business:</p>
 
@@ -89,7 +89,7 @@ const Home = () => {
                             </ul>
                         </div>
 
-                        <div className="Second-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg shadow-purple-500">
+                        <div className="Second-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
                             <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>Tools I Use</h1>
                             <p className='text-gray-400'>I use the latest tools and technologies to build functional and scalable projects:</p>
 
@@ -116,7 +116,7 @@ const Home = () => {
                         </div>
 
 
-                        <div className="Third-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg shadow-purple-500">
+                        <div className="Third-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
                             <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>Academic & Personal Projects</h1>
                             <p className='text-gray-400'>Focused on learning and building quality projects:</p>
 
@@ -136,7 +136,7 @@ const Home = () => {
 
                     <div className="my-projects flex justify-center md:justify-end">
                         <Link to={'/projects'}>
-                            <button className='btn btn-primary bg-black w-full sm:w-auto'>
+                            <button className='btn btn-primary transition duration-300 bg-black w-full sm:w-auto'>
                                 <GoProjectSymlink size={20}></GoProjectSymlink>
                                 View My Projects</button>
                         </Link>
@@ -152,10 +152,10 @@ const Home = () => {
                 <div
                     data-aos="fade-up"
                     data-aos-duration="3000"
-                    className="contact-form flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-32 xl:px-50 gap-10 md:gap-20 border border-gray-500 p rounded-2xl md:rounded-4xl py-10 md:py-30"
+                    className="contact-form flex flex-col lg:flex-row items-center justify-between px-4 sm:px-8 md:px-16 lg:px-32 xl:px-50 gap-10 md:gap-20  p rounded-2xl md:rounded-4xl py-10 md:py-30"
                 >
                     <div className="left-side space-y-5 text-center lg:text-left">
-                        <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-purple-400">
+                        <h1 className="font-bold text-2xl sm:text-3xl md:text-4xl lg:text-6xl">
                             Bringing Your Ideas Into Life.
                         </h1>
                         <p className="font-bold text-base sm:text-lg md:text-xl">
@@ -163,7 +163,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div className="Right-side bg-gray-950 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5 ">
+                    <div className="Right-side outline-1 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5 ">
                         <section>
                             <div className="py-4 md:py-8 px-2 md:px-4 mx-auto max-w-screen-md">
                                 <form
@@ -183,7 +183,7 @@ const Home = () => {
                                             value={formData.email}
                                             onChange={handleChange}
                                             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                                            placeholder="name@flowbite.com"
+                                            placeholder="Enter your email adderess"
                                             required
                                         />
                                     </div>
@@ -223,7 +223,7 @@ const Home = () => {
                                     </div>
                                     <button
                                         type="submit"
-                                        className="py-3 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 w-full sm:w-fit hover:bg-primary-800 focus:ring-4 focus:outline-none focus:ring-primary-300 dark:bg-primary dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                                        className="py-3 btn btn-primary transition duration-300 px-5 text-sm font-medium text-center text-white rounded-lg bg-primary-700 w-full sm:w-fit"
                                     >
                                         Send message
                                     </button>

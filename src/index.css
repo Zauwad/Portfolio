@@ -9,3 +9,26 @@
 .small-text {
     color: #9CA3AF;
 }
+
+.btn-primary {
+  background-color: #000000;
+  border-color: #c4c4c4;
+  outline-width: 1px;
+  color: #ffffff;
+  font-weight:600;
+  font-size: 14;
+  box-shadow: 0 0 100px rgba(255, 255, 255, 0.5);
+}
+
+
+.btn-primary:hover {
+  scale: 120%;
+  transition-property: transform, translate, scale, rotate;
+  transition-timing-function: var(--tw-ease, var(--default-transition-timing-function)
+      /* cubic-bezier(0.4, 0, 0.2, 1) */
+    );
+  transition-duration: var(--tw-duration, var(--default-transition-duration)
+      /* 150ms */
+    );
+ 
+}

@@ -60,8 +60,8 @@ export const projects = [
     desc: "A modern web platform that helps users practice English grammar, listening, and speaking with structured lessons and quizzes.",
     link: "https://english-janala-by-zawad.netlify.app/",
     images: [
-      "/assets/EnglishJanala.jpg",
-      "/assets/EnglishJanala2.jpg",
+      "/assets/EnglishJanala.png",
+      "/assets/EnglishJanala2.png",
       "/assets/EnglishJanala3.png",
     ],
     stack: ["React.js", "Firebase", "Tailwind CSS"],

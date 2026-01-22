@@ -65,7 +65,7 @@ const Banner = () => {
                 {/* Mobile Image */}
                 <div ref={mobileImgRef} className="flex justify-center md:hidden">
                     <img
-                        className="w-40 h-40 sm:w-56 sm:h-56 rounded-4xl object-cover shadow-sm shadow-white"
+                        className="w-70 h-70 sm:w-70 sm:h-70 rounded-4xl object-cover shadow-sm shadow-white"
                         src="../../../assets/myphoto3.jpg"
                         alt=""
                     />
@@ -79,14 +79,14 @@ const Banner = () => {
                     <div className="upper-part">
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                             Hey, I'm{" "}
-                            <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-gray-600 to-gray-50 bg-clip-text text-transparent">
                                 Ridwanul
                             </span>
                         </h1>
 
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                             A{" "}
-                            <span className="bg-gradient-to-r from-blue-400 to-red-400 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-gray-600 to-gray-50 bg-clip-text text-transparent">
                                 Web Developer
                             </span>
                         </h1>
@@ -94,8 +94,8 @@ const Banner = () => {
 
                     <div className="text-sm sm:text-base md:text-lg text-gray-300 text-left md:text-left">
                         <p>
-                            A <span className="font-bold">full stack developer</span> with hands-on
-                            experience in <span className="font-bold">web development</span>.
+                            A <span className="">full stack developer</span> with hands-on
+                            experience in <span className="">web development</span>.
                             <br />
                             Passionate about writing clean and efficient code
                             with a strong focus on problem-solving and front-end design.
@@ -124,13 +124,13 @@ const Banner = () => {
                         <div className="flex justify-center sm:justify-start gap-6 md:gap-10">
                             <a href="https://github.com/Zauwad">
                                 <FaGithub
-                                    className="transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500 rounded-full"
+                                    className="transition duration-300 hover:scale-130 shadow-md hover:shadow-lg rounded-full"
                                     size={32}
                                 />
                             </a>
                             <a href="https://www.linkedin.com/in/ridwanul-azim-zawad-513272184/">
                                 <FaLinkedin
-                                    className="transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500"
+                                    className="transition duration-300 hover:scale-130 shadow-md hover:shadow-lg rounfu"
                                     size={32}
                                 />
                             </a>
