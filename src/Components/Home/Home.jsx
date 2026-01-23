@@ -161,7 +161,7 @@ const Home = () => {
                         </p>
                     </div>
 
-                    <div className="Right-side outline-1 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5 ">
+                    <div className="Right-side border-1 rounded-2xl form w-full lg:w-[40%] px-3 md:px-5 bg-[#0B0A0C] ">
                         <section>
                             <div className="py-4 md:py-8 px-2 md:px-4 mx-auto max-w-screen-md">
                                 <form
