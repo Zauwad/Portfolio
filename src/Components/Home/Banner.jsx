@@ -79,14 +79,14 @@ const Banner = () => {
                     <div className="upper-part">
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                             Hey, I'm{" "}
-                            <span className="bg-gradient-to-r from-gray-600 to-gray-50 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-white to-red-400 bg-clip-text text-transparent">
                                 Ridwanul
                             </span>
                         </h1>
 
                         <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold leading-tight">
                             A{" "}
-                            <span className="bg-gradient-to-r from-gray-600 to-gray-50 bg-clip-text text-transparent">
+                            <span className="bg-gradient-to-r from-white to-red-400 bg-clip-text text-transparent">
                                 Web Developer
                             </span>
                         </h1>
