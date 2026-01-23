@@ -1,4 +1,5 @@
 import React from 'react';
+import { FaFacebook, FaGithub, FaLinkedin } from 'react-icons/fa6';
 
 const Footer = () => {
     return (
@@ -29,11 +30,36 @@ const Footer = () => {
                         </p>
                     </div>
                 </aside>
-                
+
                 <nav className='space-y-3 md:space-y-4 w-full md:w-auto'>
                     <h6 className="small-text text-base sm:text-lg md:text-xl text-center md:text-right">Built with React js., Tailwind, JavaScript</h6>
                     <div className="flex justify-center md:justify-end gap-3 sm:gap-4">
-                        <a className="hover:scale-110 transition-transform duration-200" aria-label="Twitter">
+
+
+                        <div className="flex justify-center sm:justify-start gap-6 md:gap-5">
+                            <a href="https://github.com/Zauwad">
+                                <FaGithub
+                                    className="transition duration-300 hover:scale-130 shadow-md hover:shadow-lg rounded-full"
+                                    size={32}
+                                />
+                            </a>
+                            <a href="https://www.linkedin.com/in/ridwanul-azim-zawad-513272184/">
+                                <FaLinkedin
+                                    className="transition duration-300 hover:scale-130 shadow-md hover:shadow-lg rounfu"
+                                    size={32}
+                                />
+                            </a>
+                            <a href="https://www.facebook.com/redwanul.azim.zawad">
+                                <FaFacebook
+                                    className="transition duration-300 hover:scale-130 shadow-md hover:shadow-lg rounfu"
+                                    size={32}
+                                />
+                            </a>
+                        </div>
+
+
+
+                        {/* <a className="hover:scale-110 transition-transform duration-200" aria-label="Twitter" href=''>
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 width="20"
@@ -65,7 +91,7 @@ const Footer = () => {
                                 <path
                                     d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"></path>
                             </svg>
-                        </a>
+                        </a> */}
                     </div>
                 </nav>
             </footer>

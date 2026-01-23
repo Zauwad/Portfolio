@@ -13,7 +13,7 @@ const Contacts = () => {
 
             <div className='text-xl'>
                 <p>Email: redwanulazimzawad@gmail.com</p>
-                <p>Phone: 01339562237</p>
+                <p>Phone: +8801339562237</p>
             </div>
         </div>
     );

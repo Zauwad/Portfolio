@@ -67,42 +67,42 @@ const Home = () => {
                     data-aos-duration="3000" className="Experiences px-4 sm:px-8 md:px-16 lg:px-32 xl:px-60 space-y-6 md:space-y-10 py-10 md:py-20">
                     <div className='space-y-3 text-center md:text-left'>
                         <h1 className='font-bold text-2xl sm:text-3xl md:text-4xl'>Building Digital Experiences</h1>
-                        <p className='font-light small-text'>I specialize in creating clean, efficient code and dynamic web interfaces that stand out.</p>
+                        <p className='font-light text-lg'>I specialize in creating clean, efficient code and dynamic web interfaces that stand out.</p>
                     </div>
 
                     <div className='Cards flex flex-col lg:flex-row gap-6 md:gap-10'>
                         <div className="first-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
                             <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>What I Can Do</h1>
-                            <p className='text-gray-400'>I can help develop solutions that will help you grow your business:</p>
+                            <p className='text-gray-400 text-lg'>I can help develop solutions that will help you grow your business:</p>
 
-                            <ul className='list-disc mx-4 md:mx-8 font-bold space-y-1 text-sm md:text-base'>
-                                <li>Full-stack Web Development
+                            <ul className='list-disc mx-4 md:mx-8  font-bold space-y-1  md:text-base'>
+                                <li className='text-lg'>Full-stack Web Development
                                 </li>
-                                <li>Database Design
+                                <li className='text-lg'>Database Design
                                 </li>
-                                <li>JavaScript & CSS Expertise
+                                <li className='text-lg'>JavaScript & CSS Expertise
                                 </li>
-                                <li>Dynamic Web Interfaces
+                                <li className='text-lg'>Dynamic Web Interfaces
                                 </li>
-                                <li>API Integration
+                                <li className='text-lg'>API Integration
                                 </li>
                             </ul>
                         </div>
 
                         <div className="Second-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
                             <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>Tools I Use</h1>
-                            <p className='text-gray-400'>I use the latest tools and technologies to build functional and scalable projects:</p>
+                            <p className='text-gray-400 text-lg'>I use the latest tools and technologies to build functional and scalable projects:</p>
 
-                            <ul className='list-disc mx-4 md:mx-8 text-sm md:text-base'>
-                                <li className='font-bold'>Frontend:
-                                    <p className='small-text textsm font-normal'>HTML, CSS, React, Next Js, JavaScript, Tailwind CSS </p>
+                            <ul className='list-disc mx-4 md:mx-8 md:text-base '>
+                                <li className='font-bold text-lg'>Frontend:
+                                    <p className='small-text textsm font-normal'>React Js, Next Js, JavaScript, Typescript, Tailwind CSS </p>
                                 </li>
-                                <li className='font-bold'>Backend:
+                                <li className='font-bold text-lg'>Backend:
                                     <p className='small-text font-normal'>
                                         Node.js, Express.js, Rest API
                                     </p>
                                 </li>
-                                <li className='font-bold'>Database:
+                                <li className='font-bold text-lg'>Database:
                                     <p className='small-text font-normal'>
                                         Firebase, MongoDB
                                     </p>
@@ -117,18 +117,16 @@ const Home = () => {
 
 
                         <div className="Third-card border border-gray-500 p-6 md:p-10 space-y-5 rounded-2xl w-full lg:w-[40%] transition duration-300 hover:scale-110 shadow-md hover:shadow-lg ">
-                            <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>Academic & Personal Projects</h1>
-                            <p className='text-gray-400'>Focused on learning and building quality projects:</p>
+                            <h1 className='font-bold text-xl sm:text-2xl md:text-3xl'>UI/UX Design</h1>
+                            <p className='text-gray-400 text-lg'>I can help design clean and modern interfaces:</p>
 
                             <ul className='list-disc mx-4 md:mx-8 font-bold space-y-1 text-sm md:text-base'>
-                                <li>Built full-stack web development projects</li>
-                                <li>Clean Code Architecture
+                                <li className='text-lg'>User-Centered Design</li>
+                                <li className='text-lg'>Modern & Clean UI
                                 </li>
-                                <li>Academic Project Experience
+                                <li className='text-lg'>Responsive Layouts
                                 </li>
-                                <li>Continuous Learning Mindset
-                                </li>
-                                <li>Client-Focused Solutions
+                                <li className='text-lg'>Client-Focused Solutions
                                 </li>
                             </ul>
                         </div>
