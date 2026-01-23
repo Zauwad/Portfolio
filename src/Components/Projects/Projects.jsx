@@ -9,14 +9,14 @@ const Projects = () => {
   const projects = [
   {
     id: 1,
-    title: 'Fitness Tracker',
+    title: 'FitTrack',
     img: '/assets/fitnessTracker.png',
     desc: 'A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.',
     link: 'https://fitness-tracker-d03b6.web.app/'
   },
   {
     id: 2,
-    title: 'Plant Care Tracker',
+    title: 'Plant Pal',
     img: '/assets/Plant-Track.png',
     desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
     link: 'https://plant-track-4558e.web.app/'
@@ -37,9 +37,9 @@ const Projects = () => {
   },
   {
     id: 5,
-    title: 'Job Portal',
-    img: '/assets/Screenshot (501).png',
-    desc: 'JobTrack is an innovative, user-friendly job portal website designed to help job seekers find career opportunities across a wide variety of companies.',
+    title: 'NextGenBlog',
+    img: '/assets/blog1.png',
+    desc: 'This platform is a modern, user-friendly blogging platform built to make content creation and discovery easy and enjoyable',
     link: 'https://job-track-by-zawad.netlify.app/'
   }
 ];

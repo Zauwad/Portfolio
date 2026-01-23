@@ -1,7 +1,6 @@
-export const projects = [
-  {
+export const projects = [{
     id: 1,
-    title: "Fitness Tracker",
+    title: "FitTrack",
     subtitle: "A Complete Fitness Management Platform",
     desc: "A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.",
     link: "https://fitness-tracker-d03b6.web.app/",
@@ -11,15 +10,13 @@ export const projects = [
       "/assets/fitnessTracker2.png",
     ],
     stack: ["MongoDB", "Express.js", "React.js", "Node.js", "Tailwind CSS", "Stripe"],
-    difficulty:
-      "Managing role-based dashboards and payment method while integrating real-time class scheduling.",
-    futurePlan:
-      "Add AI-based fitness recommendations and a social feed for progress sharing.",
+    difficulty: "Managing role-based dashboards and payment method while integrating real-time class scheduling.",
+    futurePlan: "Add AI-based fitness recommendations and a social feed for progress sharing.",
   },
 
   {
     id: 2,
-    title: "Plant Care Tracker",
+    title: "Plant Pal",
     subtitle: "Smart Plant Monitoring Platform",
     desc: "A platform that enables users to track daily plant care tasks, set reminders, and maintain health records for each plant.",
     link: "https://plant-track-4558e.web.app/",
@@ -29,10 +26,8 @@ export const projects = [
       "/assets/Plant-Track3.png",
     ],
     stack: ["React.js", "Firebase", "Tailwind CSS", "React Router"],
-    difficulty:
-      "Handling managing databse and CRUD functionality with cloud data sync.",
-    futurePlan:
-      "Introduce IoT integration for live soil moisture tracking and watering automation.",
+    difficulty: "Handling managing databse and CRUD functionality with cloud data sync.",
+    futurePlan: "Introduce IoT integration for live soil moisture tracking and watering automation.",
   },
 
   {
@@ -47,10 +42,8 @@ export const projects = [
       "/assets/Doctor3.png",
     ],
     stack: ["React.js", "Firebase", "Tailwind CSS", "Express.js"],
-    difficulty:
-      "Implementing secure user authentication and managing dynamic appointment scheduling.",
-    futurePlan:
-      "Add video consultation features and an AI symptom checker.",
+    difficulty: "Implementing secure user authentication and managing dynamic appointment scheduling.",
+    futurePlan: "Add video consultation features and an AI symptom checker.",
   },
 
   {
@@ -65,27 +58,23 @@ export const projects = [
       "/assets/EnglishJanala3.png",
     ],
     stack: ["React.js", "Firebase", "Tailwind CSS"],
-    difficulty:
-      "Designing quiz logic and user progress tracking while maintaining smooth UI performance.",
-    futurePlan:
-      "Add gamification, leaderboards, and personalized lesson recommendations.",
+    difficulty: "Designing quiz logic and user progress tracking while maintaining smooth UI performance.",
+    futurePlan: "Add gamification, leaderboards, and personalized lesson recommendations.",
   },
 
   {
     id: 5,
-    title: "Job Portal",
-    subtitle: "JobTrack – Find Your Dream Job",
-    desc: "JobTrack is an innovative, user-friendly job portal designed to connect job seekers with employers efficiently. Built using modern React and Tailwind CSS for a seamless experience.",
-    link: "https://job-track-by-zawad.netlify.app/",
+    title: "NextGenBlog",
+    subtitle: "NextGenBlog – Modern Blogging Platform",
+    desc: "NextGenBlog is a full-stack, user-friendly blogging platform that allows users to create, explore, and manage blogs with secure authentication and interactive features.",
+    link: "https://blog-e084f.web.app/",
     images: [
-      "/assets/Screenshot (501).png",
-      "/assets/jobTrack2.png",
-      "/assets/jobTrack3.png",
+      "/assets/blog1.png",
+      "/assets/blog2.png",
+      "/assets/blog3.png",
     ],
-    stack: ["React.js", "Firebase", "Tailwind CSS", "React Router"],
-    difficulty:
-      "Filtering and managing job data dynamically while ensuring fast performance and clean UI.",
-    futurePlan:
-      "Integrate AI-based resume analysis and automated job matching.",
+    stack: ["React.js", "Firebase", "MongoDB", "Express.js", "Tailwind CSS", "JWT"],
+    difficulty: "Implementing secure JWT-based private routes, real-time wishlist and commenting system, and optimizing MongoDB text search with category filtering.",
+    futurePlan: "Add AI-powered content recommendations, author analytics dashboard, and rich-text editor for advanced blog writing.",
   },
 ];
