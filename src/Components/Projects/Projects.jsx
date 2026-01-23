@@ -43,8 +43,8 @@ const Projects = () => {
           y: 0,
           scale: 1,
           duration: 1,
-          delay: i * 0.15,
-          ease: "power3.out",
+          delay: i * 0.25,
+          ease: "power1.out",
         }
       );
     });
@@ -171,10 +171,41 @@ const Projects = () => {
         <div className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-2">
 
           <div ref={addToRefs} className="bg-gray-900 text-white shadow-lg rounded-lg overflow-hidden flex flex-col">
-            <img className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150" src={projects[4].img} alt={projects[4].title} />
-            <div className="p-4">
+            <div className="overflow-hidden">
+              <img
+                className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150"
+                src={projects[4].img}
+                alt={projects[4].title}
+              />
+            </div>
+            <div className="p-4 flex-1">
               <h3 className="font-bold text-2xl">{projects[4].title}</h3>
               <p>{projects[4].desc}</p>
+            </div>
+            <div className="p-4 flex flex-wrap gap-3 justify-start">
+              <a
+                href={projects[4].link}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-block text-white font-semibold py-2 px-4 rounded-lg  
+                btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500"
+              >
+                <div className='flex justify-center items-center gap-2'>
+                  <CiGlobe />
+                  Visit Project
+                </div>
+              </a>
+
+              <Link
+                to={`/projects/${projects[4].id}`}
+                className="inline-block text-white font-semibold py-2 px-4 rounded-lg  
+                btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500"
+              >
+                <div className='flex justify-center items-center gap-2'>
+                  <FaInfoCircle />
+                  Project Details
+                </div>
+              </Link>
             </div>
           </div>
 
