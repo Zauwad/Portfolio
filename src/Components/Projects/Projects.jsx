@@ -1,234 +1,244 @@
-import { IoSend } from 'react-icons/io5';
-import { RiChatSmile2Fill } from 'react-icons/ri';
-import { CiGlobe } from "react-icons/ci";
-import { FaInfoCircle } from "react-icons/fa";
-import { Helmet } from 'react-helmet';
-import { Link } from 'react-router';
-import { useEffect, useRef } from "react";
-import gsap from "gsap";
+import { useMemo, useState } from "react";
+import { Link } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { Container } from "../../primitives/Container";
+import { SectionHeading } from "../../primitives/SectionHeading";
+import { PrimaryCTA } from "../../primitives/PrimaryCTA";
+import { projects } from "../../data/portfolio";
+import { EASE } from "../../lib/ease";
+import { Helmet } from "react-helmet";
 
-const Projects = () => {
+const FILTERS = [
+  { id: "all", label: "All" },
+  { id: "fullstack", label: "Full-stack" },
+  { id: "frontend", label: "Frontend" },
+];
 
-  const cardsRef = useRef([]);
-  cardsRef.current = [];
+function matchesFilter(project, filterId) {
+  if (filterId === "all") return true;
+  if (filterId === "fullstack") {
+    return project.role?.toLowerCase().includes("full-stack");
+  }
+  if (filterId === "frontend") {
+    return project.role?.toLowerCase().includes("frontend");
+  }
+  return true;
+}
 
-  const addToRefs = (el) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
-
-  useEffect(() => {
-    const directions = [
-      { x: -150, y: 0 },   // left
-      { x: 150, y: 0 },    // right
-      { x: 0, y: -150 },   // top
-      { x: 0, y: 150 },    // bottom
-    ];
-
-    cardsRef.current.forEach((card, i) => {
-      const dir = directions[i % directions.length];
-
-      gsap.fromTo(
-        card,
-        {
-          opacity: 0,
-          x: dir.x,
-          y: dir.y,
-          scale: 0.95,
-        },
-        {
-          opacity: 1,
-          x: 0,
-          y: 0,
-          scale: 1,
-          duration: 1,
-          delay: i * 0.25,
-          ease: "power1.out",
-        }
-      );
-    });
-  }, []);
-
-  const projects = [
-    {
-      id: 1,
-      title: 'FitTrack',
-      img: '/assets/fitnessTracker.png',
-      desc: 'A full-stack Fitness Tracker Platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js). Empowers users to track fitness progress, book trainers, join classes, and engage with a community.',
-      link: 'https://fitness-tracker-d03b6.web.app/'
-    },
-    {
-      id: 2,
-      title: 'Plant Pal',
-      img: '/assets/Plant-Track.png',
-      desc: 'This platform enables users to track daily care tasks, set reminders, and maintain plant health records.',
-      link: 'https://plant-track-4558e.web.app/'
-    },
-    {
-      id: 3,
-      title: 'Find a Doctor',
-      img: '/assets/Doctor-phudu.jpg',
-      desc: 'This platform connects patients with verified doctors, allowing appointment booking, online consultation, and access to medical information.',
-      link: 'https://doc-talk-bd-by-zawad.netlify.app/home'
-    },
-    {
-      id: 4,
-      title: 'English Janala',
-      img: '/assets/EnglishJanala.png',
-      desc: 'An interactive English learning platform designed to help users improve grammar, vocabulary, and speaking skills through fun exercises and lessons.',
-      link: 'https://english-janala-by-zawad.netlify.app/'
-    },
-    {
-      id: 5,
-      title: 'NextGenBlog',
-      img: '/assets/blog1.png',
-      desc: 'This platform is a modern, user-friendly blogging platform built to make content creation and discovery easy and enjoyable',
-      link: 'https://job-track-by-zawad.netlify.app/'
-    }
-  ];
+export default function Projects() {
+  const [filter, setFilter] = useState("all");
+  const filtered = useMemo(
+    () => projects.filter((p) => matchesFilter(p, filter)),
+    [filter]
+  );
 
   return (
-    <div className="px-4 bg-black md:px-10 lg:px-20 p-4 md:p-10 lg:p-20 space-y-6 md:space-y-8 lg:space-y-10">
+    <div className="relative">
       <Helmet>
-        <title>Projects</title>
+        <title>Work — Ridwanul.dev</title>
+        <meta
+          name="description"
+          content="Selected full-stack and frontend projects by Ridwanul Azim Zawad — React, Node, MongoDB, Firebase, Stripe."
+        />
       </Helmet>
 
-      <div className="text-part space-y-2">
-        <h1 className="font-bold text-3xl md:text-4xl lg:text-5xl">Projects</h1>
-        <p className="small-text">Here you will find a selection of projects I have worked on.</p>
-      </div>
+      <section className="relative border-b border-border py-20 md:py-28">
+        <Container size="wide">
+          <SectionHeading
+            index="03"
+            eyebrow="Work"
+            title="Selected projects,"
+            muted="shipped end-to-end."
+            body="Filter by discipline or skim them all. Every card opens to a short brief — stack, build notes, what's next."
+          />
 
-      <div className="project-cards relative space-y-3 md:space-y-4 lg:space-y-5">
-
-        {/* First two */}
-        <div className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-2">
-          {projects.slice(0, 2).map((p, i) => (
-            <div
-              key={i}
-              ref={addToRefs}
-              className="bg-gray-950 text-white shadow-lg rounded-lg overflow-hidden flex flex-col"
+          {/* Filter row */}
+          <div className="mb-12 flex flex-wrap items-center gap-3 border-t border-border pt-8">
+            <span
+              className="mono-label"
+              style={{ color: "var(--fg-dim)" }}
             >
-              <div className="overflow-hidden">
-                <img className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150" src={p.img} alt={p.title} />
-              </div>
-
-              <div className="p-4 flex-1">
-                <h3 className="font-bold text-2xl">{p.title}</h3>
-                <p>{p.desc}</p>
-              </div>
-
-              <div className="p-4 flex flex-wrap gap-3">
-                <a href={p.link} target="_blank" rel="noreferrer"
-                  className="btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500">
-                  <div className="flex items-center gap-2">
-                    <CiGlobe /> Visit Project
-                  </div>
-                </a>
-
-                <Link to={`/projects/${p.id}`}
-                  className="btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500">
-                  <div className="flex items-center gap-2">
-                    <FaInfoCircle /> Project Details
-                  </div>
-                </Link>
-              </div>
+              Filter
+            </span>
+            <div className="flex flex-wrap gap-2">
+              {FILTERS.map((f) => (
+                <button
+                  key={f.id}
+                  onClick={() => setFilter(f.id)}
+                  className={`mono-label rounded-sm border px-3 py-1.5 transition-all duration-300 ${
+                    filter === f.id
+                      ? "border-fg bg-fg text-[var(--bg-base)]"
+                      : "border-border bg-[var(--bg-base)] text-[var(--fg-muted)] hover:border-[var(--border-hi)] hover:text-fg"
+                  }`}
+                >
+                  {f.label}
+                </button>
+              ))}
             </div>
-          ))}
-        </div>
-
-        {/* Second two */}
-        <div className="grid grid-cols-1 md:grid-cols-[40%_60%] gap-2">
-          {projects.slice(2, 4).map((p, i) => (
-            <div
-              key={i}
-              ref={addToRefs}
-              className="bg-gray-900 text-white shadow-lg rounded-lg overflow-hidden flex flex-col"
+            <span
+              className="mono-data ml-auto tabular"
+              style={{ color: "var(--fg-dim)" }}
             >
-              <div className="overflow-hidden">
-                <img className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150" src={p.img} alt={p.title} />
-              </div>
-
-              <div className="p-4 flex-1">
-                <h3 className="font-bold text-2xl">{p.title}</h3>
-                <p>{p.desc}</p>
-              </div>
-
-              <div className="p-4 flex flex-wrap gap-3">
-                <a href={p.link} target="_blank" rel="noreferrer" className="btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500">
-                  <CiGlobe /> Visit Project
-                </a>
-
-                <Link to={`/projects/${p.id}`} className="btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500">
-                  <FaInfoCircle /> Project Details
-                </Link>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Third row */}
-        <div className="grid grid-cols-1 md:grid-cols-[60%_40%] gap-2">
-
-          <div ref={addToRefs} className="bg-gray-900 text-white shadow-lg rounded-lg overflow-hidden flex flex-col">
-            <div className="overflow-hidden">
-              <img
-                className="w-full h-[300px] md:h-[400px] object-cover object-top transition-transform duration-500 hover:scale-150"
-                src={projects[4].img}
-                alt={projects[4].title}
-              />
-            </div>
-            <div className="p-4 flex-1">
-              <h3 className="font-bold text-2xl">{projects[4].title}</h3>
-              <p>{projects[4].desc}</p>
-            </div>
-            <div className="p-4 flex flex-wrap gap-3 justify-start">
-              <a
-                href={projects[4].link}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-block text-white font-semibold py-2 px-4 rounded-lg  
-                btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500"
-              >
-                <div className='flex justify-center items-center gap-2'>
-                  <CiGlobe />
-                  Visit Project
-                </div>
-              </a>
-
-              <Link
-                to={`/projects/${projects[4].id}`}
-                className="inline-block text-white font-semibold py-2 px-4 rounded-lg  
-                btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500"
-              >
-                <div className='flex justify-center items-center gap-2'>
-                  <FaInfoCircle />
-                  Project Details
-                </div>
-              </Link>
-            </div>
+              {filtered.length} project{filtered.length === 1 ? "" : "s"}
+            </span>
           </div>
 
-          <div
-            ref={addToRefs}
-            className="right-side text-center flex items-center justify-center py-8 md:py-0"
+          {/* Projects grid */}
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={filter}
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.4, ease: EASE }}
+              className="grid grid-cols-1 gap-px bg-border lg:grid-cols-2"
+            >
+              {filtered.map((p, i) => (
+                <motion.article
+                  key={p.id}
+                  initial={{ opacity: 0, y: 24 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-10% 0px" }}
+                  transition={{ duration: 0.9, ease: EASE, delay: i * 0.06 }}
+                  className="group relative flex flex-col gap-6 bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-8"
+                >
+                  <span
+                    aria-hidden
+                    className="absolute right-6 top-6 font-mono text-[14px] text-[var(--fg-dim)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  >
+                    →
+                  </span>
+
+                  {/* Image */}
+                  <Link
+                    to={`/projects/${p.id}`}
+                    className="relative block aspect-[16/10] overflow-hidden border border-border bg-[var(--bg-base)]"
+                  >
+                    <img
+                      src={p.images[0]}
+                      alt={p.title}
+                      className="absolute inset-0 h-full w-full object-cover object-top opacity-90 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-100"
+                    />
+                    <div
+                      className="pointer-events-none absolute inset-0"
+                      style={{
+                        background:
+                          "linear-gradient(to top, rgba(8,8,11,0.7), transparent 50%)",
+                      }}
+                    />
+                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+                      <span
+                        className="mono-label"
+                        style={{ color: "rgba(250,250,250,0.85)" }}
+                      >
+                        {p.role}
+                      </span>
+                      <span
+                        className="mono-label"
+                        style={{ color: "rgba(250,250,250,0.65)" }}
+                      >
+                        {p.year}
+                      </span>
+                    </div>
+                  </Link>
+
+                  <header className="flex items-start justify-between gap-4">
+                    <Link to={`/projects/${p.id}`}>
+                      <h3
+                        className="h3-card transition-colors hover:text-fg"
+                        style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
+                      >
+                        {p.title}
+                      </h3>
+                      <p
+                        className="body-s mt-1"
+                        style={{ color: "var(--fg-muted)" }}
+                      >
+                        {p.subtitle}
+                      </p>
+                    </Link>
+                    <span
+                      className="mono-data tabular"
+                      style={{ color: "var(--fg-dim)" }}
+                    >
+                      {String(p.id).padStart(2, "0")}
+                    </span>
+                  </header>
+
+                  <p className="body-m" style={{ color: "var(--fg-muted)" }}>
+                    {p.desc}
+                  </p>
+
+                  {/* Stack chips */}
+                  <div className="flex flex-wrap gap-2">
+                    {p.stack.map((s) => (
+                      <span
+                        key={s}
+                        className="mono-label rounded-sm border border-border bg-[var(--bg-base)] px-2 py-1 text-[var(--fg-muted)]"
+                      >
+                        {s}
+                      </span>
+                    ))}
+                  </div>
+
+                  {/* Actions */}
+                  <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <PrimaryCTA variant="outline" size="sm">
+                        Visit live
+                      </PrimaryCTA>
+                    </a>
+                    <Link to={`/projects/${p.id}`}>
+                      <PrimaryCTA variant="ghost" size="sm" arrow={false}>
+                        Read brief →
+                      </PrimaryCTA>
+                    </Link>
+                  </div>
+                </motion.article>
+              ))}
+            </motion.div>
+          </AnimatePresence>
+        </Container>
+      </section>
+
+      {/* CTA strip */}
+      <section className="py-16">
+        <Container size="default">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-10% 0px" }}
+            transition={{ duration: 0.9, ease: EASE }}
+            className="flex flex-col items-start justify-between gap-6 border border-border bg-[var(--bg-elev1)] p-8 md:flex-row md:items-center md:p-10"
           >
-            <div className="space-y-3">
-              <RiChatSmile2Fill className="mx-auto" size={60} />
-              <h1 className="font-bold text-lg md:text-xl">Let's Work Together!</h1>
-              <p className="small-text">Have an idea in mind? Let's talk about it.</p>
-              <button className="btn btn-primary bg-black transition duration-300 hover:scale-110 shadow-md hover:shadow-lg hover:shadow-purple-500">
-                <IoSend />
-                <a href="mailto:redwanulazimzawad@gmail.com">Contact Me</a>
-              </button>
+            <div>
+              <h3
+                className="h3-card"
+                style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
+              >
+                Have a project in mind?
+              </h3>
+              <p
+                className="body-m mt-2"
+                style={{ color: "var(--fg-muted)" }}
+              >
+                Open to freelance, contract, and hybrid roles — let's talk
+                about what you're building.
+              </p>
             </div>
-          </div>
-
-        </div>
-
-      </div>
+            <Link to="/contacts">
+              <PrimaryCTA variant="solid" size="lg">
+                Start a project →
+              </PrimaryCTA>
+            </Link>
+          </motion.div>
+        </Container>
+      </section>
     </div>
   );
-};
-
-export default Projects;
+}

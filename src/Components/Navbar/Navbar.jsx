@@ -1,129 +1,189 @@
-import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router';
-import { SiCodeblocks } from "react-icons/si";
-import DownloadResume from './DownloadResume';
+import { useState } from "react";
+import { Link, NavLink, useLocation } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
+import { useScrollPast } from "../../hooks/useScrollPast";
+import { BrandMark } from "../../primitives/BrandMark";
+import { PrimaryCTA } from "../../primitives/PrimaryCTA";
+import { Kbd } from "../../primitives/Kbd";
+import { AnchorNavLink } from "../../primitives/AnchorNavLink";
+import { NAV_ITEMS } from "../../lib/content";
+import { cn } from "../../../lib/utils";
 
-const Navbar = () => {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 50);
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
-  const closeMobileMenu = () => setIsMobileMenuOpen(false);
-
-  // Desktop nav animation class
-  const navLinkClass = ({ isActive }) =>
-    `relative px-3 py-1 text-sm lg:text-base transition-colors duration-200
-     text-white hover:text-gray-400
-     after:content-[''] after:absolute after:left-0 after:-bottom-1 after:w-full after:h-[2px]
-     after:bg-white after:origin-left after:transition-transform after:duration-300
-     ${isActive ? "text-gray-400 after:scale-x-100" : "after:scale-x-0"}`;
-
-  // Mobile nav simple active style
-  const mobileNavClass = ({ isActive }) =>
-    `btn btn-ghost w-full text-left justify-start
-     ${isActive ? "text-gray-400" : "text-white hover:text-gray-400"}`;
+export default function Navbar({ onOpenPalette }) {
+  const scrolled = useScrollPast(12);
+  const [open, setOpen] = useState(false);
+  const location = useLocation();
 
   return (
     <>
-      <nav
-        className={`sticky top-0 z-50 border-b border-gray-700/40 ${
-          isScrolled
-            ? 'backdrop-blur-md bg-black/60 shadow-md'
-            : 'bg-black'
-        }`}
+      <motion.header
+        initial={false}
+        animate={{
+          backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
+          backgroundColor: scrolled
+            ? "rgba(8,8,11,0.7)"
+            : "rgba(8,8,11,0)",
+          borderColor: scrolled
+            ? "var(--border)"
+            : "rgba(255,255,255,0)",
+        }}
+        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+        className="fixed inset-x-0 top-0 z-50 border-b"
       >
-        <div className="pt-5 pb-5 px-4 sm:px-8 md:px-16 lg:px-32 xl:px-40">
-          <div className="flex justify-between items-center">
-
-            {/* Left Part */}
-            <div className="flex items-center gap-2 md:gap-4">
-              <Link className="flex items-center gap-1" to="/">
-                <SiCodeblocks className="size-6 md:size-7" />
-                <h1 className="text-xl sm:text-2xl md:text-3xl font-bold">
-                  Ridwanul.dev
-                </h1>
-              </Link>
-
-              {/* Desktop Navigation */}
-              <div className="hidden md:flex gap-2 lg:gap-4">
-                <NavLink to="/" className={navLinkClass}>Home</NavLink>
-                <NavLink to="/projects" className={navLinkClass}>Projects</NavLink>
-                <NavLink to="/contacts" className={navLinkClass}>Contact</NavLink>
-              </div>
-            </div>
-
-            {/* Right Part */}
-            <div className="flex items-center gap-3">
-              <div className="hidden md:inline">
-                <DownloadResume />
-              </div>
-
-              {/* Mobile Menu Button */}
-              <button
-                className="md:hidden btn btn-ghost p-2"
-                onClick={toggleMobileMenu}
-                aria-label="Toggle mobile menu"
-              >
-                <svg className="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                  {isMobileMenuOpen ? (
-                    <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
-                  ) : (
-                    <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
-                  )}
-                </svg>
-              </button>
-            </div>
+        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 md:px-10">
+          <div className="flex items-center gap-8">
+            <BrandMark size="md" />
+            <nav className="hidden items-center gap-1 md:flex">
+              {NAV_ITEMS.map((item) => {
+                const isAnchor = item.to.startsWith("/#");
+                const baseCls =
+                  "rounded-sm px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 text-[var(--fg-muted)] hover:text-fg";
+                if (isAnchor) {
+                  return (
+                    <AnchorNavLink
+                      key={item.id}
+                      to={item.to}
+                      className={baseCls}
+                      onClick={() => setOpen(false)}
+                    >
+                      {item.label}
+                    </AnchorNavLink>
+                  );
+                }
+                return (
+                  <NavLink
+                    key={item.id}
+                    to={item.to}
+                    className={({ isActive }) =>
+                      cn(baseCls, isActive && "text-fg")
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                );
+              })}
+            </nav>
           </div>
-        </div>
-      </nav>
 
-      {/* Overlay */}
-      {isMobileMenuOpen && (
-        <div
-          onClick={closeMobileMenu}
-          className="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 md:hidden"
-        />
-      )}
-
-      {/* Mobile Slide Menu */}
-      <div
-        className={`fixed top-0 right-0 h-full w-[75%] max-w-sm bg-black z-50 transform transition-transform duration-300 ease-in-out
-          ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}
-          md:hidden shadow-xl border-l border-gray-700/50`}
-      >
-        <div className="p-6 flex flex-col space-y-4">
+          <div className="hidden items-center gap-3 md:flex">
+            <button
+              onClick={onOpenPalette}
+              className="inline-flex items-center gap-2 rounded-sm border border-border bg-[var(--bg-elev1)] px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg"
+              aria-label="Open command palette"
+            >
+              <span>Search</span>
+              <Kbd>⌘K</Kbd>
+            </button>
+            <Link to="/contacts">
+              <PrimaryCTA variant="outline" size="sm" arrow={false}>
+                Get in touch
+              </PrimaryCTA>
+            </Link>
+          </div>
 
           <button
-            onClick={closeMobileMenu}
-            className="self-end btn btn-ghost"
-            aria-label="Close menu"
+            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border md:hidden"
+            onClick={() => setOpen((o) => !o)}
+            aria-label="Toggle menu"
+            aria-expanded={open}
           >
-            ✕
+            <span className="relative block h-3 w-4">
+              <span
+                className={cn(
+                  "absolute left-0 top-0 h-px w-full bg-fg transition-all duration-300",
+                  open && "translate-y-[6px] rotate-45"
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-fg transition-all duration-300",
+                  open && "opacity-0"
+                )}
+              />
+              <span
+                className={cn(
+                  "absolute bottom-0 left-0 h-px w-full bg-fg transition-all duration-300",
+                  open && "-translate-y-[6px] -rotate-45"
+                )}
+              />
+            </span>
           </button>
-
-          <NavLink to="/" onClick={closeMobileMenu} className={mobileNavClass}>
-            Home
-          </NavLink>
-
-          <NavLink to="/projects" onClick={closeMobileMenu} className={mobileNavClass}>
-            Projects
-          </NavLink>
-
-          <NavLink to="/contacts" onClick={closeMobileMenu} className={mobileNavClass}>
-            Contact
-          </NavLink>
-
-          <DownloadResume />
         </div>
-      </div>
+      </motion.header>
+
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            className="fixed inset-0 z-40 bg-[var(--bg-base)]/80 backdrop-blur-md md:hidden"
+            onClick={() => setOpen(false)}
+          >
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -20, opacity: 0 }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+              className="border-b border-border bg-[var(--bg-base)] px-6 pb-8 pt-24"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <nav className="flex flex-col gap-1">
+                {NAV_ITEMS.map((item) => {
+                  const isAnchor = item.to.startsWith("/#");
+                  const baseCls = cn(
+                    "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors",
+                    !isAnchor &&
+                      (location.pathname === item.to
+                        ? "text-fg"
+                        : "text-[var(--fg-muted)]")
+                  );
+                  if (isAnchor) {
+                    return (
+                      <AnchorNavLink
+                        key={item.id}
+                        to={item.to}
+                        onClick={() => setOpen(false)}
+                        className={cn(
+                          "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors text-[var(--fg-muted)] hover:text-fg"
+                        )}
+                      >
+                        {item.label}
+                      </AnchorNavLink>
+                    );
+                  }
+                  return (
+                    <NavLink
+                      key={item.id}
+                      to={item.to}
+                      onClick={() => setOpen(false)}
+                      className={baseCls}
+                    >
+                      {item.label}
+                    </NavLink>
+                  );
+                })}
+              </nav>
+              <div className="mt-8 flex items-center justify-between">
+                <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
+                  v2026
+                </span>
+                <PrimaryCTA
+                  variant="outline"
+                  size="sm"
+                  onClick={() => {
+                    setOpen(false);
+                    window.location.href = "/contacts";
+                  }}
+                >
+                  Get in touch
+                </PrimaryCTA>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </>
   );
-};
-
-export default Navbar;
+}
