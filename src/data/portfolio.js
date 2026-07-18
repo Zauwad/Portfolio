@@ -18,9 +18,7 @@ export const projects = [
       "Designing role-based dashboards and integrating subscriptions alongside real-time class scheduling.",
     futurePlan:
       "Add AI-based fitness recommendations and a social feed for progress sharing.",
-    metrics: {},
-    sparkline: [],
-  },
+      },
   {
     id: 2,
     title: "Plant Pal",
@@ -40,9 +38,7 @@ export const projects = [
       "Wiring reliable CRUD with cloud sync while keeping the UI fast on low-end devices.",
     futurePlan:
       "Introduce IoT integration for live soil moisture tracking and watering automation.",
-    metrics: {},
-    sparkline: [],
-  },
+      },
   {
     id: 3,
     title: "DocTalk BD",
@@ -61,9 +57,7 @@ export const projects = [
     difficulty:
       "Implementing secure user authentication and managing dynamic appointment scheduling.",
     futurePlan: "Add video consultation features and an AI symptom checker.",
-    metrics: {},
-    sparkline: [],
-  },
+      },
   {
     id: 4,
     title: "English Janala",
@@ -83,9 +77,7 @@ export const projects = [
       "Designing quiz logic and progress tracking while keeping the UI smooth throughout.",
     futurePlan:
       "Add gamification, leaderboards, and personalized lesson recommendations.",
-    metrics: {},
-    sparkline: [],
-  },
+      },
   {
     id: 5,
     title: "NextGenBlog",
@@ -105,9 +97,7 @@ export const projects = [
       "Implementing secure token-based private routes and optimizing full-text search.",
     futurePlan:
       "Add AI-powered content recommendations and a rich-text editor.",
-    metrics: {},
-    sparkline: [],
-  },
+      },
 ];
 
 export const skills = {

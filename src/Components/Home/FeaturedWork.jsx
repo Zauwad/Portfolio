@@ -24,11 +24,9 @@ export default function FeaturedWork() {
             body="A handful of projects I built from idea to deploy — frontend polish, real backends, real users."
             className="mb-0"
           />
-          <Link to="/projects">
-            <PrimaryCTA variant="outline" size="md">
-              View all work
-            </PrimaryCTA>
-          </Link>
+          <PrimaryCTA variant="outline" size="md" to="/projects">
+            View all work
+          </PrimaryCTA>
         </div>
 
         <div className="grid grid-cols-1 gap-px bg-border lg:grid-cols-3">

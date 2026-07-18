@@ -183,21 +183,24 @@ export default function Projects() {
 
                   {/* Actions */}
                   <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
-                    <a
+                    <PrimaryCTA
+                      variant="outline"
+                      size="sm"
                       href={p.link}
                       target="_blank"
                       rel="noreferrer"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <PrimaryCTA variant="outline" size="sm">
-                        Visit live
-                      </PrimaryCTA>
-                    </a>
-                    <Link to={`/projects/${p.id}`}>
-                      <PrimaryCTA variant="ghost" size="sm" arrow={false}>
-                        Read brief →
-                      </PrimaryCTA>
-                    </Link>
+                      Visit live
+                    </PrimaryCTA>
+                    <PrimaryCTA
+                      variant="ghost"
+                      size="sm"
+                      arrow={false}
+                      to={`/projects/${p.id}`}
+                    >
+                      Read brief →
+                    </PrimaryCTA>
                   </div>
                 </motion.article>
               ))}
@@ -231,11 +234,9 @@ export default function Projects() {
                 about what you're building.
               </p>
             </div>
-            <Link to="/contacts">
-              <PrimaryCTA variant="solid" size="lg">
-                Start a project →
-              </PrimaryCTA>
-            </Link>
+            <PrimaryCTA variant="solid" size="lg" to="/contacts">
+              Start a project →
+            </PrimaryCTA>
           </motion.div>
         </Container>
       </section>

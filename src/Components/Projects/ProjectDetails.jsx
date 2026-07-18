@@ -33,11 +33,9 @@ export default function ProjectDetails() {
           <p className="body-m mt-4" style={{ color: "var(--fg-muted)" }}>
             The project you're looking for doesn't exist or has been moved.
           </p>
-          <Link to="/projects" className="mt-8 inline-block">
-            <PrimaryCTA variant="outline" size="md">
-              Back to all work
-            </PrimaryCTA>
-          </Link>
+          <PrimaryCTA variant="outline" size="md" to="/projects" className="mt-8 inline-block">
+            Back to all work
+          </PrimaryCTA>
         </Container>
       </div>
     );
@@ -117,11 +115,9 @@ export default function ProjectDetails() {
               transition={{ duration: 1, ease: EASE, delay: 0.1 }}
               className="flex flex-col items-start gap-4 md:col-span-4 md:items-end md:justify-end"
             >
-              <a href={project.link} target="_blank" rel="noreferrer">
-                <PrimaryCTA variant="solid" size="lg">
-                  Visit live ↗
-                </PrimaryCTA>
-              </a>
+              <PrimaryCTA variant="solid" size="lg" href={project.link} target="_blank" rel="noreferrer">
+                Visit live ↗
+              </PrimaryCTA>
               <span
                 className="mono-data tabular"
                 style={{ color: "var(--fg-dim)" }}
@@ -307,38 +303,6 @@ export default function ProjectDetails() {
                             ))}
                           </div>
                         </div>
-
-                        {Object.keys(project.metrics || {}).filter(
-                          (k) => project.metrics[k]
-                        ).length > 0 && (
-                          <dl className="grid grid-cols-3 gap-px bg-border">
-                            {Object.entries(project.metrics)
-                              .filter(([, v]) => v != null && v !== "")
-                              .map(([k, v]) => (
-                                <div
-                                  key={k}
-                                  className="bg-[var(--bg-elev1)] p-5"
-                                >
-                                  <dt
-                                    className="mono-label capitalize"
-                                    style={{ color: "var(--fg-dim)" }}
-                                  >
-                                    {k.replace(/([A-Z])/g, " $1").trim()}
-                                  </dt>
-                                  <dd
-                                    className="tabular font-medium"
-                                    style={{
-                                      fontSize: 24,
-                                      color: "var(--fg)",
-                                      letterSpacing: "-0.02em",
-                                    }}
-                                  >
-                                    {v}
-                                  </dd>
-                                </div>
-                              ))}
-                          </dl>
-                        )}
                       </div>
                     )}
 
@@ -407,11 +371,9 @@ export default function ProjectDetails() {
                             Open to feedback, ideas, and collaboration on this
                             project.
                           </p>
-                          <a href={project.link} target="_blank" rel="noreferrer">
-                            <PrimaryCTA variant="solid" size="md">
-                              Open the project ↗
-                            </PrimaryCTA>
-                          </a>
+                          <PrimaryCTA variant="solid" size="md" href={project.link} target="_blank" rel="noreferrer">
+                            Open the project ↗
+                          </PrimaryCTA>
                         </div>
                       </div>
                     )}

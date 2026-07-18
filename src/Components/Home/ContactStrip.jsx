@@ -1,4 +1,3 @@
-import { Link } from "react-router";
 import { motion } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
@@ -50,11 +49,9 @@ export default function ContactStrip() {
 
           <div className="flex flex-col items-start gap-6 md:col-span-4 md:items-end md:justify-end">
             <StatusPulse label="Replying within 24h" variant="live" />
-            <Link to="/contacts">
-              <PrimaryCTA variant="solid" size="lg">
-                Open the conversation →
-              </PrimaryCTA>
-            </Link>
+            <PrimaryCTA variant="solid" size="lg" to="/contacts">
+              Open the conversation →
+            </PrimaryCTA>
             <a
               href="mailto:redwanulazimzawad@gmail.com"
               className="mono-label text-[var(--fg-muted)] transition-colors hover:text-fg"

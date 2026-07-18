@@ -74,11 +74,9 @@ export default function Navbar({ onOpenPalette }) {
               <span>Search</span>
               <Kbd>⌘K</Kbd>
             </button>
-            <Link to="/contacts">
-              <PrimaryCTA variant="outline" size="sm" arrow={false}>
-                Get in touch
-              </PrimaryCTA>
-            </Link>
+            <PrimaryCTA variant="outline" size="sm" arrow={false} to="/contacts">
+              Get in touch
+            </PrimaryCTA>
           </div>
 
           <button
@@ -172,10 +170,8 @@ export default function Navbar({ onOpenPalette }) {
                 <PrimaryCTA
                   variant="outline"
                   size="sm"
-                  onClick={() => {
-                    setOpen(false);
-                    window.location.href = "/contacts";
-                  }}
+                  to="/contacts"
+                  onClick={() => setOpen(false)}
                 >
                   Get in touch
                 </PrimaryCTA>

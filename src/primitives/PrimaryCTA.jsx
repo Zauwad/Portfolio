@@ -1,54 +1,13 @@
-import { useRef } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
+import { Link } from "react-router";
 import { cn } from "../../lib/utils";
-
-export function MagneticButton({
-  children,
-  strength = 0.25,
-  className,
-  as = "button",
-  ...rest
-}) {
-  const ref = useRef(null);
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
-  const sx = useSpring(x, { stiffness: 220, damping: 18, mass: 0.4 });
-  const sy = useSpring(y, { stiffness: 220, damping: 18, mass: 0.4 });
-
-  const onMove = (e) => {
-    const r = ref.current?.getBoundingClientRect();
-    if (!r) return;
-    const mx = e.clientX - (r.left + r.width / 2);
-    const my = e.clientY - (r.top + r.height / 2);
-    x.set(mx * strength);
-    y.set(my * strength);
-  };
-
-  const onLeave = () => {
-    x.set(0);
-    y.set(0);
-  };
-
-  const MotionTag = motion[as] || motion.button;
-
-  return (
-    <MotionTag
-      ref={ref}
-      onMouseMove={onMove}
-      onMouseLeave={onLeave}
-      style={{ x: sx, y: sy }}
-      className={cn("inline-block", className)}
-      {...rest}
-    >
-      {children}
-    </MotionTag>
-  );
-}
 
 export function PrimaryCTA({
   variant = "outline",
   size = "md",
   arrow = true,
+  as = "button",
+  to,
+  href,
   className,
   children,
   ...rest
@@ -69,11 +28,10 @@ export function PrimaryCTA({
     ghost: "text-fg-muted hover:text-fg",
   };
 
-  return (
-    <button
-      className={cn(base, sizes[size], variants[variant], className)}
-      {...rest}
-    >
+  const cls = cn(base, sizes[size], variants[variant], className);
+
+  const inner = (
+    <>
       {variant === "outline" && (
         <span
           aria-hidden
@@ -89,6 +47,28 @@ export function PrimaryCTA({
         {children}
         {arrow && <span aria-hidden>→</span>}
       </span>
+    </>
+  );
+
+  if (as === Link || to) {
+    return (
+      <Link to={to || href} className={cls} {...rest}>
+        {inner}
+      </Link>
+    );
+  }
+
+  if (as === "a" || href) {
+    return (
+      <a href={href} className={cls} {...rest}>
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <button className={cls} {...rest}>
+      {inner}
     </button>
   );
 }

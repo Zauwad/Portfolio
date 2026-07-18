@@ -1,12 +1,11 @@
 import { Link } from "react-router";
-import { motion } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { BrandMark } from "../../primitives/BrandMark";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { StatusPulse } from "../../primitives/StatusPulse";
 import { Reveal } from "../../primitives/Reveal";
 import { AnchorNavLink } from "../../primitives/AnchorNavLink";
-import { SOCIALS, NAV_ITEMS } from "../../lib/content";
+import { SOCIALS } from "../../lib/content";
 
 const FOOTER_NAV = [
   { label: "Work", to: "/projects" },
@@ -104,15 +103,9 @@ export default function Footer() {
               </p>
             </Reveal>
             <div className="flex flex-wrap items-center gap-3">
-              <motion.a
-                whileHover={{ y: -1 }}
-                transition={{ duration: 0.3 }}
-                href="mailto:redwanulazimzawad@gmail.com"
-              >
-                <PrimaryCTA variant="solid" size="md">
-                  Begin →
-                </PrimaryCTA>
-              </motion.a>
+              <PrimaryCTA variant="solid" size="md" href="mailto:redwanulazimzawad@gmail.com">
+                Begin →
+              </PrimaryCTA>
               <a
                 href="/Ridwanul_Azim_Resume.pdf"
                 target="_blank"

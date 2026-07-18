@@ -3,7 +3,6 @@ import { SectionHeading } from "../../primitives/SectionHeading";
 import { Reveal } from "../../primitives/Reveal";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { services } from "../../data/portfolio";
-import { Link } from "react-router";
 
 export default function Services() {
   return (
@@ -76,11 +75,9 @@ export default function Services() {
           <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
             Ready to start?
           </span>
-          <Link to="/contacts">
-            <PrimaryCTA variant="outline" size="md">
-              Start a project
-            </PrimaryCTA>
-          </Link>
+          <PrimaryCTA variant="outline" size="md" to="/contacts">
+            Start a project
+          </PrimaryCTA>
         </Reveal>
       </Container>
     </section>
