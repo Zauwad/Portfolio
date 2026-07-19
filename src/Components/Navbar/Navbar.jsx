@@ -22,11 +22,11 @@ export default function Navbar({ onOpenPalette }) {
         animate={{
           backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
           backgroundColor: scrolled
-            ? "rgba(8,8,11,0.7)"
-            : "rgba(8,8,11,0)",
+            ? "color-mix(in srgb, var(--bg-base) 72%, transparent)"
+            : "color-mix(in srgb, var(--bg-base) 0%, transparent)",
           borderColor: scrolled
             ? "var(--border)"
-            : "rgba(255,255,255,0)",
+            : "transparent",
         }}
         transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
         className="fixed inset-x-0 top-0 z-50 border-b"
