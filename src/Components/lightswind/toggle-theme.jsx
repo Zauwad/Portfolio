@@ -1,5 +1,3 @@
-"use client";
-
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Moon, Sun } from "lucide-react";
 import { flushSync } from "react-dom";
@@ -40,7 +38,30 @@ export const ToggleTheme = ({
   }, []);
 
   useEffect(() => {
-    if (animationType === "flip-x-in") return;
+    if (animationType === "flip-x-in") {
+      const styleId = "toggle-theme-flip-override";
+      let styleElement = document.getElementById(styleId);
+      if (!styleElement) {
+        styleElement = document.createElement("style");
+        styleElement.id = styleId;
+        document.head.appendChild(styleElement);
+      }
+      styleElement.textContent = `
+                ::view-transition-group(root) { perspective: 1000px; }
+                ::view-transition-old(root) { transform-origin: center; animation: flip-out 400ms forwards; }
+                ::view-transition-new(root) { transform-origin: center; animation: flip-in 400ms forwards; }
+
+                @keyframes flip-out { from { transform: rotateY(0deg); opacity: 1; } to { transform: rotateY(-90deg); opacity: 0; } }
+                @keyframes flip-in { from { transform: rotateY(90deg); opacity: 0; } to { transform: rotateY(0deg); opacity: 1; } }
+            `;
+
+      return () => {
+        const el = document.getElementById(styleId);
+        if (el && el.parentNode) {
+          el.parentNode.removeChild(el);
+        }
+      };
+    }
 
     let styleElement = document.getElementById("toggle-theme-vt-override");
     if (!styleElement) {
@@ -60,15 +81,21 @@ export const ToggleTheme = ({
   const toggleTheme = useCallback(async () => {
     if (!buttonRef.current) return;
 
+    const applyTheme = (nextIsDark) => {
+      const root = document.documentElement;
+      root.classList.toggle("dark", nextIsDark);
+      root.classList.toggle("light", !nextIsDark);
+      setIsDark(nextIsDark);
+      localStorage.setItem("theme", nextIsDark ? "dark" : "light");
+    };
+
+    if (typeof document.startViewTransition !== "function") {
+      flushSync(() => applyTheme(!isDark));
+      return;
+    }
+
     await document.startViewTransition(() => {
-      flushSync(() => {
-        const newTheme = !isDark;
-        const root = document.documentElement;
-        root.classList.toggle("dark", newTheme);
-        root.classList.toggle("light", !newTheme);
-        setIsDark(newTheme);
-        localStorage.setItem("theme", newTheme ? "dark" : "light");
-      });
+      flushSync(() => applyTheme(!isDark));
     }).ready;
 
     const { top, left, width, height } =
@@ -123,7 +150,7 @@ export const ToggleTheme = ({
           },
           {
             duration,
-            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            easing: "cubic-bezier(0.2, 0, 0.2, 1)",
             pseudoElement: "::view-transition-new(root)",
           }
         );
@@ -139,7 +166,7 @@ export const ToggleTheme = ({
           },
           {
             duration,
-            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            easing: "cubic-bezier(0.2, 0, 0.2, 1)",
             pseudoElement: "::view-transition-new(root)",
           }
         );
@@ -197,20 +224,6 @@ export const ToggleTheme = ({
         );
         break;
 
-      case "flip-x-in": {
-        const styleElement = document.createElement("style");
-        styleElement.textContent = `
-                    ::view-transition-group(root) { perspective: 1000px; }
-                    ::view-transition-old(root) { transform-origin: center; animation: flip-out 400ms forwards; }
-                    ::view-transition-new(root) { transform-origin: center; animation: flip-in 400ms forwards; }
-
-                    @keyframes flip-out { from { transform: rotateY(0deg); opacity: 1; } to { transform: rotateY(-90deg); opacity: 0; } }
-                    @keyframes flip-in { from { transform: rotateY(90deg); opacity: 0; } to { transform: rotateY(0deg); opacity: 1; } }
-                `;
-        document.head.appendChild(styleElement);
-        break;
-      }
-
       case "split-vertical":
         document.documentElement.animate(
           [{ opacity: 0 }, { opacity: 1 }],
@@ -244,7 +257,7 @@ export const ToggleTheme = ({
           },
           {
             duration,
-            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            easing: "cubic-bezier(0.2, 0, 0.2, 1)",
             pseudoElement: "::view-transition-new(root)",
           }
         );
@@ -260,7 +273,7 @@ export const ToggleTheme = ({
           },
           {
             duration,
-            easing: "cubic-bezier(0.2, 0, 0, 1)",
+            easing: "cubic-bezier(0.2, 0, 0.2, 1)",
             pseudoElement: "::view-transition-new(root)",
           }
         );
@@ -282,6 +295,7 @@ export const ToggleTheme = ({
         );
         break;
 
+      case "flip-x-in":
       case "none":
       default:
         break;
