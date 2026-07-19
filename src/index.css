@@ -1,5 +1,5 @@
 @import "tailwindcss";
-
+@plugin "lightswind/plugin";
 @theme {
   --color-bg-base: #08080b;
   --color-bg-elev1: #0e0e13;
