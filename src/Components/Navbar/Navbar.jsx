@@ -8,6 +8,7 @@ import { Kbd } from "../../primitives/Kbd";
 import { AnchorNavLink } from "../../primitives/AnchorNavLink";
 import { NAV_ITEMS } from "../../lib/content";
 import { cn } from "../../../lib/utils";
+import { ToggleTheme } from "../lightswind/toggle-theme";
 
 export default function Navbar({ onOpenPalette }) {
   const scrolled = useScrollPast(12);
@@ -74,6 +75,9 @@ export default function Navbar({ onOpenPalette }) {
               <span>Search</span>
               <Kbd>⌘K</Kbd>
             </button>
+            <div className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-sm border border-border bg-[var(--bg-elev1)] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg">
+              <ToggleTheme animationType="circle-spread" duration={600} />
+            </div>
             <PrimaryCTA variant="outline" size="sm" arrow={false} to="/contacts">
               Get in touch
             </PrimaryCTA>
@@ -163,10 +167,13 @@ export default function Navbar({ onOpenPalette }) {
                   );
                 })}
               </nav>
-              <div className="mt-8 flex items-center justify-between">
+              <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
                 <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
                   v2026
                 </span>
+                <div className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-sm border border-border text-[var(--fg-muted)] transition-colors hover:border-[var(--border-hi)] hover:text-fg">
+                  <ToggleTheme animationType="circle-spread" duration={600} />
+                </div>
                 <PrimaryCTA
                   variant="outline"
                   size="sm"
