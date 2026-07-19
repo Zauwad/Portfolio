@@ -38,6 +38,28 @@
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+:root.light {
+  --bg-base: #f5f4ef;
+  --bg-elev1: #ecebe4;
+  --bg-elev2: #e3e1d8;
+  --fg: #1a1a1c;
+  --fg-muted: rgba(26, 26, 28, 0.66);
+  --fg-dim: rgba(26, 26, 28, 0.42);
+  --border: rgba(26, 26, 28, 0.10);
+  --border-hi: rgba(26, 26, 28, 0.18);
+  --accent: #1a1a1c;
+  --accent-glow: rgba(26, 26, 28, 0.06);
+}
+
+/* Suppress dark-only decoration in light mode */
+:root.light .vignette::before {
+  display: none;
+}
+
+:root.light .grid-bg {
+  display: none;
+}
+
 @layer base {
   * {
     border-color: var(--border);
@@ -45,7 +67,7 @@
 
   html {
     scroll-behavior: smooth;
-    color-scheme: dark;
+    color-scheme: light dark;
   }
 
   html,
