@@ -118,6 +118,16 @@ export default function ProjectDetails() {
               <PrimaryCTA variant="solid" size="lg" href={project.link} target="_blank" rel="noreferrer">
                 Visit live ↗
               </PrimaryCTA>
+              {project.repo && (
+                <a
+                  href={project.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="mono-label inline-flex items-center gap-2 text-[var(--fg-muted)] transition-colors hover:text-fg"
+                >
+                  Source <span aria-hidden>↗</span>
+                </a>
+              )}
               <span
                 className="mono-data tabular"
                 style={{ color: "var(--fg-dim)" }}
@@ -283,7 +293,47 @@ export default function ProjectDetails() {
                           >
                             Preview
                           </span>
-                          <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
+
+                          {/* Hero image */}
+                          <motion.div
+                            key={activeImage}
+                            initial={{ opacity: 0, y: 8 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.4, ease: EASE }}
+                            className="relative overflow-hidden border border-border bg-[var(--bg-elev1)]"
+                          >
+                            <div className="relative aspect-[16/9] w-full">
+                              <img
+                                src={project.images[activeImage]}
+                                alt={`${project.title} preview ${activeImage + 1}`}
+                                className="absolute inset-0 h-full w-full object-cover object-top"
+                              />
+                              <div
+                                className="pointer-events-none absolute inset-0"
+                                style={{
+                                  background:
+                                    "linear-gradient(to top, rgba(8,8,11,0.55), transparent 40%)",
+                                }}
+                              />
+                              <div className="absolute bottom-3 left-4 right-4 flex items-center justify-between">
+                                <span
+                                  className="mono-label"
+                                  style={{ color: "rgba(250,250,250,0.85)" }}
+                                >
+                                  {project.title}
+                                </span>
+                                <span
+                                  className="mono-data tabular"
+                                  style={{ color: "rgba(250,250,250,0.65)" }}
+                                >
+                                  {String(activeImage + 1).padStart(2, "0")} / {String(project.images.length).padStart(2, "0")}
+                                </span>
+                              </div>
+                            </div>
+                          </motion.div>
+
+                          {/* Thumb strip */}
+                          <div className="mt-3 grid grid-cols-3 gap-3 md:grid-cols-6">
                             {project.images.map((img, i) => (
                               <button
                                 key={i}
@@ -293,10 +343,11 @@ export default function ProjectDetails() {
                                     ? "border-fg"
                                     : "border-border hover:border-[var(--border-hi)]"
                                 }`}
+                                aria-label={`Show preview ${i + 1}`}
                               >
                                 <img
                                   src={img}
-                                  alt={`${project.title} preview ${i + 1}`}
+                                  alt=""
                                   className="absolute inset-0 h-full w-full object-cover object-top"
                                 />
                               </button>

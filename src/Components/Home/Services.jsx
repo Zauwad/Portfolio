@@ -13,11 +13,11 @@ export default function Services() {
           eyebrow="Engagements"
           title="What I can do,"
           muted="and how I like to work."
-          body="Three overlapping modes — building, designing, and shipping. Pick one or the whole loop."
+          body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
         />
 
-        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
-          {services.map((s, i) => (
+        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
+          {services.filter((s) => s.id !== "design").map((s, i, arr) => (
             <Reveal
               key={s.id}
               delay={i * 0.08}
@@ -34,7 +34,7 @@ export default function Services() {
                   className="mono-label"
                   style={{ color: "var(--fg-dim)" }}
                 >
-                  {i < services.length - 1 ? "→" : "end"}
+                  {i < arr.length - 1 ? "→" : "end"}
                 </span>
               </div>
               <h3

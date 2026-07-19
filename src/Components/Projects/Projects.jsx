@@ -193,6 +193,18 @@ export default function Projects() {
                     >
                       Visit live
                     </PrimaryCTA>
+                    {p.repo && (
+                      <PrimaryCTA
+                        variant="outline"
+                        size="sm"
+                        href={p.repo}
+                        target="_blank"
+                        rel="noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        Source
+                      </PrimaryCTA>
+                    )}
                     <PrimaryCTA
                       variant="ghost"
                       size="sm"

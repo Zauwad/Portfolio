@@ -1,6 +1,28 @@
 export const projects = [
   {
     id: 1,
+    title: "PettyCash",
+    subtitle: "Hackathon 2nd place · Multi-tenant OMS",
+    desc: "Cross-company office hackathon — 2nd place. Multi-tenant Operations Management System (A Maze Venture, mYnt Connect, Braincount) — Django REST + JWT, row-level data isolation, approval delegation engine, role-scoped audit log, PDF disbursement vouchers.",
+    link: "http://20.219.32.255",
+    repo: "https://github.com/Zauwad/PettyCash",
+    year: "2026",
+    role: "Full-stack",
+    images: [
+      "/assets/PettyCash1.png",
+      "/assets/PettyCash2.png",
+      "/assets/PettyCash3.png",
+      "/assets/PettyCash4.png",
+      "/assets/PettyCash5.png",
+    ],
+    stack: ["React", "Vite", "Tailwind v4", "DaisyUI", "GSAP", "Django REST", "JWT", "SQLite", "Docker", "Azure VM"],
+    difficulty:
+      "Architecting row-level multi-tenancy on a shared SQLite database while keeping the auth + query layer strictly isolated between three sister companies.",
+    futurePlan:
+      "Add per-company analytics dashboards, scheduled export jobs, and a webhooks layer for ERP integration.",
+  },
+  {
+    id: 2,
     title: "FitTrack",
     subtitle: "Fitness platform with subscriptions",
     desc: "My flagship build — a complete fitness management platform. Members track progress, book trainers, join classes, and engage with a community. Subscriptions, role-based dashboards, and a clean member experience end-to-end.",
@@ -18,9 +40,32 @@ export const projects = [
       "Designing role-based dashboards and integrating subscriptions alongside real-time class scheduling.",
     futurePlan:
       "Add AI-based fitness recommendations and a social feed for progress sharing.",
-      },
+  },
   {
-    id: 2,
+    id: 3,
+    title: "x-AI",
+    subtitle: "Intelligence workspace prototype",
+    desc: "Interactive intelligence workspace — GLSL particle hero, natural-language query surface, scroll-pinned pipeline, hand-rolled dashboard with animated KPIs, automations grid, R3F icosahedron signature. ⌘K command palette.",
+    link: "https://xai-psi.vercel.app/",
+    repo: "https://github.com/Zauwad/xAI-Frontend",
+    year: "2026",
+    role: "Frontend",
+    images: [
+      "/assets/x-AI1.png",
+      "/assets/x-AI2.png",
+      "/assets/x-AI3.png",
+      "/assets/x-AI4.png",
+      "/assets/x-AI5.png",
+      "/assets/x-AI6.png",
+    ],
+    stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "ScrollTrigger", "React Three Fiber", "Three.js", "GLSL", "Geist"],
+    difficulty:
+      "Keeping a 1,500-point custom GLSL particle shader at 60 fps while morphing into a 12-node icosahedral constellation — every animation tied to scroll, pointer, or a real render metric, no chart libraries or UI kits.",
+    futurePlan:
+      "Add a real ingestion pipeline behind the AskXai surface, replace mock data with live sources, and ship the workflow editor.",
+  },
+  {
+    id: 4,
     title: "Plant Pal",
     subtitle: "Plant care tracker",
     desc: "A gentle, focused tool for plant people — track daily care, set reminders, and keep health records for every plant in your collection. Cloud-synced data with a UI designed to feel calm, not cluttered.",
@@ -38,9 +83,9 @@ export const projects = [
       "Wiring reliable CRUD with cloud sync while keeping the UI fast on low-end devices.",
     futurePlan:
       "Introduce IoT integration for live soil moisture tracking and watering automation.",
-      },
+  },
   {
-    id: 3,
+    id: 5,
     title: "DocTalk BD",
     subtitle: "Healthcare consultations, simplified",
     desc: "A responsive healthcare platform connecting patients with doctors for quick online consultations. Secure authentication, appointment scheduling, and a clean medical UI that doesn't get in the way.",
@@ -57,9 +102,9 @@ export const projects = [
     difficulty:
       "Implementing secure user authentication and managing dynamic appointment scheduling.",
     futurePlan: "Add video consultation features and an AI symptom checker.",
-      },
+  },
   {
-    id: 4,
+    id: 6,
     title: "English Janala",
     subtitle: "Interactive English lessons",
     desc: "Practice grammar, listening, and speaking through structured lessons and quizzes. Vocabulary tracking with progressive difficulty so learners always know where they stand.",
@@ -77,9 +122,9 @@ export const projects = [
       "Designing quiz logic and progress tracking while keeping the UI smooth throughout.",
     futurePlan:
       "Add gamification, leaderboards, and personalized lesson recommendations.",
-      },
+  },
   {
-    id: 5,
+    id: 7,
     title: "NextGenBlog",
     subtitle: "Modern full-stack blogging",
     desc: "A user-friendly blogging platform with secure auth, real-time wishlist and commenting, and full-text search with category filtering — the whole loop from publish to discover.",
@@ -97,7 +142,7 @@ export const projects = [
       "Implementing secure token-based private routes and optimizing full-text search.",
     futurePlan:
       "Add AI-powered content recommendations and a rich-text editor.",
-      },
+  },
 ];
 
 export const skills = {
@@ -140,16 +185,6 @@ export const skills = {
 
 export const services = [
   {
-    id: "design",
-    title: "Design",
-    subtitle: "Decide what we're building first",
-    points: [
-      "Wireframes, flows, and edge-case thinking",
-      "Tokens, component language, and visual rhythm",
-      "Reviews with stakeholders until the shape is right",
-    ],
-  },
-  {
     id: "plan",
     title: "Plan",
     subtitle: "Scope it tightly, then sequence it",
@@ -184,7 +219,7 @@ export const services = [
 export const experience = [
   {
     id: "amaze",
-    role: "Full-stack Developer",
+    role: "Associate Software Engineer",
     org: "Amaze Venture",
     when: "April 2026 → Present",
     points: [
@@ -195,8 +230,8 @@ export const experience = [
   },
   {
     id: "cs",
-    role: "Computer Science background",
-    org: "Self-directed · ongoing",
+    role: "Computer Science",
+    org: "ongoing",
     when: "Foundations → ongoing",
     points: [
       "Grounded in algorithms, data structures, and software engineering fundamentals.",

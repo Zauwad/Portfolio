@@ -41,7 +41,7 @@ export default function ContactStrip() {
                 className="body-l mt-8 max-w-[55ch]"
                 style={{ color: "var(--fg-muted)" }}
               >
-                Have a project, an idea, or just want to talk shop? I read every
+                Have a project, an idea, or just want to talk? I read every
                 message and usually reply within a day.
               </p>
             </motion.div>

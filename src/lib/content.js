@@ -6,7 +6,7 @@ export const SITE = {
   meta: "Building and shipping for the web",
   version: "2026",
   description:
-    "Full-stack web developer at Amaze Venture — design, build, and ship considered products end-to-end.",
+    "Associate Software Engineer at Amaze Venture — design, build, and ship considered products end-to-end.",
 };
 
 export const NAV_ITEMS = [
@@ -21,7 +21,7 @@ export const SOCIALS = [
   {
     id: "linkedin",
     label: "LinkedIn",
-    href: "https://www.linkedin.com/in/ridwanul-azim-zawad-513272184/",
+    href: "https://www.linkedin.com/in/ridwanul-azim-zawad",
   },
   {
     id: "facebook",
