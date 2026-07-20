@@ -1,19 +1,19 @@
 @import "tailwindcss";
 @plugin "lightswind/plugin";
 @theme {
-  --color-bg-base: #08080b;
-  --color-bg-elev1: #0e0e13;
-  --color-bg-elev2: #14141b;
+  --color-bg-base: var(--bg-base);
+  --color-bg-elev1: var(--bg-elev1);
+  --color-bg-elev2: var(--bg-elev2);
 
-  --color-fg: #fafafa;
-  --color-fg-muted: rgba(250, 250, 250, 0.56);
-  --color-fg-dim: rgba(250, 250, 250, 0.32);
+  --color-fg: var(--fg);
+  --color-fg-muted: var(--fg-muted);
+  --color-fg-dim: var(--fg-dim);
 
-  --color-border: rgba(255, 255, 255, 0.06);
-  --color-border-hi: rgba(255, 255, 255, 0.12);
+  --color-border: var(--border);
+  --color-border-hi: var(--border-hi);
 
-  --color-accent: #fafafa;
-  --color-accent-glow: rgba(255, 255, 255, 0.08);
+  --color-accent: var(--accent);
+  --color-accent-glow: var(--accent-glow);
 
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 
