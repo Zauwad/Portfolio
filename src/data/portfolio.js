@@ -155,31 +155,33 @@ export const skills = {
     "HTML5 / CSS3",
     "Framer Motion",
     "GSAP",
+    "ShadCN UI",
   ],
   backend: [
     "Node.js",
     "Express.js",
     "Django",
-    "SQL",
     "REST APIs",
     "RAG",
     "MCP",
-    "JWT Auth",
-    "Stripe",
+    "JWT",
   ],
-  data: ["MongoDB", "Mongoose", "Firebase Auth", "Firestore", "Realtime DB"],
+  data: [
+    "PostgreSQL",
+    "MongoDB",
+    "Firebase Auth",
+    "Django ORM"
+  ],
   tools: [
     "Git",
     "GitLab",
-    "VS Code",
-    "Vite",
-    "Vercel",
-    "Netlify",
     "Azure",
     "DigitalOcean",
+    "Vercel",
     "Firebase Hosting",
     "Postman",
-    "AI-first IDEs (Cursor, Copilot)",
+    "AI-first IDEs",
+    "Spec-Driven Development"
   ],
 };
 
@@ -224,6 +226,7 @@ export const experience = [
     when: "April 2026 → Present",
     points: [
       "Build full-stack web platforms alongside the team — backend, frontend, and the parts in between.",
+      "Designing and managing databases.",
       "Translate briefs into scoped, deployable work in collaboration with stakeholders.",
       "Care about the handoff — clean contracts, readable code, and things that don't break later.",
     ],

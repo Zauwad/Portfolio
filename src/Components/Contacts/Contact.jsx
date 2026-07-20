@@ -113,7 +113,7 @@ export default function Contacts() {
                   >
                     Dhaka, Bangladesh · UTC +6
                     <br />
-                    Open to hybrid and remote globally.
+                    Also Open to remote globally.
                   </p>
                 </div>
               </Reveal>

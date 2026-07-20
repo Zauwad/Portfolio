@@ -8,7 +8,7 @@ import { AnchorNavLink } from "../../primitives/AnchorNavLink";
 import { SOCIALS } from "../../lib/content";
 
 const FOOTER_NAV = [
-  { label: "Work", to: "/projects" },
+  { label: "Works", to: "/projects" },
   { label: "About", to: "/#about" },
   { label: "Stack", to: "/#stack" },
   { label: "Contact", to: "/contacts" },
@@ -29,7 +29,7 @@ export default function Footer() {
                 style={{ color: "var(--fg-muted)" }}
               >
                 Full-stack engineer building considered web platforms. Open to
-                freelance, contract, and hybrid roles — based in Bangladesh.
+                freelance, contract, and onsite/remote roles — based in Bangladesh.
               </p>
             </Reveal>
             <div className="mt-8">

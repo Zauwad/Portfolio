@@ -10,7 +10,7 @@ export const SITE = {
 };
 
 export const NAV_ITEMS = [
-  { id: "work", label: "Work", to: "/projects" },
+  { id: "work", label: "Works", to: "/projects" },
   { id: "about", label: "About", to: "/#about" },
   { id: "stack", label: "Stack", to: "/#stack" },
   { id: "contact", label: "Contact", to: "/contacts" },

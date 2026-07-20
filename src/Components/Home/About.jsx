@@ -73,7 +73,7 @@ export default function About() {
               <div className="flex flex-wrap gap-3">
                 {[
                   "Calm under pressure",
-                  "Hybrid-ready",
+                  "Accountability",
                   "Async-first",
                   "English · বাংলা",
                 ].map((tag) => (
