@@ -19,7 +19,7 @@ export function PrimaryCTA({
   };
 
   const base =
-    "group relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm font-mono uppercase tracking-[0.18em] transition-colors duration-300 select-none";
+    "cta group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm font-mono uppercase tracking-[0.18em] transition-colors duration-300 select-none";
 
   const variants = {
     outline:
@@ -35,13 +35,13 @@ export function PrimaryCTA({
       {variant === "outline" && (
         <span
           aria-hidden
-          className="pointer-events-none absolute inset-0 -translate-y-full bg-fg transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0"
+          className="pointer-events-none absolute inset-0 -translate-y-full bg-fg transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover/cta:translate-y-0"
         />
       )}
       <span
         className={cn(
           "relative z-10 flex items-center gap-2 transition-colors duration-500",
-          variant === "outline" && "group-hover:text-[var(--bg-base)]"
+          variant === "outline" && "group-hover/cta:text-[var(--bg-base)]"
         )}
       >
         {children}

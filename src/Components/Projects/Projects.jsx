@@ -216,40 +216,40 @@ export default function Projects() {
                   </div>
                 </motion.article>
               ))}
+
+              {/* CTA tile — fills the empty slot beside an odd-numbered last card */}
+              <motion.div
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-10% 0px" }}
+                transition={{ duration: 0.9, ease: EASE }}
+                className="flex flex-col items-center justify-center gap-6 bg-[var(--bg-elev1)] p-6 text-center md:p-8"
+              >
+                <span
+                  className="mono-label"
+                  style={{ color: "var(--fg-dim)" }}
+                >
+                  ✕ 08 · next
+                </span>
+                <h3
+                  className="h3-card"
+                  style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
+                >
+                  Have a project in mind?
+                </h3>
+                <p
+                  className="body-m max-w-[44ch]"
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  Open to freelance, contract, and hybrid roles — let's talk
+                  about what you're building.
+                </p>
+                <PrimaryCTA variant="solid" size="md" to="/contacts">
+                  Start a project →
+                </PrimaryCTA>
+              </motion.div>
             </motion.div>
           </AnimatePresence>
-        </Container>
-      </section>
-
-      {/* CTA strip */}
-      <section className="py-16">
-        <Container size="default">
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-10% 0px" }}
-            transition={{ duration: 0.9, ease: EASE }}
-            className="flex flex-col items-start justify-between gap-6 border border-border bg-[var(--bg-elev1)] p-8 md:flex-row md:items-center md:p-10"
-          >
-            <div>
-              <h3
-                className="h3-card"
-                style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
-              >
-                Have a project in mind?
-              </h3>
-              <p
-                className="body-m mt-2"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                Open to freelance, contract, and hybrid roles — let's talk
-                about what you're building.
-              </p>
-            </div>
-            <PrimaryCTA variant="solid" size="lg" to="/contacts">
-              Start a project →
-            </PrimaryCTA>
-          </motion.div>
         </Container>
       </section>
     </div>
