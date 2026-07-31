@@ -66,50 +66,52 @@ export default function Navbar({ onOpenPalette }) {
             </nav>
           </div>
 
-          <div className="hidden items-center gap-3 md:flex">
+          {/* ponytail: single flex container handles mobile and desktop header actions */}
+          <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={onOpenPalette}
-              className="inline-flex items-center gap-2 rounded-sm border border-border bg-[var(--bg-elev1)] px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg"
+              className="hidden items-center gap-2 rounded-sm border border-border bg-[var(--bg-elev1)] px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg md:inline-flex"
               aria-label="Open command palette"
             >
               <span>Search</span>
               <Kbd>⌘K</Kbd>
             </button>
-            <div className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-sm border border-border bg-[var(--bg-elev1)] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg">
+            <div className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-[var(--bg-elev1)] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg md:h-[34px] md:w-[34px]">
               <ToggleTheme animationType="circle-spread" duration={600} />
             </div>
-            <PrimaryCTA variant="outline" size="sm" arrow={false} to="/contacts">
-              Get in touch
-            </PrimaryCTA>
+            <div className="hidden md:block">
+              <PrimaryCTA variant="outline" size="sm" arrow={false} to="/contacts">
+                Get in touch
+              </PrimaryCTA>
+            </div>
+            <button
+              className="flex h-9 w-9 items-center justify-center rounded-sm border border-border md:hidden"
+              onClick={() => setOpen((o) => !o)}
+              aria-label="Toggle menu"
+              aria-expanded={open}
+            >
+              <span className="relative block h-3 w-4">
+                <span
+                  className={cn(
+                    "absolute left-0 top-0 h-px w-full bg-fg transition-all duration-300",
+                    open && "translate-y-[6px] rotate-45"
+                  )}
+                />
+                <span
+                  className={cn(
+                    "absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-fg transition-all duration-300",
+                    open && "opacity-0"
+                  )}
+                />
+                <span
+                  className={cn(
+                    "absolute bottom-0 left-0 h-px w-full bg-fg transition-all duration-300",
+                    open && "-translate-y-[6px] -rotate-45"
+                  )}
+                />
+              </span>
+            </button>
           </div>
-
-          <button
-            className="flex h-9 w-9 items-center justify-center rounded-sm border border-border md:hidden"
-            onClick={() => setOpen((o) => !o)}
-            aria-label="Toggle menu"
-            aria-expanded={open}
-          >
-            <span className="relative block h-3 w-4">
-              <span
-                className={cn(
-                  "absolute left-0 top-0 h-px w-full bg-fg transition-all duration-300",
-                  open && "translate-y-[6px] rotate-45"
-                )}
-              />
-              <span
-                className={cn(
-                  "absolute left-0 top-1/2 h-px w-full -translate-y-1/2 bg-fg transition-all duration-300",
-                  open && "opacity-0"
-                )}
-              />
-              <span
-                className={cn(
-                  "absolute bottom-0 left-0 h-px w-full bg-fg transition-all duration-300",
-                  open && "-translate-y-[6px] -rotate-45"
-                )}
-              />
-            </span>
-          </button>
         </div>
       </motion.header>
 
@@ -167,13 +169,10 @@ export default function Navbar({ onOpenPalette }) {
                   );
                 })}
               </nav>
-              <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+              <div className="mt-8 flex items-center justify-between gap-4">
                 <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
                   v2026
                 </span>
-                <div className="inline-flex h-[34px] w-[34px] items-center justify-center rounded-sm border border-border text-[var(--fg-muted)] transition-colors hover:border-[var(--border-hi)] hover:text-fg">
-                  <ToggleTheme animationType="circle-spread" duration={600} />
-                </div>
                 <PrimaryCTA
                   variant="outline"
                   size="sm"
