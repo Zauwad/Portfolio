@@ -22,9 +22,14 @@ export function StatusPulse({
         {variant === "live" && (
           <motion.span
             className="absolute inset-0 rounded-full bg-fg/60"
-            initial={{ scale: 1, opacity: 0.6 }}
-            animate={{ scale: 2.6, opacity: 0 }}
-            transition={{ duration: 1.8, repeat: Infinity, ease: "easeOut" }}
+            /* ponytail: scale 3.2 and 0.75 opacity for fuller pulse radius */
+            animate={{ scale: [1, 3.2, 3.2], opacity: [0.75, 0, 0] }}
+            transition={{
+              duration: 2.2,
+              repeat: Infinity,
+              times: [0, 0.75, 1],
+              ease: "easeOut",
+            }}
             aria-hidden
           />
         )}
