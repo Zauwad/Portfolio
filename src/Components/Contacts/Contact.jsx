@@ -131,7 +131,7 @@ export default function Contacts() {
                       { label: "GitHub", href: "https://github.com/Zauwad" },
                       {
                         label: "LinkedIn",
-                        href: "https://www.linkedin.com/in/ridwanul-azim-zawad-513272184/",
+                        href: "https://www.linkedin.com/in/ridwanul-azim-zawad",
                       },
                       {
                         label: "Facebook",
