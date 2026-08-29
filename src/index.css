@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 @import "tailwindcss";
 @plugin "lightswind/plugin";
 @theme {
@@ -17,9 +18,9 @@
 
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --font-sans: "Playfair Display", Georgia, serif, system-ui, sans-serif;
+  --font-sans: "Playfair Display", Georgia, serif;
   --font-serif: "Playfair Display", Georgia, serif;
-  --font-mono: "Geist Mono", ui-monospace, "JetBrains Mono", monospace;
+  --font-mono: "Playfair Display", Georgia, serif;
 
   --tracking-mono: 0.18em;
   --tracking-display: -0.035em;
@@ -62,20 +63,22 @@
 }
 
 @layer base {
-  * {
+  *, ::before, ::after {
     border-color: var(--border);
+    font-family: "Playfair Display", Georgia, serif !important;
   }
 
   html {
     scroll-behavior: smooth;
     color-scheme: light dark;
+    font-family: "Playfair Display", Georgia, serif !important;
   }
 
   html,
   body {
     background-color: var(--bg-base);
     color: var(--fg);
-    font-family: "Playfair Display", Georgia, serif, system-ui, sans-serif;
+    font-family: "Playfair Display", Georgia, serif !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
