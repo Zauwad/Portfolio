@@ -28,8 +28,7 @@ export default function Footer() {
                 className="body-l mt-6 max-w-[42ch]"
                 style={{ color: "var(--fg-muted)" }}
               >
-                Full-stack engineer building considered web platforms. Open to
-                freelance, contract, and onsite/remote roles — based in Bangladesh.
+                Full-stack engineer building platforms. Open to roles — based in Bangladesh.
               </p>
             </Reveal>
             <div className="mt-8">
@@ -126,7 +125,7 @@ export default function Footer() {
           >
             <span>© {year} Ridwanul Azim Zawad</span>
             <span aria-hidden>·</span>
-            <span>Built with React, Vite, Tailwind v4</span>
+            <span>Built with React, ShadCN, Framer Motion</span>
             <span aria-hidden>·</span>
             <span>Dhaka, Bangladesh</span>
           </div>

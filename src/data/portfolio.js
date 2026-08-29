@@ -15,7 +15,7 @@ export const projects = [
       "/assets/PettyCash4.png",
       "/assets/PettyCash5.png",
     ],
-    stack: ["React", "Vite", "Tailwind v4", "DaisyUI", "GSAP", "Django REST", "JWT", "SQLite", "Docker", "Azure VM"],
+    stack: ["React", "Django REST", "JWT", "SQLite", "Docker", "Azure VM", "GSAP"],
     difficulty:
       "Architecting row-level multi-tenancy on a shared SQLite database while keeping the auth + query layer strictly isolated between three sister companies.",
     futurePlan:
@@ -35,7 +35,7 @@ export const projects = [
       "/assets/fitnessTracker1.png",
       "/assets/fitnessTracker2.png",
     ],
-    stack: ["MongoDB", "Express.js", "React", "Node.js", "Tailwind", "Stripe", "Firebase"],
+    stack: ["React", "Express.js", "MongoDB", "Stripe", "Firebase Auth", "Tailwind"],
     difficulty:
       "Designing role-based dashboards and integrating subscriptions alongside real-time class scheduling.",
     futurePlan:
@@ -58,7 +58,7 @@ export const projects = [
       "/assets/x-AI5.png",
       "/assets/x-AI6.png",
     ],
-    stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "ScrollTrigger", "React Three Fiber", "Three.js", "GLSL", "Geist"],
+    stack: ["Next.js 14", "TypeScript", "Tailwind CSS", "Framer Motion", "GSAP", "React Three Fiber", "Three.js", "GLSL"],
     difficulty:
       "Keeping a 1,500-point custom GLSL particle shader at 60 fps while morphing into a 12-node icosahedral constellation — every animation tied to scroll, pointer, or a real render metric, no chart libraries or UI kits.",
     futurePlan:
@@ -78,7 +78,7 @@ export const projects = [
       "/assets/Plant-Track2.png",
       "/assets/Plant-Track3.png",
     ],
-    stack: ["React", "Firebase", "Tailwind", "React Router"],
+    stack: ["React", "Firebase", "Tailwind", "MongoDB"],
     difficulty:
       "Wiring reliable CRUD with cloud sync while keeping the UI fast on low-end devices.",
     futurePlan:
@@ -149,10 +149,9 @@ export const skills = {
   frontend: [
     "React",
     "Next.js",
-    "JavaScript (ES6+)",
+    "JavaScript",
     "TypeScript",
     "Tailwind CSS",
-    "HTML5 / CSS3",
     "Framer Motion",
     "GSAP",
     "ShadCN UI",
@@ -160,27 +159,26 @@ export const skills = {
   backend: [
     "Node.js",
     "Express.js",
-    "Django",
-    "REST APIs",
+    "Django Rest Framework",
     "RAG",
-    "MCP",
     "JWT",
+    "RBAC"
   ],
   data: [
     "PostgreSQL",
+    "MySQL",
     "MongoDB",
-    "Firebase Auth",
     "Django ORM"
   ],
   tools: [
     "Git",
-    "GitLab",
     "Azure",
     "DigitalOcean",
     "Vercel",
     "Firebase Hosting",
     "Postman",
     "AI-first IDEs",
+    "MCP",
     "Spec-Driven Development"
   ],
 };

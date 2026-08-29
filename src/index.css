@@ -17,7 +17,8 @@
 
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --font-sans: "Geist", system-ui, -apple-system, sans-serif;
+  --font-sans: "Playfair Display", Georgia, serif, system-ui, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
   --font-mono: "Geist Mono", ui-monospace, "JetBrains Mono", monospace;
 
   --tracking-mono: 0.18em;
@@ -74,8 +75,7 @@
   body {
     background-color: var(--bg-base);
     color: var(--fg);
-    font-family: "Geist", system-ui, -apple-system, sans-serif;
-    font-feature-settings: "ss01", "cv11";
+    font-family: "Playfair Display", Georgia, serif, system-ui, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
