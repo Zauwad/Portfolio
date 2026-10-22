@@ -780,6 +780,70 @@ function initParticles(canvas) {
 
 ---
 
+### Recipe 13: Scroll-Pinned Pipeline / Docking Sequence (Framer Motion)
+
+*Seen on: Premier Awwwards Portfolios, United Carriers, and Ridwanul.dev (Engagements)*
+
+```jsx
+import { useRef } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
+
+export function ScrollPinnedPipeline({ phases }) {
+  const containerRef = useRef(null);
+  
+  // Track vertical scroll progress across the pinned frame
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  // Phase 1 is anchored from entry (x: 0, opacity: 1)
+  // Phase 2 glides in from offscreen right between scroll 0.12 and 0.44
+  // Phase 3 glides in from offscreen right between scroll 0.48 and 0.80
+  const phase2X = useSpring(
+    useTransform(scrollYProgress, [0.12, 0.44], ["50vw", "0vw"], { clamp: true }),
+    { stiffness: 140, damping: 26, mass: 0.35 }
+  );
+  const phase3X = useSpring(
+    useTransform(scrollYProgress, [0.48, 0.80], ["50vw", "0vw"], { clamp: true }),
+    { stiffness: 140, damping: 26, mass: 0.35 }
+  );
+
+  return (
+    // Outer section defines the scroll runway (e.g. 250vh)
+    <section ref={containerRef} className="relative h-[250vh]">
+      {/* Pinned frame stays fixed in viewport while user scrolls */}
+      <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-7xl mx-auto px-6">
+          {/* Card 1: Anchored */}
+          <div className="relative">
+            <Card data={phases[0]} />
+          </div>
+
+          {/* Card 2: Docking bay placeholder + Gliding Card */}
+          <div className="relative">
+            <DockingBayPlaceholder label="PHASE 02" />
+            <motion.div style={{ x: phase2X }} className="relative z-10">
+              <Card data={phases[1]} />
+            </motion.div>
+          </div>
+
+          {/* Card 3: Docking bay placeholder + Gliding Card */}
+          <div className="relative">
+            <DockingBayPlaceholder label="PHASE 03" />
+            <motion.div style={{ x: phase3X }} className="relative z-10">
+              <Card data={phases[2]} />
+            </motion.div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+```
+
+---
+
 ## Animation Performance Rules
 
 1. **Only animate `transform` and `opacity`**: Transforms execute on the GPU via the Compositor thread without triggering expensive browser layout recalculations (`reflow`).

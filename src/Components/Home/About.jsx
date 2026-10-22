@@ -91,7 +91,8 @@ export default function About({ showTopBorder = true }) {
       id="about"
       className={`relative py-20 md:py-28 ${showTopBorder ? "border-t border-border" : ""}`}
     >
-      <Container size="default">
+      <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+      <Container size="default" className="relative">
         <SectionHeading
           index="01"
           eyebrow="About"

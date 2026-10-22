@@ -233,7 +233,8 @@ export default function Projects() {
       </Helmet>
 
       <section className="relative border-b border-border py-20 md:py-28">
-        <Container size="wide">
+        <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+        <Container size="wide" className="relative">
           {/* Masked Editorial Headline */}
           <div className="mb-10 max-w-[800px]">
             <div className="mono-data mb-4 flex items-center gap-2 text-[var(--fg-dim)]">

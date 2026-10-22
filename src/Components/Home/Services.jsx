@@ -6,12 +6,33 @@ import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { TiltCard } from "../../primitives/TiltCard";
 import { services } from "../../data/portfolio";
 
+function CheckmarkIcon() {
+  return (
+    <span
+      aria-hidden
+      className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-border bg-[var(--bg-elev2)] text-accent transition-colors group-hover:border-accent/50"
+    >
+      <svg
+        className="h-2.5 w-2.5"
+        viewBox="0 0 12 12"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      >
+        <polyline points="2.5 6 5 8.5 9.5 3.5" />
+      </svg>
+    </span>
+  );
+}
+
 function ScrollStageCard({ s, i, scrollYProgress }) {
-  // Clear, non-overlapping scroll intervals:
+  // Clear, non-overlapping scroll intervals linked to scroll pin:
   // Card 0 (Plan): arrives from right between 0.05 and 0.28, then stays settled
   // Card 1 (Build): hidden until 0.35, arrives from right between 0.35 and 0.58, then stays settled
-  // Card 2 (Ship): hidden until 0.68, arrives from right between 0.68 and 0.90, then stays settled
-  const start = 0.05 + i * 0.31;
+  // Card 2 (Ship): hidden until 0.66, arrives from right between 0.66 and 0.88, then stays settled
+  const start = 0.05 + i * 0.30;
   const end = start + 0.23;
 
   const rawX = useTransform(
@@ -36,9 +57,9 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
   );
 
   // Fluid spring physics for gentle, luxury deceleration when gliding in from the right
-  const x = useSpring(rawX, { stiffness: 50, damping: 18, mass: 0.75 });
-  const opacity = useSpring(rawOpacity, { stiffness: 70, damping: 20 });
-  const scale = useSpring(rawScale, { stiffness: 50, damping: 18 });
+  const x = useSpring(rawX, { stiffness: 55, damping: 18, mass: 0.7 });
+  const opacity = useSpring(rawOpacity, { stiffness: 75, damping: 20 });
+  const scale = useSpring(rawScale, { stiffness: 55, damping: 18 });
 
   return (
     <motion.div
@@ -46,7 +67,7 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
       className="flex h-full w-full flex-col"
     >
       <TiltCard maxTilt={6} className="h-full">
-        <div className="group relative flex h-full flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 md:p-7 transition-all duration-500 hover:border-border-hi hover:bg-[var(--bg-elev2)] hover:shadow-xl">
+        <div className="group relative flex h-full flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 md:p-7 transition-all duration-500 hover:border-border-hi hover:bg-[var(--bg-elev2)] hover:shadow-2xl">
           {/* Top row */}
           <div>
             <div className="mb-5 flex items-baseline justify-between border-b border-border/80 pb-3">
@@ -76,12 +97,7 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
                   className="flex items-start gap-3"
                   style={{ color: "var(--fg-muted)" }}
                 >
-                  <span
-                    aria-hidden
-                    className="mono-data mt-1 font-bold text-accent"
-                  >
-                    ✓
-                  </span>
+                  <CheckmarkIcon />
                   <span className="leading-relaxed">{pt}</span>
                 </li>
               ))}
@@ -137,9 +153,7 @@ function MobileCard({ s, i }) {
                   className="flex items-start gap-2.5 text-sm"
                   style={{ color: "var(--fg-muted)" }}
                 >
-                  <span aria-hidden className="mono-data mt-0.5 font-bold text-accent">
-                    ✓
-                  </span>
+                  <CheckmarkIcon />
                   <span>{pt}</span>
                 </li>
               ))}
@@ -183,7 +197,8 @@ export default function Services() {
         id="engagements"
         className="relative overflow-hidden border-t border-border py-20"
       >
-        <Container size="default">
+        <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+        <Container size="default" className="relative">
           <SectionHeading
             index="05"
             eyebrow="Engagements"
@@ -215,12 +230,15 @@ export default function Services() {
     <section
       ref={containerRef}
       id="engagements"
-      className="relative h-[300vh] border-t border-border"
+      className="relative h-[260vh] border-t border-border"
     >
-      {/* Sticky viewport frame pinned while scrolling through the sequence */}
+      {/* Pinned viewport frame with transparent background matching all other sections */}
       <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
-        <Container size="default">
-          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+        {/* Grid background matching About, Stack, and Work */}
+        <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+
+        <Container size="default" className="relative">
+          <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <SectionHeading
               index="05"
               eyebrow="Engagements"
@@ -229,9 +247,30 @@ export default function Services() {
               body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
               className="mb-0"
             />
+            <div className="flex items-center gap-2 font-mono text-[11px] text-[var(--fg-dim)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              <span>PINNED SEQUENCE // SCROLL TO ADVANCE</span>
+            </div>
           </div>
 
-          {/* 3-Column Grid: Each card arrives from the right on its dedicated scroll stage */}
+          {/* Sequential Phase Pipeline Connector */}
+          <div className="mb-8 hidden items-center gap-4 font-mono text-[11px] text-[var(--fg-dim)] md:flex">
+            {validServices.map((s, idx) => (
+              <div key={s.id} className="flex items-center gap-4">
+                <div className="flex items-center gap-2">
+                  <span className="h-1.5 w-1.5 rounded-full bg-accent" />
+                  <span className="text-fg font-medium tracking-wider">
+                    PHASE 0{idx + 1} // {s.title.toUpperCase()}
+                  </span>
+                </div>
+                {idx < validServices.length - 1 && (
+                  <span className="h-px w-12 bg-border-hi" aria-hidden="true" />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {/* 3-Column Grid: Each card arrives from the RIGHT on its dedicated scroll stage */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {validServices.map((s, i) => (
               <ScrollStageCard
@@ -260,3 +299,7 @@ export default function Services() {
     </section>
   );
 }
+
+
+
+

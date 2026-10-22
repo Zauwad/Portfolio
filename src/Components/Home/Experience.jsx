@@ -17,9 +17,17 @@ export default function Experience() {
   return (
     <section
       id="experience"
-      className="relative border-t border-border py-20 md:py-28"
+      className="relative isolate overflow-hidden border-t border-border py-20 md:py-28"
     >
-      <Container size="default">
+      <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+      <div
+        className="pointer-events-none absolute right-1/4 top-1/2 h-[500px] w-[500px] -translate-y-1/2 rounded-full opacity-25 blur-3xl"
+        style={{
+          background: "radial-gradient(circle, var(--accent-glow), transparent 70%)",
+        }}
+        aria-hidden
+      />
+      <Container size="default" className="relative">
         <SectionHeading
           index="04"
           eyebrow="Trajectory"

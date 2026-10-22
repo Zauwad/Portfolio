@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Link } from "react-router";
-import { motion, useScroll, useTransform } from "framer-motion";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { SectionHeading } from "../../primitives/SectionHeading";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
@@ -10,29 +10,45 @@ import { getTechIcon } from "../../lib/techIcons";
 
 function StackedProjectCard({ project, index, total }) {
   const cardRef = useRef(null);
+  const isLast = index === total - 1;
 
-  // Scroll tracking for progressive scaling and dimming as next card overlaps
+  // Track each card relative to its sticky resting position
   const { scrollYProgress } = useScroll({
     target: cardRef,
-    offset: ["start end", "start start"],
+    offset: ["start 84px", "end 84px"],
   });
 
-  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
+  const rawScale = useTransform(scrollYProgress, [0, 1], [1, isLast ? 1 : 0.94]);
+  const rawOverlay = useTransform(scrollYProgress, [0, 1], [0, isLast ? 0 : 0.38]);
+
+  // Smooth springs for fluid, physics-based depth changes
+  const scale = useSpring(rawScale, { stiffness: 120, damping: 24 });
+  const overlayOpacity = useSpring(rawOverlay, { stiffness: 120, damping: 24 });
 
   return (
     <div
       ref={cardRef}
       style={{
         position: "sticky",
-        top: `calc(96px + ${index * 24}px)`,
+        top: `calc(84px + ${index * 28}px)`,
         zIndex: index + 10,
       }}
-      className="mb-14 w-full transition-all duration-300"
+      className="mb-14 md:mb-20 last:mb-0 w-full"
     >
       <motion.article
-        style={{ scale }}
-        className="group relative overflow-hidden rounded-2xl border border-border-hi bg-[var(--bg-elev1)] p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+        style={{
+          scale,
+          transformOrigin: "top center",
+        }}
+        className="group relative overflow-hidden rounded-2xl border border-border-hi bg-[var(--bg-elev1)] p-6 md:p-10 shadow-[0_25px_60px_rgba(0,0,0,0.5)] backdrop-blur-xl transition-shadow duration-500 hover:border-border-hi"
       >
+        {/* Dynamic depth / recession overlay as next cards stack over */}
+        <motion.div
+          style={{ opacity: overlayOpacity }}
+          className="pointer-events-none absolute inset-0 z-20 bg-black/55 backdrop-blur-[0.5px] transition-opacity"
+          aria-hidden="true"
+        />
+
         {/* Subtle background ambient gradient accent */}
         <div
           className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full opacity-10 blur-3xl"
@@ -52,7 +68,7 @@ function StackedProjectCard({ project, index, total }) {
           <div className="flex flex-col gap-6 lg:col-span-6">
             <header className="flex items-center justify-between border-b border-border pb-4">
               <div className="flex items-center gap-3">
-                <span className="mono-data font-mono text-[12px] text-accent">
+                <span className="mono-data font-mono text-[12px] font-bold text-accent">
                   PROJECT // {String(index + 1).padStart(2, "0")}
                 </span>
                 <span className="mono-micro font-mono text-[10px] text-[var(--fg-dim)]">
@@ -179,7 +195,10 @@ export default function FeaturedWork() {
       id="work"
       className="relative border-t border-border py-20 md:py-32"
     >
-      <Container size="default">
+      {/* Architectural grid background */}
+      <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
+
+      <Container size="default" className="relative">
         {/* Section headline */}
         <div className="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <SectionHeading
@@ -190,13 +209,19 @@ export default function FeaturedWork() {
             body="A curated showcase of full-stack engineering — scroll through the stack deck."
             className="mb-0"
           />
-          <PrimaryCTA variant="outline" size="md" to="/projects">
-            View all work
-          </PrimaryCTA>
+          <div className="flex flex-col items-start md:items-end gap-3">
+            <div className="flex items-center gap-2 font-mono text-[11px] text-[var(--fg-dim)]">
+              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
+              <span>STACK DECK // SCROLL TO ADVANCE</span>
+            </div>
+            <PrimaryCTA variant="outline" size="md" to="/projects">
+              View all work
+            </PrimaryCTA>
+          </div>
         </div>
 
         {/* Sticky Stacking Deck Container */}
-        <div className="relative pb-32">
+        <div className="relative pb-24 md:pb-32">
           {featured.map((project, index) => (
             <StackedProjectCard
               key={project.id}
@@ -210,3 +235,5 @@ export default function FeaturedWork() {
     </section>
   );
 }
+
+

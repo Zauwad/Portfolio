@@ -154,7 +154,7 @@ html.light .footer-watermark {
 
   body {
     min-height: 100svh;
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   ::selection {
