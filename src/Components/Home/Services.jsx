@@ -6,7 +6,7 @@ import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { TiltCard } from "../../primitives/TiltCard";
 import { services } from "../../data/portfolio";
 
-function ScrollStageCard({ s, i, progress }) {
+function ScrollStageCard({ s, i, scrollYProgress }) {
   // Clear, non-overlapping scroll intervals:
   // Card 0 (Plan): arrives from right between 0.05 and 0.28, then stays settled
   // Card 1 (Build): hidden until 0.35, arrives from right between 0.35 and 0.58, then stays settled
@@ -14,27 +14,31 @@ function ScrollStageCard({ s, i, progress }) {
   const start = 0.05 + i * 0.31;
   const end = start + 0.23;
 
-  // Glides smoothly from offscreen right into its settled grid column
-  const x = useTransform(
-    progress,
+  const rawX = useTransform(
+    scrollYProgress,
     [0, start, end, 1],
-    ["100vw", "100vw", "0vw", "0vw"],
+    ["55vw", "55vw", "0vw", "0vw"],
     { clamp: true }
   );
 
-  const opacity = useTransform(
-    progress,
-    [0, start, start + 0.08, 1],
+  const rawOpacity = useTransform(
+    scrollYProgress,
+    [0, start, start + 0.10, 1],
     [0, 0, 1, 1],
     { clamp: true }
   );
 
-  const scale = useTransform(
-    progress,
+  const rawScale = useTransform(
+    scrollYProgress,
     [0, start, end, 1],
     [0.94, 0.94, 1, 1],
     { clamp: true }
   );
+
+  // Fluid spring physics for gentle, luxury deceleration when gliding in from the right
+  const x = useSpring(rawX, { stiffness: 50, damping: 18, mass: 0.75 });
+  const opacity = useSpring(rawOpacity, { stiffness: 70, damping: 20 });
+  const scale = useSpring(rawScale, { stiffness: 50, damping: 18 });
 
   return (
     <motion.div
@@ -100,10 +104,10 @@ function ScrollStageCard({ s, i, progress }) {
 function MobileCard({ s, i }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: 60 }}
+      initial={{ opacity: 0, x: 45 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
+      transition={{ duration: 0.6, delay: i * 0.1, ease: [0.16, 1, 0.3, 1] }}
       className="w-full"
     >
       <TiltCard maxTilt={5}>
@@ -168,16 +172,8 @@ export default function Services() {
     offset: ["start start", "end end"],
   });
 
-  // Smooth, continuous spring physics applied to scroll progression
-  const progress = useSpring(scrollYProgress, {
-    stiffness: 55,
-    damping: 18,
-    mass: 0.8,
-  });
-
-  const ctaOpacity = useTransform(progress, [0.88, 0.98], [0, 1], {
-    clamp: true,
-  });
+  const rawCtaOpacity = useTransform(scrollYProgress, [0.85, 0.96], [0, 1]);
+  const ctaOpacity = useSpring(rawCtaOpacity, { stiffness: 80, damping: 20 });
 
   const validServices = services.filter((s) => s.id !== "design");
 
@@ -219,7 +215,7 @@ export default function Services() {
     <section
       ref={containerRef}
       id="engagements"
-      className="relative h-[300vh] overflow-hidden border-t border-border"
+      className="relative h-[300vh] border-t border-border"
     >
       {/* Sticky viewport frame pinned while scrolling through the sequence */}
       <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
@@ -242,7 +238,7 @@ export default function Services() {
                 key={s.id}
                 s={s}
                 i={i}
-                progress={progress}
+                scrollYProgress={scrollYProgress}
               />
             ))}
           </div>
