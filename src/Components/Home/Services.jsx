@@ -6,43 +6,39 @@ import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { TiltCard } from "../../primitives/TiltCard";
 import { services } from "../../data/portfolio";
 
-function ScrollStageCard({ s, i, scrollYProgress }) {
+function ScrollStageCard({ s, i, progress }) {
   // Clear, non-overlapping scroll intervals:
-  // Card 0 (Plan): arrives between 0.04 and 0.25, then stays settled
-  // Card 1 (Build): hidden until 0.35, arrives between 0.35 and 0.58, then stays settled
-  // Card 2 (Ship): hidden until 0.68, arrives between 0.68 and 0.90, then stays settled
-  const start = 0.04 + i * 0.32;
-  const end = start + 0.22;
+  // Card 0 (Plan): arrives from right between 0.05 and 0.28, then stays settled
+  // Card 1 (Build): hidden until 0.35, arrives from right between 0.35 and 0.58, then stays settled
+  // Card 2 (Ship): hidden until 0.68, arrives from right between 0.68 and 0.90, then stays settled
+  const start = 0.05 + i * 0.31;
+  const end = start + 0.23;
 
-  const rawY = useTransform(
-    scrollYProgress,
+  // Glides smoothly from offscreen right into its settled grid column
+  const x = useTransform(
+    progress,
     [0, start, end, 1],
-    [50, 50, 0, 0],
+    ["100vw", "100vw", "0vw", "0vw"],
     { clamp: true }
   );
 
-  const rawOpacity = useTransform(
-    scrollYProgress,
-    [0, start, start + 0.12, 1],
+  const opacity = useTransform(
+    progress,
+    [0, start, start + 0.08, 1],
     [0, 0, 1, 1],
     { clamp: true }
   );
 
-  const rawScale = useTransform(
-    scrollYProgress,
+  const scale = useTransform(
+    progress,
     [0, start, end, 1],
-    [0.95, 0.95, 1, 1],
+    [0.94, 0.94, 1, 1],
     { clamp: true }
   );
 
-  // Luxury spring physics for fluid deceleration on mouse wheel scroll
-  const y = useSpring(rawY, { stiffness: 60, damping: 19, mass: 0.8 });
-  const opacity = useSpring(rawOpacity, { stiffness: 75, damping: 22 });
-  const scale = useSpring(rawScale, { stiffness: 60, damping: 19 });
-
   return (
     <motion.div
-      style={{ y, opacity, scale }}
+      style={{ x, opacity, scale }}
       className="flex h-full w-full flex-col"
     >
       <TiltCard maxTilt={6} className="h-full">
@@ -104,10 +100,10 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
 function MobileCard({ s, i }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      initial={{ opacity: 0, x: 60 }}
+      whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
-      transition={{ duration: 0.6, delay: i * 0.1 }}
+      transition={{ duration: 0.6, delay: i * 0.12, ease: [0.16, 1, 0.3, 1] }}
       className="w-full"
     >
       <TiltCard maxTilt={5}>
@@ -172,8 +168,16 @@ export default function Services() {
     offset: ["start start", "end end"],
   });
 
-  const rawCtaOpacity = useTransform(scrollYProgress, [0.85, 0.96], [0, 1]);
-  const ctaOpacity = useSpring(rawCtaOpacity, { stiffness: 80, damping: 20 });
+  // Smooth, continuous spring physics applied to scroll progression
+  const progress = useSpring(scrollYProgress, {
+    stiffness: 55,
+    damping: 18,
+    mass: 0.8,
+  });
+
+  const ctaOpacity = useTransform(progress, [0.88, 0.98], [0, 1], {
+    clamp: true,
+  });
 
   const validServices = services.filter((s) => s.id !== "design");
 
@@ -189,7 +193,7 @@ export default function Services() {
             eyebrow="Engagements"
             title="What I can do,"
             muted="and how I like to work."
-            body="Three overlapping modes — planning, building, and shipping. Scroll down to watch each mode arrive."
+            body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
           />
 
           <div className="mt-10 flex flex-col gap-6">
@@ -215,43 +219,30 @@ export default function Services() {
     <section
       ref={containerRef}
       id="engagements"
-      className="relative h-[280vh] border-t border-border"
+      className="relative h-[300vh] overflow-hidden border-t border-border"
     >
       {/* Sticky viewport frame pinned while scrolling through the sequence */}
       <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
         <Container size="default">
-          <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+          <div className="mb-10 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <SectionHeading
               index="05"
               eyebrow="Engagements"
               title="What I can do,"
               muted="and how I like to work."
-              body="Three overlapping modes — planning, building, and shipping. Scroll to advance through each phase."
+              body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
               className="mb-0"
             />
-
-            {/* Sequence Status Indicator */}
-            <div className="hidden lg:flex items-center gap-3 rounded-full border border-border bg-[var(--bg-elev1)] px-4 py-2 font-mono text-[11px] tracking-wider text-[var(--fg-dim)]">
-              <span className="flex items-center gap-1.5 text-accent font-semibold">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                SCROLL TO ADVANCE //
-              </span>
-              <span>01 PLAN</span>
-              <span className="opacity-40">──</span>
-              <span>02 BUILD</span>
-              <span className="opacity-40">──</span>
-              <span>03 SHIP</span>
-            </div>
           </div>
 
-          {/* 3-Column Grid: Each card arrives on its dedicated scroll stage */}
+          {/* 3-Column Grid: Each card arrives from the right on its dedicated scroll stage */}
           <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
             {validServices.map((s, i) => (
               <ScrollStageCard
                 key={s.id}
                 s={s}
                 i={i}
-                scrollYProgress={scrollYProgress}
+                progress={progress}
               />
             ))}
           </div>
