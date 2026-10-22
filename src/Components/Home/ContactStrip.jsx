@@ -11,7 +11,7 @@ export default function ContactStrip() {
         className="pointer-events-none absolute left-1/2 top-1/2 h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,255,255,0.05), transparent 70%)",
+            "radial-gradient(circle, var(--accent-glow), transparent 70%)",
         }}
         aria-hidden
       />

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, NavLink, useLocation } from "react-router";
 import { motion, AnimatePresence } from "framer-motion";
 import { useScrollPast } from "../../hooks/useScrollPast";
@@ -13,53 +13,81 @@ import { ToggleTheme } from "../lightswind/toggle-theme";
 export default function Navbar({ onOpenPalette }) {
   const scrolled = useScrollPast(12);
   const [open, setOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
+  const [hoveredNav, setHoveredNav] = useState(null);
   const location = useLocation();
+
+  // Smoothly glide up on intentional scroll down, return smoothly on scroll up
+  useEffect(() => {
+    let lastScrollY = window.scrollY;
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      // Only hide after scrolling past 160px with deliberate downward movement
+      if (currentScrollY > 160 && currentScrollY > lastScrollY + 10) {
+        setHidden(true);
+      } else if (currentScrollY < lastScrollY - 8 || currentScrollY <= 80) {
+        setHidden(false);
+      }
+      lastScrollY = currentScrollY;
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  const isHidden = hidden && !open;
 
   return (
     <>
       <motion.header
         initial={false}
-        animate={{
-          backdropFilter: scrolled ? "blur(12px)" : "blur(0px)",
-          backgroundColor: scrolled
-            ? "color-mix(in srgb, var(--bg-base) 72%, transparent)"
-            : "color-mix(in srgb, var(--bg-base) 0%, transparent)",
-          borderColor: scrolled
-            ? "var(--border)"
-            : "transparent",
+        animate={{ y: isHidden ? -100 : 0, opacity: isHidden ? 0 : 1 }}
+        transition={{
+          duration: 0.5,
+          ease: [0.22, 1, 0.36, 1],
         }}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="fixed inset-x-0 top-0 z-50 border-b"
+        className="fixed inset-x-0 top-3 md:top-4 z-50 px-3 md:px-8 pointer-events-none"
       >
-        <div className="mx-auto flex max-w-[1440px] items-center justify-between px-6 py-4 md:px-10">
+        <div
+          className={cn(
+            "mx-auto flex max-w-[1360px] items-center justify-between rounded-md border px-4 py-2.5 md:px-7 md:py-2.5 transition-all duration-300 pointer-events-auto",
+            scrolled
+              ? "border-border-hi bg-[var(--bg-base)]/90 backdrop-blur-md shadow-lg shadow-black/[0.04]"
+              : "border-border/80 bg-[var(--bg-base)]/75 backdrop-blur-md shadow-sm"
+          )}
+        >
           <div className="flex items-center gap-8">
             <BrandMark size="md" />
-            <nav className="hidden items-center gap-1 md:flex">
+            <nav
+              className="hidden items-center gap-1 md:flex"
+              onMouseLeave={() => setHoveredNav(null)}
+            >
               {NAV_ITEMS.map((item) => {
-                const isAnchor = item.to.startsWith("/#");
+                const isHovered = hoveredNav === item.id;
                 const baseCls =
-                  "rounded-sm px-3 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 text-[var(--fg-muted)] hover:text-fg";
-                if (isAnchor) {
-                  return (
-                    <AnchorNavLink
-                      key={item.id}
-                      to={item.to}
-                      className={baseCls}
-                      onClick={() => setOpen(false)}
-                    >
-                      {item.label}
-                    </AnchorNavLink>
-                  );
-                }
+                  "relative rounded-sm px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 text-[var(--fg-muted)] hover:text-fg";
+
                 return (
                   <NavLink
                     key={item.id}
                     to={item.to}
+                    onMouseEnter={() => setHoveredNav(item.id)}
                     className={({ isActive }) =>
-                      cn(baseCls, isActive && "text-fg")
+                      cn(baseCls, isActive && "text-fg font-medium")
                     }
                   >
-                    {item.label}
+                    {({ isActive }) => (
+                      <>
+                        <span className="relative z-10">{item.label}</span>
+                        {(isHovered || (isActive && !hoveredNav)) && (
+                          <motion.span
+                            layoutId="nav-pill"
+                            className="absolute inset-0 rounded-sm bg-[var(--bg-elev2)] border border-[var(--border-hi)] shadow-sm"
+                            transition={{ type: "spring", stiffness: 400, damping: 30 }}
+                          />
+                        )}
+                      </>
+                    )}
                   </NavLink>
                 );
               })}
@@ -134,44 +162,25 @@ export default function Navbar({ onOpenPalette }) {
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="flex flex-col gap-1">
-                {NAV_ITEMS.map((item) => {
-                  const isAnchor = item.to.startsWith("/#");
-                  const baseCls = cn(
-                    "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors",
-                    !isAnchor &&
-                      (location.pathname === item.to
-                        ? "text-fg"
-                        : "text-[var(--fg-muted)]")
-                  );
-                  if (isAnchor) {
-                    return (
-                      <AnchorNavLink
-                        key={item.id}
-                        to={item.to}
-                        onClick={() => setOpen(false)}
-                        className={cn(
-                          "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors text-[var(--fg-muted)] hover:text-fg"
-                        )}
-                      >
-                        {item.label}
-                      </AnchorNavLink>
-                    );
-                  }
-                  return (
-                    <NavLink
-                      key={item.id}
-                      to={item.to}
-                      onClick={() => setOpen(false)}
-                      className={baseCls}
-                    >
-                      {item.label}
-                    </NavLink>
-                  );
-                })}
+                {NAV_ITEMS.map((item) => (
+                  <NavLink
+                    key={item.id}
+                    to={item.to}
+                    onClick={() => setOpen(false)}
+                    className={({ isActive }) =>
+                      cn(
+                        "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors",
+                        isActive ? "text-fg font-semibold" : "text-[var(--fg-muted)] hover:text-fg"
+                      )
+                    }
+                  >
+                    {item.label}
+                  </NavLink>
+                ))}
               </nav>
               <div className="mt-8 flex items-center justify-between gap-4">
                 <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
-                  v2026
+                  Portfolio · Ridwanul
                 </span>
                 <PrimaryCTA
                   variant="outline"

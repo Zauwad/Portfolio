@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,400..700;1,400..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Plus+Jakarta+Sans:ital,wght@0,400..800;1,400..800&display=swap');
 @import "tailwindcss";
 @plugin "lightswind/plugin";
 @theme {
@@ -18,11 +18,11 @@
 
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
 
-  --font-sans: "Playfair Display", Georgia, serif;
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
   --font-serif: "Playfair Display", Georgia, serif;
-  --font-mono: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 
-  --tracking-mono: 0.18em;
+  --tracking-mono: 0.14em;
   --tracking-display: -0.035em;
 }
 
@@ -38,47 +38,114 @@
   --accent: #fafafa;
   --accent-glow: rgba(255, 255, 255, 0.08);
   --ease-out-quart: cubic-bezier(0.22, 1, 0.36, 1);
+  --font-sans: "Plus Jakarta Sans", system-ui, -apple-system, sans-serif;
+  --font-serif: "Playfair Display", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
 }
 
-:root.light {
-  --bg-base: #f5f4ef;
-  --bg-elev1: #ecebe4;
-  --bg-elev2: #e3e1d8;
-  --fg: #1a1a1c;
-  --fg-muted: rgba(26, 26, 28, 0.66);
-  --fg-dim: rgba(26, 26, 28, 0.42);
-  --border: rgba(26, 26, 28, 0.10);
-  --border-hi: rgba(26, 26, 28, 0.18);
-  --accent: #1a1a1c;
-  --accent-glow: rgba(26, 26, 28, 0.06);
+:root.light,
+html.light {
+  --bg-base: #f8fafc;
+  --bg-elev1: rgba(255, 255, 255, 0.72);
+  --bg-elev2: rgba(255, 255, 255, 0.88);
+  --fg: #0f172a;
+  --fg-muted: #334155;
+  --fg-dim: #64748b;
+  --border: rgba(15, 23, 42, 0.08);
+  --border-hi: rgba(15, 23, 42, 0.16);
+  --accent: #0f172a;
+  --accent-glow: rgba(16, 185, 129, 0.12);
 }
 
-/* Suppress dark-only decoration in light mode */
+:root.light body,
+html.light body {
+  background-color: #f6f8fa;
+  background-image: 
+    radial-gradient(at 12% 15%, rgba(190, 240, 222, 0.55) 0px, transparent 55%),
+    radial-gradient(at 88% 18%, rgba(255, 225, 212, 0.55) 0px, transparent 55%),
+    radial-gradient(at 50% 50%, rgba(235, 245, 255, 0.6) 0px, transparent 65%),
+    radial-gradient(at 15% 85%, rgba(200, 242, 228, 0.45) 0px, transparent 50%),
+    radial-gradient(at 85% 85%, rgba(255, 230, 218, 0.45) 0px, transparent 50%);
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+  background-size: cover;
+  color: #0f172a;
+}
+
 :root.light .vignette::before {
   display: none;
 }
 
+:root.light .grain::after {
+  mix-blend-mode: multiply;
+  opacity: 0.02;
+}
+
 :root.light .grid-bg {
-  display: none;
+  display: block;
+  background-image: linear-gradient(
+      to right,
+      rgba(15, 23, 42, 0.035) 1px,
+      transparent 1px
+    ),
+    linear-gradient(to bottom, rgba(15, 23, 42, 0.035) 1px, transparent 1px);
+}
+
+:root.light .h1,
+:root.light .h2,
+:root.light .h2-section,
+:root.light .h3-card,
+:root.light .hero-display,
+:root.light .display {
+  color: #0f172a !important;
+}
+
+:root.light .body-l,
+:root.light .body-m,
+:root.light .body-s,
+:root.light p,
+:root.light li {
+  color: #334155 !important;
+}
+
+:root.light .mono-label,
+:root.light .mono-data,
+:root.light .mono-micro {
+  color: #475569 !important;
+}
+
+:root.light .footer-watermark,
+html.light .footer-watermark {
+  color: #0f172a !important;
+  opacity: 0.85 !important;
+}
+
+/* Light mode frosted glass enhancements */
+:root.light [class*="bg-[var(--bg-elev1)]"],
+:root.light [class*="bg-[var(--bg-elev2)]"] {
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+}
+
+:root.light article {
+  box-shadow: 0 20px 45px -15px rgba(15, 23, 42, 0.07), 0 0 0 1px rgba(255, 255, 255, 0.9) inset !important;
 }
 
 @layer base {
   *, ::before, ::after {
     border-color: var(--border);
-    font-family: "Playfair Display", Georgia, serif !important;
   }
 
   html {
     scroll-behavior: smooth;
     color-scheme: light dark;
-    font-family: "Playfair Display", Georgia, serif !important;
   }
 
   html,
   body {
     background-color: var(--bg-base);
     color: var(--fg);
-    font-family: "Playfair Display", Georgia, serif !important;
+    font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-rendering: optimizeLegibility;
@@ -201,18 +268,21 @@
 
 /* Display helpers */
 .display {
+  font-family: var(--font-serif);
   font-weight: 500;
   letter-spacing: -0.035em;
   line-height: 1.02;
 }
 
 .h2-section {
+  font-family: var(--font-serif);
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1.05;
 }
 
 .h3-card {
+  font-family: var(--font-serif);
   font-weight: 500;
   letter-spacing: -0.02em;
   line-height: 1.2;
@@ -236,6 +306,7 @@
 
 /* Hero display */
 .hero-display {
+  font-family: var(--font-serif);
   font-size: clamp(44px, 7vw, 88px);
   font-weight: 500;
   letter-spacing: -0.04em;
@@ -244,8 +315,27 @@
 
 /* Section heading */
 .h2 {
+  font-family: var(--font-serif);
   font-size: clamp(32px, 4.2vw, 56px);
   font-weight: 500;
   letter-spacing: -0.03em;
   line-height: 1.05;
+}
+
+/* 3D utilities */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.rotate-y-180 {
+  transform: rotateY(180deg);
 }

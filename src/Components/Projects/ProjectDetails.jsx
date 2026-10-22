@@ -5,10 +5,12 @@ import { Helmet } from "react-helmet";
 import { Container } from "../../primitives/Container";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { projects } from "../../data/portfolio";
+import { getTechIcon } from "../../lib/techIcons";
 import { EASE } from "../../lib/ease";
 
 const TABS = [
   { id: "overview", label: "Overview" },
+  { id: "architecture", label: "Architecture" },
   { id: "build", label: "Build notes" },
   { id: "next", label: "What's next" },
 ];
@@ -79,14 +81,14 @@ export default function ProjectDetails() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE }}
-              className="md:col-span-8"
+              className="md:col-span-7"
             >
               <div className="flex flex-wrap items-center gap-3">
                 <span
                   className="mono-label rounded-sm border border-border bg-[var(--bg-elev1)] px-3 py-1.5"
                   style={{ color: "var(--fg-muted)" }}
                 >
-                  {String(project.id).padStart(2, "0")} · {project.year}
+                  {String(project.id).padStart(2, "0")} · Case Study
                 </span>
                 <span
                   className="mono-label rounded-sm border border-border bg-[var(--bg-elev1)] px-3 py-1.5"
@@ -94,12 +96,26 @@ export default function ProjectDetails() {
                 >
                   {project.role}
                 </span>
+                {project.architecture?.category && (
+                  <span
+                    className="mono-label rounded-sm border border-border bg-[var(--bg-elev1)] px-3 py-1.5 text-accent"
+                  >
+                    {project.architecture.category}
+                  </span>
+                )}
               </div>
               <h1
-                className="hero-display mt-6"
+                className="hero-display mt-6 overflow-hidden py-1"
                 style={{ fontSize: "clamp(36px, 5.5vw, 72px)" }}
               >
-                {project.title}
+                <motion.span
+                  className="block"
+                  initial={{ y: "115%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                >
+                  {project.title}
+                </motion.span>
               </h1>
               <p
                 className="body-l mt-6 max-w-[58ch]"
@@ -113,26 +129,42 @@ export default function ProjectDetails() {
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE, delay: 0.1 }}
-              className="flex flex-col items-start gap-4 md:col-span-4 md:items-end md:justify-end"
+              className="flex flex-col items-start gap-3 md:col-span-5 md:items-end md:justify-end"
             >
-              <PrimaryCTA variant="solid" size="lg" href={project.link} target="_blank" rel="noreferrer">
-                Visit live ↗
-              </PrimaryCTA>
-              {project.repo && (
-                <a
-                  href={project.repo}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mono-label inline-flex items-center gap-2 text-[var(--fg-muted)] transition-colors hover:text-fg"
-                >
-                  Source <span aria-hidden>↗</span>
-                </a>
-              )}
+              <div className="flex flex-wrap items-center gap-2.5">
+                {project.link && (
+                  <PrimaryCTA variant="solid" size="md" href={project.link} target="_blank" rel="noreferrer">
+                    Visit live ↗
+                  </PrimaryCTA>
+                )}
+                {project.repo && (
+                  <PrimaryCTA
+                    variant="outline"
+                    size="md"
+                    href={project.repo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {project.serverRepo ? "Client Repo ↗" : "Source Code ↗"}
+                  </PrimaryCTA>
+                )}
+                {project.serverRepo && (
+                  <PrimaryCTA
+                    variant="outline"
+                    size="md"
+                    href={project.serverRepo}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    Server Repo ↗
+                  </PrimaryCTA>
+                )}
+              </div>
               <span
-                className="mono-data tabular"
+                className="mono-data tabular text-xs"
                 style={{ color: "var(--fg-dim)" }}
               >
-                ✕ Live · {project.year}
+                ✕ Shipped · Production
               </span>
             </motion.div>
           </div>
@@ -172,7 +204,7 @@ export default function ProjectDetails() {
 
             <div className="flex flex-col md:flex-row">
               {/* Sidebar */}
-              <aside className="hidden w-[220px] shrink-0 flex-col gap-1 border-r border-border p-4 md:flex">
+              <aside className="hidden w-[230px] shrink-0 flex-col gap-1 border-r border-border p-4 md:flex">
                 {TABS.map((t) => (
                   <button
                     key={t.id}
@@ -208,32 +240,42 @@ export default function ProjectDetails() {
                     Stack
                   </span>
                   <div className="flex flex-col gap-2">
-                    {project.stack.map((s) => (
-                      <span
-                        key={s}
-                        className="mono-label text-[var(--fg-muted)]"
-                      >
-                        · {s}
-                      </span>
-                    ))}
+                    {project.stack.map((s) => {
+                      const iconData = getTechIcon(s);
+                      return (
+                        <span
+                          key={s}
+                          className="mono-label inline-flex items-center gap-2 text-[var(--fg-muted)] hover:text-fg transition-colors"
+                        >
+                          {iconData?.svg && (
+                            <span className="h-3.5 w-3.5 shrink-0 opacity-75 flex items-center justify-center [&>svg]:h-3.5 [&>svg]:w-3.5">
+                              {iconData.svg}
+                            </span>
+                          )}
+                          <span>{s}</span>
+                        </span>
+                      );
+                    })}
                   </div>
                 </div>
+
 
                 <div className="mt-6 border-t border-border pt-4">
                   <span
                     className="mono-label mb-3 block"
                     style={{ color: "var(--fg-dim)" }}
                   >
-                    Year
+                    Status
                   </span>
                   <span
-                    className="tabular font-medium"
-                    style={{ fontSize: 24, color: "var(--fg)", letterSpacing: "-0.02em" }}
+                    className="tabular font-medium text-accent"
+                    style={{ fontSize: 20, letterSpacing: "-0.01em" }}
                   >
-                    {project.year}
+                    Production
                   </span>
                 </div>
               </aside>
+
 
               {/* Content area */}
               <div className="min-h-[440px] flex-1 overflow-hidden bg-[var(--bg-base)] p-6 md:p-8">
@@ -357,6 +399,113 @@ export default function ProjectDetails() {
                       </div>
                     )}
 
+                    {tab === "architecture" && (
+                      <div className="space-y-8">
+                        {project.architecture?.category && (
+                          <div className="border-b border-border/80 pb-4">
+                            <span className="mono-micro font-mono text-[10px] text-accent uppercase tracking-wider block mb-1">
+                              SYSTEM CLASSIFICATION
+                            </span>
+                            <h3 className="h3-card font-serif text-fg text-xl md:text-2xl">
+                              {project.architecture.category}
+                            </h3>
+                          </div>
+                        )}
+
+                        {project.architecture?.highlights && (
+                          <div>
+                            <span
+                              className="mono-label mb-4 inline-block"
+                              style={{ color: "var(--fg-dim)" }}
+                            >
+                              Core Engineering Mechanisms
+                            </span>
+                            <div className="space-y-3">
+                              {project.architecture.highlights.map((h, i) => (
+                                <div
+                                  key={i}
+                                  className="rounded-sm border border-border bg-[var(--bg-elev1)] p-4 transition-colors hover:border-border-hi"
+                                >
+                                  <div className="flex items-center gap-2 mb-1.5">
+                                    <span className="font-mono text-accent text-xs font-semibold">
+                                      0{i + 1} //
+                                    </span>
+                                    <h4 className="font-medium text-fg text-sm">
+                                      {h.title}
+                                    </h4>
+                                  </div>
+                                  <p className="body-s text-xs md:text-[13px] text-[var(--fg-muted)] leading-relaxed">
+                                    {h.description}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        {project.architecture?.stackLayers && (
+                          <div className="border-t border-border/80 pt-6">
+                            <span
+                              className="mono-label mb-4 inline-block"
+                              style={{ color: "var(--fg-dim)" }}
+                            >
+                              Layered Technology Boundaries
+                            </span>
+                            <div className="grid grid-cols-1 gap-2.5 sm:grid-cols-2">
+                              {project.architecture.stackLayers.map((l, i) => (
+                                <div
+                                  key={i}
+                                  className="rounded-sm border border-border bg-[var(--bg-elev1)]/80 p-3"
+                                >
+                                  <span className="mono-micro font-mono text-[10px] text-accent block uppercase mb-1">
+                                    {l.layer}
+                                  </span>
+                                  <span className="font-mono text-xs text-fg">
+                                    {l.tech}
+                                  </span>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+
+                        <div className="border-t border-border/80 pt-6 flex flex-wrap items-center justify-between gap-4">
+                          <div>
+                            <span className="mono-label block text-xs" style={{ color: "var(--fg-dim)" }}>
+                              Code Audit & Repository
+                            </span>
+                            <span className="body-s text-xs text-[var(--fg-muted)]">
+                              Inspect source trees, middleware handlers, and schema configurations on GitHub.
+                            </span>
+                          </div>
+                          <div className="flex flex-wrap gap-2.5">
+                            {project.repo && (
+                              <PrimaryCTA
+                                variant="outline"
+                                size="sm"
+                                href={project.repo}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                {project.serverRepo ? "Client Repo ↗" : "Source Code ↗"}
+                              </PrimaryCTA>
+                            )}
+                            {project.serverRepo && (
+                              <PrimaryCTA
+                                variant="outline"
+                                size="sm"
+                                href={project.serverRepo}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                Server Repo ↗
+                              </PrimaryCTA>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    )}
+
                     {tab === "build" && (
                       <div className="space-y-8">
                         <div>
@@ -364,7 +513,7 @@ export default function ProjectDetails() {
                             className="mono-label mb-4 inline-block"
                             style={{ color: "var(--fg-dim)" }}
                           >
-                            Difficulty
+                            Core Technical Challenge
                           </span>
                           <p
                             className="body-l"
@@ -373,6 +522,37 @@ export default function ProjectDetails() {
                             {project.difficulty}
                           </p>
                         </div>
+
+                        {project.buildNotes && project.buildNotes.length > 0 && (
+                          <div className="border-t border-border/80 pt-6">
+                            <span
+                              className="mono-label mb-4 inline-block"
+                              style={{ color: "var(--fg-dim)" }}
+                            >
+                              Codebase & Build Challenges
+                            </span>
+                            <div className="space-y-4">
+                              {project.buildNotes.map((note, i) => (
+                                <div
+                                  key={i}
+                                  className="rounded-sm border border-border bg-[var(--bg-elev1)]/80 p-4 transition-colors hover:border-border-hi"
+                                >
+                                  <div className="flex items-center gap-2 mb-2">
+                                    <span className="font-mono text-accent text-xs font-semibold">
+                                      0{i + 1} //
+                                    </span>
+                                    <h4 className="font-medium text-fg text-sm">
+                                      {note.title}
+                                    </h4>
+                                  </div>
+                                  <p className="body-s text-xs md:text-[13px] text-[var(--fg-muted)] leading-relaxed">
+                                    {note.takeaway}
+                                  </p>
+                                </div>
+                              ))}
+                            </div>
+                          </div>
+                        )}
 
                         <div>
                           <span
@@ -385,11 +565,12 @@ export default function ProjectDetails() {
                             className="body-l"
                             style={{ color: "var(--fg-muted)" }}
                           >
-                            {project.year} · {project.role}
+                            Shipped · {project.role}
                           </p>
                         </div>
                       </div>
                     )}
+
 
                     {tab === "next" && (
                       <div className="space-y-8">

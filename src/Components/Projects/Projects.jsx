@@ -1,10 +1,11 @@
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import { Link } from "react-router";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform, useSpring } from "framer-motion";
 import { Container } from "../../primitives/Container";
-import { SectionHeading } from "../../primitives/SectionHeading";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { projects } from "../../data/portfolio";
+import { TiltCard } from "../../primitives/TiltCard";
+import { getTechIcon } from "../../lib/techIcons";
 import { EASE } from "../../lib/ease";
 import { Helmet } from "react-helmet";
 
@@ -23,6 +24,195 @@ function matchesFilter(project, filterId) {
     return project.role?.toLowerCase().includes("frontend");
   }
   return true;
+}
+
+function ScrollProjectArticle({ project, index }) {
+  const cardRef = useRef(null);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0, active: false });
+
+  const handleMouseMove = (e) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePos({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+      active: true,
+    });
+  };
+
+  const handleMouseLeave = () => {
+    setMousePos((prev) => ({ ...prev, active: false }));
+  };
+
+  return (
+    <motion.article
+      layout="position"
+      ref={cardRef}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      initial={{ opacity: 0, scale: 0.96 }}
+      animate={{ opacity: 1, scale: 1 }}
+      exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.2 } }}
+      transition={{
+        layout: { type: "spring", stiffness: 300, damping: 28 },
+        opacity: { duration: 0.3 },
+        scale: { duration: 0.3 },
+      }}
+      className="group relative flex flex-col justify-between overflow-hidden bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-8"
+    >
+      {/* Interactive spotlight cursor mask effect */}
+      {mousePos.active && (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-0 z-10 transition-opacity duration-300"
+          style={{
+            background: `radial-gradient(420px circle at ${mousePos.x}px ${mousePos.y}px, var(--accent-glow), transparent 75%)`,
+          }}
+        />
+      )}
+
+      <div>
+        <div className="flex items-center justify-between border-b border-border/80 pb-4 mb-6">
+          <div className="flex items-center gap-3">
+            <span className="mono-data font-mono text-[12px] text-accent">
+              PROJECT // {String(project.id).padStart(2, "0")}
+            </span>
+            <span className="mono-micro font-mono text-[11px] text-[var(--fg-dim)]">
+              · {project.role}
+            </span>
+          </div>
+          <span
+            aria-hidden
+            className="font-mono text-[13px] text-[var(--fg-dim)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-fg"
+          >
+            ↗
+          </span>
+        </div>
+
+        {/* Image with 3D Tilt */}
+        <TiltCard maxTilt={5} glare={false}>
+          <Link
+            to={`/projects/${project.id}`}
+            className="relative block aspect-[16/10] overflow-hidden rounded-sm border border-border bg-[var(--bg-base)]"
+          >
+            <img
+              src={project.images[0]}
+              alt={project.title}
+              className="absolute inset-0 h-full w-full object-cover object-top opacity-90 transition-all duration-700 group-hover:scale-[1.04] group-hover:opacity-100"
+            />
+            <div
+              className="pointer-events-none absolute inset-0"
+              style={{
+                background:
+                  "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.1) 40%, transparent 80%)",
+              }}
+            />
+            <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
+              <span
+                className="mono-label font-mono text-[10px] uppercase tracking-[0.2em] px-2 py-0.5 rounded-xs bg-black/60 backdrop-blur-md text-white/90 border border-white/10"
+              >
+                {project.role}
+              </span>
+              <span
+                className="mono-label font-mono text-[10px] uppercase tracking-[0.2em] text-white/70"
+              >
+                Shipped Build
+              </span>
+            </div>
+          </Link>
+        </TiltCard>
+
+        <header className="mt-6">
+          <Link to={`/projects/${project.id}`}>
+            <h3
+              className="h3-card font-serif text-fg transition-colors group-hover:text-accent"
+              style={{ fontSize: "clamp(24px, 2.2vw, 30px)" }}
+            >
+              {project.title}
+            </h3>
+            <p
+              className="body-s mt-1 font-sans text-[var(--fg-muted)] italic"
+            >
+              "{project.subtitle}"
+            </p>
+          </Link>
+        </header>
+
+        <p className="body-m mt-4 text-[var(--fg-muted)] leading-relaxed">
+          {project.desc}
+        </p>
+
+        {project.difficulty && (
+          <div className="mt-4 rounded-md border border-border/80 bg-[var(--bg-base)]/60 p-3 text-xs text-[var(--fg-muted)]">
+            <span className="mono-micro font-mono text-[10px] text-accent block mb-1">
+              CORE CHALLENGE
+            </span>
+            {project.difficulty}
+          </div>
+        )}
+
+        {/* Stack chips with official SVG icons */}
+        <div className="mt-6 flex flex-wrap gap-2">
+          {project.stack.map((s) => {
+            const iconData = getTechIcon(s);
+            return (
+              <span
+                key={s}
+                className="mono-micro font-mono inline-flex items-center gap-1.5 rounded-sm border border-border bg-[var(--bg-base)] px-2.5 py-1 text-[11px] text-[var(--fg)] transition-all hover:border-border-hi"
+              >
+                {iconData?.svg && (
+                  <span className="h-3 w-3 shrink-0 opacity-75 flex items-center justify-center [&>svg]:h-3 [&>svg]:w-3">
+                    {iconData.svg}
+                  </span>
+                )}
+                <span>{s}</span>
+              </span>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Actions */}
+      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-border/80 pt-4">
+        <div className="flex items-center gap-2">
+          {project.link && (
+            <PrimaryCTA
+              variant="outline"
+              size="sm"
+              as="a"
+              href={project.link}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Visit live ↗
+            </PrimaryCTA>
+          )}
+          {project.repo && (
+            <PrimaryCTA
+              variant="ghost"
+              size="sm"
+              arrow={false}
+              as="a"
+              href={project.repo}
+              target="_blank"
+              rel="noreferrer"
+              onClick={(e) => e.stopPropagation()}
+            >
+              Source
+            </PrimaryCTA>
+          )}
+        </div>
+
+        <Link
+          to={`/projects/${project.id}`}
+          className="mono-label font-mono text-[11px] text-[var(--fg-dim)] transition-colors hover:text-fg"
+        >
+          Read brief →
+        </Link>
+      </div>
+    </motion.article>
+  );
 }
 
 export default function Projects() {
@@ -44,212 +234,144 @@ export default function Projects() {
 
       <section className="relative border-b border-border py-20 md:py-28">
         <Container size="wide">
-          <SectionHeading
-            index="03"
-            eyebrow="Work"
-            title="Selected projects,"
-            muted="shipped end-to-end."
-            body="Filter by discipline or skim them all. Every card opens to a short brief — stack, build notes, what's next."
-          />
+          {/* Masked Editorial Headline */}
+          <div className="mb-10 max-w-[800px]">
+            <div className="mono-data mb-4 flex items-center gap-2 text-[var(--fg-dim)]">
+              <span className="h-1 w-1 rounded-full bg-accent" />
+              <span>02 // SELECTED CASE STUDIES</span>
+            </div>
+
+            <h1 className="hero-display text-balance">
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  className="block"
+                  initial={{ y: "115%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                >
+                  Selected projects.
+                </motion.span>
+              </span>
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  className="block text-[var(--fg-muted)] font-serif italic"
+                  initial={{ y: "115%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+                >
+                  Shipped end-to-end.
+                </motion.span>
+              </span>
+            </h1>
+
+            <motion.p
+              initial={{ opacity: 0, y: 16 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
+              className="body-l mt-6 max-w-[58ch] text-[var(--fg-muted)] leading-relaxed"
+            >
+              Filter by discipline or explore the full roster. Every card opens to an
+              in-depth brief — architecture, data models, build decisions, and live links.
+            </motion.p>
+          </div>
+
+          {/* Architectural Live HUD */}
+          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-border/80 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--fg-dim)]">
+            <div className="flex items-center gap-4">
+              <span className="flex items-center gap-2 text-fg font-medium">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>{projects.length} CASE STUDIES</span>
+              </span>
+              <span>·</span>
+              <span>MULTI-TENANT / REALTIME / AI WORKSPACES</span>
+            </div>
+            <span className="hidden md:inline tabular">SCROLL TO EXPLORE ARCHITECTURE ↓</span>
+          </div>
 
           {/* Filter row */}
-          <div className="mb-12 flex flex-wrap items-center gap-3 border-t border-border pt-8">
+          <div className="mb-10 flex flex-wrap items-center gap-3">
             <span
-              className="mono-label"
+              className="mono-label font-mono text-[11px] uppercase tracking-[0.2em]"
               style={{ color: "var(--fg-dim)" }}
             >
-              Filter
+              FILTER:
             </span>
             <div className="flex flex-wrap gap-2">
-              {FILTERS.map((f) => (
-                <button
-                  key={f.id}
-                  onClick={() => setFilter(f.id)}
-                  className={`mono-label rounded-sm border px-3 py-1.5 transition-all duration-300 ${
-                    filter === f.id
-                      ? "border-fg bg-fg text-[var(--bg-base)]"
-                      : "border-border bg-[var(--bg-base)] text-[var(--fg-muted)] hover:border-[var(--border-hi)] hover:text-fg"
-                  }`}
-                >
-                  {f.label}
-                </button>
-              ))}
+              {FILTERS.map((f) => {
+                const isActive = filter === f.id;
+                return (
+                  <button
+                    key={f.id}
+                    onClick={() => setFilter(f.id)}
+                    className="relative rounded-sm px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 select-none cursor-pointer"
+                    style={{
+                      color: isActive ? "var(--bg-base)" : "var(--fg-muted)",
+                    }}
+                  >
+                    <span className="relative z-10">{f.label}</span>
+                    {isActive ? (
+                      <motion.span
+                        layoutId="project-filter-pill"
+                        className="absolute inset-0 rounded-sm bg-fg shadow-sm"
+                        transition={{ type: "spring", stiffness: 420, damping: 30 }}
+                      />
+                    ) : (
+                      <span className="absolute inset-0 rounded-sm border border-border bg-[var(--bg-base)] transition-colors hover:border-[var(--border-hi)]" />
+                    )}
+                  </button>
+                );
+              })}
             </div>
             <span
-              className="mono-data ml-auto tabular"
+              className="mono-data ml-auto tabular font-mono text-[11px]"
               style={{ color: "var(--fg-dim)" }}
             >
-              {filtered.length} project{filtered.length === 1 ? "" : "s"}
+              Showing {filtered.length} of {projects.length} projects
             </span>
           </div>
 
-          {/* Projects grid */}
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={filter}
-              initial={{ opacity: 0, y: 12 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.4, ease: EASE }}
-              className="grid grid-cols-1 gap-px bg-border lg:grid-cols-2"
-            >
+          {/* Projects grid with Spring Layout Transitions */}
+          <motion.div
+            layout
+            className="grid grid-cols-1 gap-px bg-border lg:grid-cols-2"
+          >
+            <AnimatePresence mode="popLayout" initial={false}>
               {filtered.map((p, i) => (
-                <motion.article
-                  key={p.id}
-                  initial={{ opacity: 0, y: 24 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-10% 0px" }}
-                  transition={{ duration: 0.9, ease: EASE, delay: i * 0.06 }}
-                  className="group relative flex flex-col gap-6 bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-8"
-                >
-                  <span
-                    aria-hidden
-                    className="absolute right-6 top-6 font-mono text-[14px] text-[var(--fg-dim)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-                  >
-                    →
-                  </span>
-
-                  {/* Image */}
-                  <Link
-                    to={`/projects/${p.id}`}
-                    className="relative block aspect-[16/10] overflow-hidden border border-border bg-[var(--bg-base)]"
-                  >
-                    <img
-                      src={p.images[0]}
-                      alt={p.title}
-                      className="absolute inset-0 h-full w-full object-cover object-top opacity-90 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-100"
-                    />
-                    <div
-                      className="pointer-events-none absolute inset-0"
-                      style={{
-                        background:
-                          "linear-gradient(to top, rgba(8,8,11,0.7), transparent 50%)",
-                      }}
-                    />
-                    <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                      <span
-                        className="mono-label"
-                        style={{ color: "rgba(250,250,250,0.85)" }}
-                      >
-                        {p.role}
-                      </span>
-                      <span
-                        className="mono-label"
-                        style={{ color: "rgba(250,250,250,0.65)" }}
-                      >
-                        {p.year}
-                      </span>
-                    </div>
-                  </Link>
-
-                  <header className="flex items-start justify-between gap-4">
-                    <Link to={`/projects/${p.id}`}>
-                      <h3
-                        className="h3-card transition-colors hover:text-fg"
-                        style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
-                      >
-                        {p.title}
-                      </h3>
-                      <p
-                        className="body-s mt-1"
-                        style={{ color: "var(--fg-muted)" }}
-                      >
-                        {p.subtitle}
-                      </p>
-                    </Link>
-                    <span
-                      className="mono-data tabular"
-                      style={{ color: "var(--fg-dim)" }}
-                    >
-                      {String(p.id).padStart(2, "0")}
-                    </span>
-                  </header>
-
-                  <p className="body-m" style={{ color: "var(--fg-muted)" }}>
-                    {p.desc}
-                  </p>
-
-                  {/* Stack chips */}
-                  <div className="flex flex-wrap gap-2">
-                    {p.stack.map((s) => (
-                      <span
-                        key={s}
-                        className="mono-label rounded-sm border border-border bg-[var(--bg-base)] px-2 py-1 text-[var(--fg-muted)]"
-                      >
-                        {s}
-                      </span>
-                    ))}
-                  </div>
-
-                  {/* Actions */}
-                  <div className="mt-auto flex flex-wrap items-center gap-3 pt-2">
-                    <PrimaryCTA
-                      variant="outline"
-                      size="sm"
-                      href={p.link}
-                      target="_blank"
-                      rel="noreferrer"
-                      onClick={(e) => e.stopPropagation()}
-                    >
-                      Visit live
-                    </PrimaryCTA>
-                    {p.repo && (
-                      <PrimaryCTA
-                        variant="outline"
-                        size="sm"
-                        href={p.repo}
-                        target="_blank"
-                        rel="noreferrer"
-                        onClick={(e) => e.stopPropagation()}
-                      >
-                        Source
-                      </PrimaryCTA>
-                    )}
-                    <PrimaryCTA
-                      variant="ghost"
-                      size="sm"
-                      arrow={false}
-                      to={`/projects/${p.id}`}
-                    >
-                      Read brief →
-                    </PrimaryCTA>
-                  </div>
-                </motion.article>
+                <ScrollProjectArticle key={p.id} project={p} index={i} />
               ))}
+            </AnimatePresence>
 
-              {/* CTA tile — fills the empty slot beside an odd-numbered last card */}
-              <motion.div
-                initial={{ opacity: 0, y: 16 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-10% 0px" }}
-                transition={{ duration: 0.9, ease: EASE }}
-                className="flex flex-col items-center justify-center gap-6 bg-[var(--bg-elev1)] p-6 text-center md:p-8"
+            {/* CTA tile — fills the empty slot beside an odd-numbered last card */}
+            <motion.div
+              layout
+              initial={{ opacity: 0, y: 16 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-10% 0px" }}
+              transition={{ duration: 0.9, ease: EASE }}
+              className="flex flex-col items-center justify-center gap-6 bg-[var(--bg-elev1)] p-8 text-center md:p-12"
+            >
+              <span
+                className="mono-label font-mono text-[11px] text-[var(--fg-dim)]"
               >
-                <span
-                  className="mono-label"
-                  style={{ color: "var(--fg-dim)" }}
-                >
-                  ✕ 08 · next
-                </span>
-                <h3
-                  className="h3-card"
-                  style={{ fontSize: "clamp(22px, 2vw, 28px)" }}
-                >
-                  Have a project in mind?
-                </h3>
-                <p
-                  className="body-m max-w-[44ch]"
-                  style={{ color: "var(--fg-muted)" }}
-                >
-                  Open to freelance, contract, and hybrid roles — let's talk
-                  about what you're building.
-                </p>
-                <PrimaryCTA variant="solid" size="md" to="/contacts">
-                  Start a project →
-                </PrimaryCTA>
-              </motion.div>
+                ✕ 08 · NEXT CHAPTER
+              </span>
+              <h3
+                className="h3-card font-serif text-fg"
+                style={{ fontSize: "clamp(24px, 2.4vw, 32px)" }}
+              >
+                Have a project in mind?
+              </h3>
+              <p
+                className="body-m max-w-[44ch] text-[var(--fg-muted)] leading-relaxed"
+              >
+                Open to freelance, contract, and hybrid roles — let's build
+                something resilient and considered together.
+              </p>
+              <PrimaryCTA variant="solid" size="md" to="/contacts">
+                Start a project →
+              </PrimaryCTA>
             </motion.div>
-          </AnimatePresence>
+          </motion.div>
         </Container>
       </section>
     </div>

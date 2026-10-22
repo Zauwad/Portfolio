@@ -1,10 +1,175 @@
+import { useRef } from "react";
 import { Link } from "react-router";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { SectionHeading } from "../../primitives/SectionHeading";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
+import { TiltCard } from "../../primitives/TiltCard";
 import { projects } from "../../data/portfolio";
-import { EASE } from "../../lib/ease";
+import { getTechIcon } from "../../lib/techIcons";
+
+function StackedProjectCard({ project, index, total }) {
+  const cardRef = useRef(null);
+
+  // Scroll tracking for progressive scaling and dimming as next card overlaps
+  const { scrollYProgress } = useScroll({
+    target: cardRef,
+    offset: ["start end", "start start"],
+  });
+
+  const scale = useTransform(scrollYProgress, [0, 1], [0.92, 1]);
+
+  return (
+    <div
+      ref={cardRef}
+      style={{
+        position: "sticky",
+        top: `calc(96px + ${index * 24}px)`,
+        zIndex: index + 10,
+      }}
+      className="mb-14 w-full transition-all duration-300"
+    >
+      <motion.article
+        style={{ scale }}
+        className="group relative overflow-hidden rounded-2xl border border-border-hi bg-[var(--bg-elev1)] p-6 md:p-10 shadow-[0_20px_50px_rgba(0,0,0,0.5)] backdrop-blur-xl"
+      >
+        {/* Subtle background ambient gradient accent */}
+        <div
+          className="pointer-events-none absolute -right-20 -top-20 h-96 w-96 rounded-full opacity-10 blur-3xl"
+          style={{
+            background:
+              index === 0
+                ? "radial-gradient(circle, #3b82f6, transparent 70%)"
+                : index === 1
+                ? "radial-gradient(circle, #10b981, transparent 70%)"
+                : "radial-gradient(circle, #8b5cf6, transparent 70%)",
+          }}
+          aria-hidden="true"
+        />
+
+        <div className="grid grid-cols-1 items-center gap-8 lg:grid-cols-12 lg:gap-12">
+          {/* Left Column: Project Editorial Information */}
+          <div className="flex flex-col gap-6 lg:col-span-6">
+            <header className="flex items-center justify-between border-b border-border pb-4">
+              <div className="flex items-center gap-3">
+                <span className="mono-data font-mono text-[12px] text-accent">
+                  PROJECT // {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="mono-micro font-mono text-[10px] text-[var(--fg-dim)]">
+                  OF {String(total).padStart(2, "0")}
+                </span>
+              </div>
+              <span className="mono-label font-mono rounded border border-border bg-[var(--bg-base)] px-2.5 py-1 text-[11px] text-[var(--fg-muted)]">
+                {project.role}
+              </span>
+            </header>
+
+            <div>
+              <span className="mono-micro font-mono text-[11px] text-accent/80 block mb-1">
+                {project.subtitle}
+              </span>
+              <Link
+                to={`/projects/${project.id}`}
+                className="h2-section font-serif block text-fg hover:text-accent transition-colors"
+                style={{ fontSize: "clamp(28px, 2.8vw, 42px)" }}
+              >
+                {project.title}
+              </Link>
+            </div>
+
+            <p className="body-m text-[var(--fg-muted)] leading-relaxed">
+              {project.desc}
+            </p>
+
+            {project.difficulty && (
+              <div className="rounded-lg border border-border/80 bg-[var(--bg-base)] p-3.5 text-xs text-[var(--fg-muted)]">
+                <span className="mono-micro font-mono text-[10px] text-accent block mb-1">
+                  CORE CHALLENGE
+                </span>
+                {project.difficulty}
+              </div>
+            )}
+
+            {/* Stack Badges with SVG Icons */}
+            <div className="flex flex-wrap gap-2">
+              {project.stack.map((tech) => {
+                const iconData = getTechIcon(tech);
+                return (
+                  <span
+                    key={tech}
+                    className="mono-micro font-mono inline-flex items-center gap-1.5 rounded-md border border-border bg-[var(--bg-elev2)] px-2.5 py-1 text-[11px] text-[var(--fg)] transition-all hover:border-border-hi"
+                  >
+                    {iconData?.svg && (
+                      <span className="h-3.5 w-3.5 shrink-0 opacity-80 flex items-center justify-center [&>svg]:h-3.5 [&>svg]:w-3.5">
+                        {iconData.svg}
+                      </span>
+                    )}
+                    <span>{tech}</span>
+                  </span>
+                );
+              })}
+            </div>
+
+            {/* CTAs */}
+            <div className="flex items-center gap-4 pt-4 border-t border-border mt-2">
+              {project.link && (
+                <PrimaryCTA
+                  variant="solid"
+                  size="sm"
+                  as="a"
+                  href={project.link}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  Visit Live ↗
+                </PrimaryCTA>
+              )}
+              <PrimaryCTA
+                variant="outline"
+                size="sm"
+                to={`/projects/${project.id}`}
+              >
+                Case Study
+              </PrimaryCTA>
+            </div>
+          </div>
+
+          {/* Right Column: 3D Holographic Tilt Card Preview */}
+          <div className="lg:col-span-6">
+            <TiltCard maxTilt={10} glare={true} className="w-full">
+              <Link
+                to={`/projects/${project.id}`}
+                className="group/img relative block aspect-[16/10] overflow-hidden rounded-xl border border-border-hi bg-[var(--bg-base)] shadow-2xl"
+              >
+                <img
+                  src={project.images[0]}
+                  alt={project.title}
+                  className="h-full w-full object-cover object-top transition-transform duration-700 ease-[cubic-bezier(0.16,1,0.3,1)] group-hover/img:scale-105"
+                />
+
+                {/* Ambient vignette and overlay info */}
+                <div
+                  className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"
+                  aria-hidden="true"
+                />
+
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-xs font-mono text-white/90">
+                  <span className="flex items-center gap-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+                    <span>Production Build</span>
+                  </span>
+                  <span className="rounded bg-black/60 px-2 py-1 backdrop-blur-md border border-white/10 text-[10px]">
+                    Interactive Preview →
+                  </span>
+                </div>
+              </Link>
+            </TiltCard>
+          </div>
+        </div>
+      </motion.article>
+    </div>
+  );
+}
 
 export default function FeaturedWork() {
   const featured = projects.slice(0, 3);
@@ -12,16 +177,17 @@ export default function FeaturedWork() {
   return (
     <section
       id="work"
-      className="relative border-t border-border py-20 md:py-28"
+      className="relative border-t border-border py-20 md:py-32"
     >
       <Container size="default">
-        <div className="mb-16 flex flex-col items-start justify-between gap-8 md:mb-20 md:flex-row md:items-end">
+        {/* Section headline */}
+        <div className="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <SectionHeading
-            index="03"
+            index="02"
             eyebrow="Featured work"
             title="A small set,"
             muted="shipped end-to-end."
-            body="A handful of projects I built from idea to deploy — frontend polish, real backends, real users."
+            body="A curated showcase of full-stack engineering — scroll through the stack deck."
             className="mb-0"
           />
           <PrimaryCTA variant="outline" size="md" to="/projects">
@@ -29,107 +195,15 @@ export default function FeaturedWork() {
           </PrimaryCTA>
         </div>
 
-        <div className="grid grid-cols-1 gap-px bg-border lg:grid-cols-3">
-          {featured.map((p, i) => (
-            <motion.article
-              key={p.id}
-              initial={{ opacity: 0, y: 24 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-10% 0px" }}
-              transition={{ duration: 0.9, ease: EASE, delay: i * 0.1 }}
-              whileHover={{ y: -2 }}
-              className="group relative flex flex-col gap-6 bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-7"
-            >
-              <span
-                aria-hidden
-                className="absolute right-5 top-5 font-mono text-[14px] text-[var(--fg-dim)] opacity-0 transition-opacity duration-500 group-hover:opacity-100"
-              >
-                →
-              </span>
-              {/* Image preview */}
-              <Link
-                to={`/projects/${p.id}`}
-                className="relative block aspect-[4/3] overflow-hidden border border-border bg-[var(--bg-base)]"
-              >
-                <img
-                  src={p.images[0]}
-                  alt={p.title}
-                  className="absolute inset-0 h-full w-full object-cover object-top opacity-80 transition-all duration-700 group-hover:scale-[1.03] group-hover:opacity-100"
-                />
-                <div
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "linear-gradient(to top, rgba(8,8,11,0.6), transparent 40%)",
-                  }}
-                />
-                <div className="absolute bottom-3 left-3 right-3 flex items-center justify-between">
-                  <span
-                    className="mono-label"
-                    style={{ color: "rgba(250,250,250,0.8)" }}
-                  >
-                    {p.role}
-                  </span>
-                  <span
-                    className="mono-label"
-                    style={{ color: "rgba(250,250,250,0.6)" }}
-                  >
-                    {p.year}
-                  </span>
-                </div>
-              </Link>
-
-              <header className="flex items-baseline justify-between gap-4">
-                <Link
-                  to={`/projects/${p.id}`}
-                  className="h3-card hover:underline"
-                  style={{ fontSize: "clamp(20px, 1.6vw, 24px)" }}
-                >
-                  {p.title}
-                </Link>
-                <span
-                  className="mono-data tabular"
-                  style={{ color: "var(--fg-dim)" }}
-                >
-                  {String(p.id).padStart(2, "0")}
-                </span>
-              </header>
-
-              <p
-                className="body-m"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                {p.desc}
-              </p>
-
-              <div className="mt-auto flex flex-wrap gap-2">
-                {p.stack.slice(0, 4).map((s) => (
-                  <span
-                    key={s}
-                    className="mono-label rounded-sm border border-border bg-[var(--bg-base)] px-2 py-1 text-[var(--fg-muted)]"
-                  >
-                    {s}
-                  </span>
-                ))}
-              </div>
-
-              <div className="flex items-center justify-between border-t border-border pt-4">
-                <a
-                  href={p.link}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mono-label inline-flex items-center gap-2 text-fg-muted transition-colors hover:text-fg"
-                >
-                  Visit live <span aria-hidden>↗</span>
-                </a>
-                <Link
-                  to={`/projects/${p.id}`}
-                  className="mono-label inline-flex items-center gap-2 text-fg-muted transition-colors hover:text-fg"
-                >
-                  Read brief <span aria-hidden>→</span>
-                </Link>
-              </div>
-            </motion.article>
+        {/* Sticky Stacking Deck Container */}
+        <div className="relative pb-32">
+          {featured.map((project, index) => (
+            <StackedProjectCard
+              key={project.id}
+              project={project}
+              index={index}
+              total={featured.length}
+            />
           ))}
         </div>
       </Container>

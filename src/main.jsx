@@ -10,6 +10,8 @@ import Layout from "./Components/Layout/Layout";
 import Projects from "./Components/Projects/Projects";
 import Contacts from "./Components/Contacts/Contact";
 import ProjectDetails from "./Components/Projects/ProjectDetails";
+import AboutPage from "./Components/About/AboutPage";
+import StackPage from "./Components/Stack/StackPage";
 
 const router = createBrowserRouter([
   {
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
       { index: true, Component: Home },
       { path: "/projects", Component: Projects },
       { path: "/projects/:id", Component: ProjectDetails },
+      { path: "/about", Component: AboutPage },
+      { path: "/stack", Component: StackPage },
       { path: "/contacts", Component: Contacts },
     ],
   },

@@ -4,6 +4,7 @@ export function Marquee({
   items,
   separator = "◇",
   speed = 40,
+  pauseOnHover = true,
   className,
 }) {
   const rendered = items.join(` ${separator} `);
@@ -11,7 +12,7 @@ export function Marquee({
   return (
     <div
       className={cn(
-        "relative w-full overflow-hidden border-y border-border",
+        "group/marquee relative w-full overflow-hidden border-y border-border bg-[var(--bg-base)]/50 backdrop-blur-sm select-none",
         className
       )}
       style={{
@@ -22,14 +23,17 @@ export function Marquee({
       }}
     >
       <div
-        className="mono-data flex whitespace-nowrap py-4 text-[var(--fg-muted)]"
+        className={cn(
+          "mono-data flex whitespace-nowrap py-3.5 text-[var(--fg-muted)] transition-colors duration-300 group-hover/marquee:text-fg",
+          pauseOnHover && "group-hover/marquee:[animation-play-state:paused]"
+        )}
         style={{
           animation: `marquee-scroll ${speed}s linear infinite`,
           width: "max-content",
         }}
       >
-        <span className="px-6">{full}</span>
-        <span className="px-6" aria-hidden>
+        <span className="px-6 tracking-[0.2em]">{full}</span>
+        <span className="px-6 tracking-[0.2em]" aria-hidden>
           {full}
         </span>
       </div>

@@ -1,85 +1,275 @@
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { SectionHeading } from "../../primitives/SectionHeading";
-import { Reveal } from "../../primitives/Reveal";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
+import { TiltCard } from "../../primitives/TiltCard";
 import { services } from "../../data/portfolio";
 
-export default function Services() {
+function ScrollStageCard({ s, i, scrollYProgress }) {
+  // Clear, non-overlapping scroll intervals:
+  // Card 0 (Plan): arrives between 0.04 and 0.25, then stays settled
+  // Card 1 (Build): hidden until 0.35, arrives between 0.35 and 0.58, then stays settled
+  // Card 2 (Ship): hidden until 0.68, arrives between 0.68 and 0.90, then stays settled
+  const start = 0.04 + i * 0.32;
+  const end = start + 0.22;
+
+  const rawY = useTransform(
+    scrollYProgress,
+    [0, start, end, 1],
+    [50, 50, 0, 0],
+    { clamp: true }
+  );
+
+  const rawOpacity = useTransform(
+    scrollYProgress,
+    [0, start, start + 0.12, 1],
+    [0, 0, 1, 1],
+    { clamp: true }
+  );
+
+  const rawScale = useTransform(
+    scrollYProgress,
+    [0, start, end, 1],
+    [0.95, 0.95, 1, 1],
+    { clamp: true }
+  );
+
+  // Luxury spring physics for fluid deceleration on mouse wheel scroll
+  const y = useSpring(rawY, { stiffness: 60, damping: 19, mass: 0.8 });
+  const opacity = useSpring(rawOpacity, { stiffness: 75, damping: 22 });
+  const scale = useSpring(rawScale, { stiffness: 60, damping: 19 });
+
   return (
-    <section className="relative border-t border-border py-20 md:py-28">
-      <Container size="default">
-        <SectionHeading
-          index="05"
-          eyebrow="Engagements"
-          title="What I can do,"
-          muted="and how I like to work."
-          body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
-        />
+    <motion.div
+      style={{ y, opacity, scale }}
+      className="flex h-full w-full flex-col"
+    >
+      <TiltCard maxTilt={6} className="h-full">
+        <div className="group relative flex h-full flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 md:p-7 transition-all duration-500 hover:border-border-hi hover:bg-[var(--bg-elev2)] hover:shadow-xl">
+          {/* Top row */}
+          <div>
+            <div className="mb-5 flex items-baseline justify-between border-b border-border/80 pb-3">
+              <span className="mono-data font-mono text-[12px] font-bold text-accent">
+                PHASE // {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="mono-label font-mono text-[11px] text-[var(--fg-dim)] transition-colors group-hover:text-accent">
+                {i < 2 ? "NEXT →" : "SHIP"}
+              </span>
+            </div>
 
-        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-3">
-          {services.filter((s) => s.id !== "design").map((s, i, arr) => (
-            <Reveal
-              key={s.id}
-              delay={i * 0.08}
-              className="group flex flex-col gap-6 bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-7"
+            <h3
+              className="h3-card font-serif text-fg transition-colors"
+              style={{ fontSize: "clamp(24px, 2.2vw, 30px)" }}
             >
-              <div className="flex items-baseline justify-between">
-                <span
-                  className="mono-data text-[12px]"
-                  style={{ color: "var(--fg-dim)" }}
-                >
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                <span
-                  className="mono-label"
-                  style={{ color: "var(--fg-dim)" }}
-                >
-                  {i < arr.length - 1 ? "→" : "end"}
-                </span>
-              </div>
-              <h3
-                className="h3-card"
-                style={{ fontSize: "clamp(24px, 2.4vw, 32px)" }}
-              >
-                {s.title}
-              </h3>
-              <p
-                className="body-m"
-                style={{ color: "var(--fg-muted)" }}
-              >
-                {s.subtitle}
-              </p>
-              <ul className="space-y-3 body-m">
-                {s.points.map((pt, j) => (
-                  <li
-                    key={j}
-                    className="flex items-start gap-3"
-                    style={{ color: "var(--fg-muted)" }}
-                  >
-                    <span
-                      aria-hidden
-                      className="mono-data mt-2"
-                      style={{ color: "var(--fg-dim)" }}
-                    >
-                      ·
-                    </span>
-                    <span>{pt}</span>
-                  </li>
-                ))}
-              </ul>
-            </Reveal>
-          ))}
-        </div>
+              {s.title}
+            </h3>
 
-        <Reveal delay={0.2} className="mt-12 flex flex-wrap items-center gap-4">
-          <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
-            Ready to start?
-          </span>
-          <PrimaryCTA variant="outline" size="md" to="/contacts">
-            Start a project
-          </PrimaryCTA>
-        </Reveal>
-      </Container>
+            <p className="body-m mt-2 text-[var(--fg-muted)] italic leading-relaxed">
+              "{s.subtitle}"
+            </p>
+
+            <ul className="mt-6 space-y-3 body-m">
+              {s.points.map((pt, j) => (
+                <li
+                  key={j}
+                  className="flex items-start gap-3"
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  <span
+                    aria-hidden
+                    className="mono-data mt-1 font-bold text-accent"
+                  >
+                    ✓
+                  </span>
+                  <span className="leading-relaxed">{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Bottom step tag */}
+          <div className="mt-8 flex items-center justify-between border-t border-border/80 pt-4 font-mono text-[11px] text-[var(--fg-dim)]">
+            <span>Deliverable ready</span>
+            <span className="transition-transform duration-300 group-hover:translate-x-1">
+              Step {i + 1} of 3 →
+            </span>
+          </div>
+        </div>
+      </TiltCard>
+    </motion.div>
+  );
+}
+
+function MobileCard({ s, i }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 30 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-10% 0px" }}
+      transition={{ duration: 0.6, delay: i * 0.1 }}
+      className="w-full"
+    >
+      <TiltCard maxTilt={5}>
+        <div className="group relative flex flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 transition-all duration-300">
+          <div>
+            <div className="mb-4 flex items-baseline justify-between border-b border-border/80 pb-3">
+              <span className="mono-data font-mono text-[12px] font-bold text-accent">
+                PHASE // {String(i + 1).padStart(2, "0")}
+              </span>
+              <span className="mono-label font-mono text-[11px] text-[var(--fg-dim)]">
+                {i < 2 ? "NEXT →" : "SHIP"}
+              </span>
+            </div>
+
+            <h3 className="h3-card font-serif text-fg text-2xl">
+              {s.title}
+            </h3>
+
+            <p className="body-m mt-1.5 text-[var(--fg-muted)] italic">
+              "{s.subtitle}"
+            </p>
+
+            <ul className="mt-5 space-y-2.5 body-m">
+              {s.points.map((pt, j) => (
+                <li
+                  key={j}
+                  className="flex items-start gap-2.5 text-sm"
+                  style={{ color: "var(--fg-muted)" }}
+                >
+                  <span aria-hidden className="mono-data mt-0.5 font-bold text-accent">
+                    ✓
+                  </span>
+                  <span>{pt}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="mt-6 flex items-center justify-between border-t border-border/80 pt-3 font-mono text-[11px] text-[var(--fg-dim)]">
+            <span>Deliverable ready</span>
+            <span>Step {i + 1} of 3 →</span>
+          </div>
+        </div>
+      </TiltCard>
+    </motion.div>
+  );
+}
+
+export default function Services() {
+  const containerRef = useRef(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
+
+  const rawCtaOpacity = useTransform(scrollYProgress, [0.85, 0.96], [0, 1]);
+  const ctaOpacity = useSpring(rawCtaOpacity, { stiffness: 80, damping: 20 });
+
+  const validServices = services.filter((s) => s.id !== "design");
+
+  if (isMobile) {
+    return (
+      <section
+        id="engagements"
+        className="relative overflow-hidden border-t border-border py-20"
+      >
+        <Container size="default">
+          <SectionHeading
+            index="05"
+            eyebrow="Engagements"
+            title="What I can do,"
+            muted="and how I like to work."
+            body="Three overlapping modes — planning, building, and shipping. Scroll down to watch each mode arrive."
+          />
+
+          <div className="mt-10 flex flex-col gap-6">
+            {validServices.map((s, i) => (
+              <MobileCard key={s.id} s={s} i={i} />
+            ))}
+          </div>
+
+          <div className="mt-12 flex flex-wrap items-center gap-4">
+            <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
+              Ready to start?
+            </span>
+            <PrimaryCTA variant="solid" size="md" to="/contacts">
+              Start a project
+            </PrimaryCTA>
+          </div>
+        </Container>
+      </section>
+    );
+  }
+
+  return (
+    <section
+      ref={containerRef}
+      id="engagements"
+      className="relative h-[280vh] border-t border-border"
+    >
+      {/* Sticky viewport frame pinned while scrolling through the sequence */}
+      <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
+        <Container size="default">
+          <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
+            <SectionHeading
+              index="05"
+              eyebrow="Engagements"
+              title="What I can do,"
+              muted="and how I like to work."
+              body="Three overlapping modes — planning, building, and shipping. Scroll to advance through each phase."
+              className="mb-0"
+            />
+
+            {/* Sequence Status Indicator */}
+            <div className="hidden lg:flex items-center gap-3 rounded-full border border-border bg-[var(--bg-elev1)] px-4 py-2 font-mono text-[11px] tracking-wider text-[var(--fg-dim)]">
+              <span className="flex items-center gap-1.5 text-accent font-semibold">
+                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                SCROLL TO ADVANCE //
+              </span>
+              <span>01 PLAN</span>
+              <span className="opacity-40">──</span>
+              <span>02 BUILD</span>
+              <span className="opacity-40">──</span>
+              <span>03 SHIP</span>
+            </div>
+          </div>
+
+          {/* 3-Column Grid: Each card arrives on its dedicated scroll stage */}
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+            {validServices.map((s, i) => (
+              <ScrollStageCard
+                key={s.id}
+                s={s}
+                i={i}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+          </div>
+
+          {/* Bottom CTA, reveals after all 3 cards have settled */}
+          <motion.div
+            style={{ opacity: ctaOpacity }}
+            className="mt-8 flex flex-wrap items-center gap-4 border-t border-border/80 pt-6"
+          >
+            <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
+              Ready to start?
+            </span>
+            <PrimaryCTA variant="solid" size="md" to="/contacts">
+              Start a project
+            </PrimaryCTA>
+          </motion.div>
+        </Container>
+      </div>
     </section>
   );
 }

@@ -4,15 +4,15 @@ export const SITE = {
   brandLower: "ridwanul",
   tag: "",
   meta: "Building and shipping for the web",
-  version: "2026",
+  version: "v2.0",
   description:
     "Associate Software Engineer at Amaze Venture — design, build, and ship considered products end-to-end.",
 };
 
 export const NAV_ITEMS = [
   { id: "work", label: "Works", to: "/projects" },
-  { id: "about", label: "About", to: "/#about" },
-  { id: "stack", label: "Stack", to: "/#stack" },
+  { id: "about", label: "About", to: "/about" },
+  { id: "stack", label: "Stack", to: "/stack" },
   { id: "contact", label: "Contact", to: "/contacts" },
 ];
 

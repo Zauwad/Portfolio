@@ -1,20 +1,36 @@
-import { motion } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { Container } from "../../primitives/Container";
 import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { StatusPulse } from "../../primitives/StatusPulse";
 import { Marquee } from "../../primitives/Marquee";
+import { ParticleField } from "../../primitives/ParticleField";
+import { TiltCard } from "../../primitives/TiltCard";
 import { EASE } from "../../lib/ease";
 
 export default function Hero() {
+  const heroRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+
+  const heroY = useTransform(scrollYProgress, [0, 1], [0, 60]);
+  const heroOpacity = useTransform(scrollYProgress, [0, 0.85], [1, 0.1]);
+  const portraitY = useTransform(scrollYProgress, [0, 1], [0, -30]);
+
   return (
-    <section className="relative isolate overflow-hidden border-b border-border">
+    <section ref={heroRef} className="relative isolate overflow-hidden border-b border-border">
+      {/* Interactive 3D space dust particles */}
+      <ParticleField />
+
       {/* Background layers */}
       <div className="grid-bg absolute inset-0" aria-hidden />
       <div
-        className="absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full"
+        className="pointer-events-none absolute left-1/2 top-1/2 h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background:
-            "radial-gradient(circle, rgba(255,255,255,0.06), transparent 70%)",
+            "radial-gradient(circle, var(--accent-glow), transparent 70%)",
         }}
         aria-hidden
       />
@@ -42,25 +58,25 @@ export default function Hero() {
       </span>
 
       <Container size="wide" className="relative py-20 md:py-28 lg:py-36">
-        {/* Top eyebrow row */}
+        {/* Top editorial index row - calm, non-needy, museum-grade */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mb-12 flex items-center justify-between md:mb-16"
+          className="mb-10 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] md:mb-14"
+          style={{ color: "var(--fg-dim)" }}
         >
-          <StatusPulse label="Available · 2026" variant="live" />
-          <span
-            className="mono-data hidden md:inline-flex"
-            style={{ color: "var(--fg-dim)" }}
-          >
-            ✕ Dhaka, Bangladesh · UTC+6
+          <span className="hidden md:inline-flex items-center gap-2">
+            <span>DHAKA, BANGLADESH</span>
+            <span aria-hidden>·</span>
+            <span className="tabular">UTC+6</span>
           </span>
         </motion.div>
 
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-10 lg:gap-16">
-          {/* Portrait — mobile first, right column on md+ */}
+          {/* Portrait with 3D Holographic Perspective Tilt */}
           <motion.figure
+            style={{ y: portraitY }}
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.05 }}
@@ -68,7 +84,6 @@ export default function Hero() {
           >
             {/* Outer ring — sits behind the panel, gives the accent halo */}
             <div
-              aria-hidden
               className="relative"
               style={{ padding: 14 }}
             >
@@ -95,23 +110,39 @@ export default function Hero() {
                   maskComposite: "exclude",
                 }}
               />
+              <div
+                aria-hidden
+                className="pointer-events-none absolute inset-0 block dark:hidden"
+                style={{
+                  padding: 1,
+                  background:
+                    "linear-gradient(135deg, rgba(15,23,42,0.22) 0%, rgba(15,23,42,0.06) 35%, rgba(15,23,42,0.02) 65%, rgba(15,23,42,0.16) 100%)",
+                  WebkitMask:
+                    "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+                  WebkitMaskComposite: "xor",
+                  maskComposite: "exclude",
+                }}
+              />
 
-              <div className="relative overflow-hidden border border-border bg-[var(--bg-elev1)]">
-                <div
-                  aria-hidden
-                  className="pointer-events-none absolute inset-0"
-                  style={{
-                    background:
-                      "radial-gradient(circle at 50% 30%, rgba(255,255,255,0.10), transparent 60%)",
-                  }}
-                />
-                <img
-                  src="/assets/MyPhoto.jpg"
-                  alt="Portrait of Ridwanul Azim Zawad"
-                  className="relative block h-auto w-full select-none"
-                  draggable="false"
-                />
-              </div>
+              {/* Photo with 3D tilt only, outer borders stay completely static */}
+              <TiltCard maxTilt={8} glare={false}>
+                <div className="relative overflow-hidden border border-border bg-[var(--bg-elev1)]">
+                  <div
+                    aria-hidden
+                    className="pointer-events-none absolute inset-0"
+                    style={{
+                      background:
+                        "radial-gradient(circle at 50% 30%, rgba(255,255,255,0.10), transparent 60%)",
+                    }}
+                  />
+                  <img
+                    src="/assets/MyPhoto.jpg"
+                    alt="Portrait of Ridwanul Azim Zawad"
+                    className="relative block h-auto w-full select-none"
+                    draggable="false"
+                  />
+                </div>
+              </TiltCard>
             </div>
 
             <figcaption
@@ -119,24 +150,37 @@ export default function Hero() {
               style={{ color: "var(--fg-dim)" }}
             >
               <span>✕ me</span>
-              <span className="tabular">548 × 455</span>
+              <span className="tabular font-mono">548 × 455</span>
             </figcaption>
           </motion.figure>
 
-          {/* Copy */}
-          <div className="order-2 md:order-1 md:col-span-7 lg:col-span-7">
-            <motion.h1
-              initial={{ opacity: 0, y: 24 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 1.1, ease: EASE, delay: 0.1 }}
-              className="hero-display text-balance"
-            >
-              Backend that scales.
-              <br />
-              <span style={{ color: "var(--fg-muted)" }}>
-                Frontend that feels.
+          {/* Copy with Masked Editorial Line Reveals & Scroll Parallax */}
+          <motion.div
+            style={{ y: heroY, opacity: heroOpacity }}
+            className="order-2 md:order-1 md:col-span-7 lg:col-span-7"
+          >
+            <h1 className="hero-display text-balance">
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  className="block"
+                  initial={{ y: "115%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                >
+                  Backend that scales.
+                </motion.span>
               </span>
-            </motion.h1>
+              <span className="block overflow-hidden py-1">
+                <motion.span
+                  className="block text-[var(--fg-muted)]"
+                  initial={{ y: "115%" }}
+                  animate={{ y: 0 }}
+                  transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
+                >
+                  Frontend that feels.
+                </motion.span>
+              </span>
+            </h1>
 
             <motion.p
               initial={{ opacity: 0, y: 16 }}
@@ -171,7 +215,7 @@ export default function Hero() {
                 Resume <span aria-hidden>↓</span>
               </a>
             </motion.div>
-          </div>
+          </motion.div>
         </div>
       </Container>
 

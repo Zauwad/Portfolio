@@ -1,4 +1,6 @@
+import { useRef } from "react";
 import { Link } from "react-router";
+import { motion, useSpring } from "framer-motion";
 import { cn } from "../../lib/utils";
 
 export function PrimaryCTA({
@@ -10,8 +12,31 @@ export function PrimaryCTA({
   href,
   className,
   children,
+  magnetic = true,
   ...rest
 }) {
+  const btnRef = useRef(null);
+
+  // Magnetic spring physics
+  const springConfig = { damping: 15, stiffness: 180, mass: 0.2 };
+  const magneticX = useSpring(0, springConfig);
+  const magneticY = useSpring(0, springConfig);
+
+  const handleMouseMove = (e) => {
+    if (!magnetic || !btnRef.current) return;
+    const rect = btnRef.current.getBoundingClientRect();
+    const x = e.clientX - (rect.left + rect.width / 2);
+    const y = e.clientY - (rect.top + rect.height / 2);
+    magneticX.set(x * 0.28);
+    magneticY.set(y * 0.28);
+  };
+
+  const handleMouseLeave = () => {
+    if (!magnetic) return;
+    magneticX.set(0);
+    magneticY.set(0);
+  };
+
   const sizes = {
     sm: "px-3 py-1.5 text-[12px]",
     md: "px-5 py-2.5 text-[13px]",
@@ -19,11 +44,10 @@ export function PrimaryCTA({
   };
 
   const base =
-    "cta group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm font-mono uppercase tracking-[0.18em] transition-colors duration-300 select-none";
+    "cta group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm font-mono uppercase tracking-[0.18em] transition-colors duration-300 select-none cursor-pointer";
 
   const variants = {
-    outline:
-      "border border-[var(--border-hi)] text-fg hover:border-fg",
+    outline: "border border-[var(--border-hi)] text-fg hover:border-fg",
     solid: "border border-fg bg-fg text-[var(--bg-base)]",
     ghost: "text-fg-muted hover:text-fg",
   };
@@ -45,30 +69,55 @@ export function PrimaryCTA({
         )}
       >
         {children}
-        {arrow && <span aria-hidden>→</span>}
+        {arrow && (
+          <span
+            aria-hidden
+            className="transition-transform duration-300 group-hover/cta:translate-x-1"
+          >
+            →
+          </span>
+        )}
       </span>
     </>
   );
 
+  const motionProps = {
+    ref: btnRef,
+    style: { x: magneticX, y: magneticY },
+    onMouseMove: handleMouseMove,
+    onMouseLeave: handleMouseLeave,
+    className: cls,
+  };
+
   if (as === Link || to) {
     return (
-      <Link to={to || href} className={cls} {...rest}>
-        {inner}
-      </Link>
+      <motion.div {...motionProps} className="inline-block">
+        <Link to={to || href} className={cls} {...rest}>
+          {inner}
+        </Link>
+      </motion.div>
     );
   }
 
   if (as === "a" || href) {
     return (
-      <a href={href} className={cls} {...rest}>
+      <motion.a
+        href={href}
+        {...motionProps}
+        {...rest}
+      >
         {inner}
-      </a>
+      </motion.a>
     );
   }
 
   return (
-    <button className={cls} {...rest}>
+    <motion.button
+      type="button"
+      {...motionProps}
+      {...rest}
+    >
       {inner}
-    </button>
+    </motion.button>
   );
 }
