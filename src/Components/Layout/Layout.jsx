@@ -7,24 +7,21 @@ import Footer from "../Footer/Footer";
 import CommandPalette from "../CommandPalette/CommandPalette";
 import { CustomCursor } from "../../primitives/CustomCursor";
 import { useReducedMotion } from "../../hooks/useReducedMotion";
-import { NavigationProvider, useNavigationStatus } from "../../context/NavigationContext";
 
 function LayoutContent({ paletteOpen, setPaletteOpen, location, outlet, reduced }) {
-  const { isRouteChange } = useNavigationStatus();
-
   return (
     <div className="flex min-h-[100svh] flex-col overflow-x-clip bg-bg-base text-fg selection:bg-fg selection:text-bg-base">
       <CustomCursor />
       <Navbar onOpenPalette={() => setPaletteOpen(true)} />
       <main className="flex-1 pt-20 md:pt-24">
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="wait">
           <motion.div
             key={location.pathname}
-            initial={isRouteChange && !reduced ? { opacity: 0, y: 10 } : false}
+            initial={reduced ? false : { opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
             exit={reduced ? { opacity: 1 } : { opacity: 0, y: -10 }}
             transition={{
-              duration: reduced ? 0 : 0.28,
+              duration: reduced ? 0 : 0.35,
               ease: [0.22, 1, 0.36, 1],
             }}
             className="w-full flex-1"
@@ -97,14 +94,12 @@ export default function Layout() {
   }, []);
 
   return (
-    <NavigationProvider>
-      <LayoutContent
-        paletteOpen={paletteOpen}
-        setPaletteOpen={setPaletteOpen}
-        location={location}
-        outlet={outlet}
-        reduced={reduced}
-      />
-    </NavigationProvider>
+    <LayoutContent
+      paletteOpen={paletteOpen}
+      setPaletteOpen={setPaletteOpen}
+      location={location}
+      outlet={outlet}
+      reduced={reduced}
+    />
   );
 }

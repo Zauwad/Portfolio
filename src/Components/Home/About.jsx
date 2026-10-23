@@ -7,7 +7,6 @@ import { EASE } from "../../lib/ease";
 import { SvgSignature } from "../../primitives/SvgSignature";
 import { TiltCard } from "../../primitives/TiltCard";
 import amazeLogo from "../../../assets/A Maze Venture.png";
-import { useNavigationStatus } from "../../context/NavigationContext";
 
 const ICONS = {
   github: (
@@ -87,7 +86,6 @@ const ABOUT_PARAGRAPHS = [
 ];
 
 export default function About({ showTopBorder = true }) {
-  const { isRouteChange } = useNavigationStatus();
   return (
     <section
       id="about"
@@ -140,7 +138,7 @@ export default function About({ showTopBorder = true }) {
           <div className="md:col-span-5">
             <TiltCard maxTilt={8}>
               <motion.div
-                initial={isRouteChange ? { opacity: 0, y: 24 } : false}
+                initial={{ opacity: 0, y: 24 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}
                 transition={{ duration: 0.9, ease: EASE }}

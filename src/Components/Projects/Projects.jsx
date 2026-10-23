@@ -8,7 +8,6 @@ import { TiltCard } from "../../primitives/TiltCard";
 import { getTechIcon } from "../../lib/techIcons";
 import { EASE } from "../../lib/ease";
 import { Helmet } from "react-helmet";
-import { useNavigationStatus } from "../../context/NavigationContext";
 
 const FILTERS = [
   { id: "all", label: "All" },
@@ -27,7 +26,7 @@ function matchesFilter(project, filterId) {
   return true;
 }
 
-function ScrollProjectArticle({ project, index, isRouteChange }) {
+function ScrollProjectArticle({ project, index }) {
   const cardRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, active: false });
 
@@ -51,7 +50,7 @@ function ScrollProjectArticle({ project, index, isRouteChange }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={isRouteChange ? { opacity: 0, scale: 0.96 } : false}
+      initial={{ opacity: 0, scale: 0.96 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.2 } }}
       transition={{
@@ -215,7 +214,6 @@ function ScrollProjectArticle({ project, index, isRouteChange }) {
 }
 
 export default function Projects() {
-  const { isRouteChange } = useNavigationStatus();
   const [filter, setFilter] = useState("all");
   const filtered = useMemo(
     () => projects.filter((p) => matchesFilter(p, filter)),
@@ -246,7 +244,7 @@ export default function Projects() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block"
-                  initial={isRouteChange ? { y: "115%" } : false}
+                  initial={{ y: "115%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
@@ -256,7 +254,7 @@ export default function Projects() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block text-fg-muted font-serif italic"
-                  initial={isRouteChange ? { y: "115%" } : false}
+                  initial={{ y: "115%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 >
@@ -266,7 +264,7 @@ export default function Projects() {
             </h1>
 
             <motion.p
-              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
               className="body-l mt-4 md:mt-6 max-w-[58ch] text-fg-muted leading-relaxed"
@@ -324,7 +322,6 @@ export default function Projects() {
                   key={p.id}
                   project={p}
                   index={i}
-                  isRouteChange={isRouteChange}
                 />
               ))}
             </AnimatePresence>
@@ -332,7 +329,7 @@ export default function Projects() {
             {/* CTA tile — fills the empty slot beside an odd-numbered last card */}
             <motion.div
               layout
-              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
+              initial={{ opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: 0.9, ease: EASE }}

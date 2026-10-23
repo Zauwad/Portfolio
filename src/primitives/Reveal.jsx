@@ -2,7 +2,6 @@ import { motion } from "framer-motion";
 import { useEffect, useRef, useState } from "react";
 import { EASE } from "../lib/ease";
 import { useReducedMotion } from "../hooks/useReducedMotion";
-import { useNavigationStatus } from "../context/NavigationContext";
 
 export function Reveal({
   as = "div",
@@ -13,13 +12,12 @@ export function Reveal({
   children,
   ...rest
 }) {
-  const { isRouteChange } = useNavigationStatus();
   const reduced = useReducedMotion();
   const ref = useRef(null);
-  const [visible, setVisible] = useState(!isRouteChange);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    if (reduced || !isRouteChange) return;
+    if (reduced) return;
     const el = ref.current;
     if (!el) return;
     const io = new IntersectionObserver(
@@ -31,16 +29,16 @@ export function Reveal({
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -10% 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px -5% 0px" }
     );
     io.observe(el);
     // Safety fallback
-    const t = setTimeout(() => setVisible(true), 2000);
+    const t = setTimeout(() => setVisible(true), 1500);
     return () => {
       io.disconnect();
       clearTimeout(t);
     };
-  }, [reduced, isRouteChange]);
+  }, [reduced]);
 
   const MotionTag = motion[as] || motion.div;
 
@@ -55,13 +53,9 @@ export function Reveal({
   return (
     <MotionTag
       ref={ref}
-      initial={isRouteChange ? { opacity: 0, y } : false}
+      initial={{ opacity: 0, y }}
       animate={visible ? { opacity: 1, y: 0 } : { opacity: 0, y }}
-      transition={
-        isRouteChange
-          ? { duration, delay, ease: EASE }
-          : { duration: 0 }
-      }
+      transition={{ duration, delay, ease: EASE }}
       className={className}
       {...rest}
     >

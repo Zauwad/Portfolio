@@ -7,10 +7,8 @@ import { Marquee } from "../../primitives/Marquee";
 import { ParticleField } from "../../primitives/ParticleField";
 import { TiltCard } from "../../primitives/TiltCard";
 import { EASE } from "../../lib/ease";
-import { useNavigationStatus } from "../../context/NavigationContext";
 
 export default function Hero() {
-  const { isRouteChange } = useNavigationStatus();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -62,7 +60,7 @@ export default function Hero() {
       <Container size="wide" className="relative py-20 md:py-28 lg:py-36">
         {/* Top editorial index row - calm, non-needy, museum-grade */}
         <motion.div
-          initial={isRouteChange ? { opacity: 0, y: 12 } : false}
+          initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
           className="mb-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-fg-dim md:mb-14"
@@ -78,7 +76,7 @@ export default function Hero() {
           {/* Portrait with 3D Holographic Perspective Tilt */}
           <motion.figure
             style={{ y: portraitY }}
-            initial={isRouteChange ? { opacity: 0, y: 16 } : false}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.05 }}
             className="order-1 mx-auto w-full max-w-[260px] md:order-2 md:col-span-5 md:max-w-none md:justify-self-end lg:col-span-5 lg:max-w-[360px]"
@@ -162,7 +160,7 @@ export default function Hero() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block"
-                  initial={isRouteChange ? { y: "115%" } : false}
+                  initial={{ y: "115%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
@@ -172,7 +170,7 @@ export default function Hero() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block text-fg-muted font-serif italic"
-                  initial={isRouteChange ? { y: "115%" } : false}
+                  initial={{ y: "115%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 >
@@ -182,7 +180,7 @@ export default function Hero() {
             </h1>
 
             <motion.p
-              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
+              initial={{ opacity: 0, y: 16 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
               className="body-l mt-6 md:mt-8 max-w-[58ch] text-fg-muted leading-relaxed"
@@ -198,7 +196,7 @@ export default function Hero() {
             </motion.p>
 
             <motion.div
-              initial={isRouteChange ? { opacity: 0, y: 12 } : false}
+              initial={{ opacity: 0, y: 12 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.55 }}
               className="mt-8 md:mt-12 flex flex-wrap items-center gap-3"

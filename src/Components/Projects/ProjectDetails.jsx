@@ -7,7 +7,6 @@ import { PrimaryCTA } from "../../primitives/PrimaryCTA";
 import { projects } from "../../data/portfolio";
 import { getTechIcon } from "../../lib/techIcons";
 import { EASE } from "../../lib/ease";
-import { useNavigationStatus } from "../../context/NavigationContext";
 
 const TABS = [
   { id: "overview", label: "Overview" },
@@ -17,7 +16,6 @@ const TABS = [
 ];
 
 export default function ProjectDetails() {
-  const { isRouteChange } = useNavigationStatus();
   const { id } = useParams();
   const project = projects.find((p) => p.id === parseInt(id));
   const [tab, setTab] = useState("overview");
@@ -73,7 +71,7 @@ export default function ProjectDetails() {
 
           <div className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-8">
             <motion.div
-              initial={isRouteChange ? { opacity: 0, y: 20 } : false}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE }}
               className="md:col-span-7"
@@ -97,7 +95,7 @@ export default function ProjectDetails() {
               >
                 <motion.span
                   className="block"
-                  initial={isRouteChange ? { y: "115%" } : false}
+                  initial={{ y: "115%" }}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
@@ -110,7 +108,7 @@ export default function ProjectDetails() {
             </motion.div>
 
             <motion.div
-              initial={isRouteChange ? { opacity: 0, y: 20 } : false}
+              initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, ease: EASE, delay: 0.1 }}
               className="flex flex-col items-start gap-3 md:col-span-5 md:items-end md:justify-end"
@@ -265,10 +263,10 @@ export default function ProjectDetails() {
                   ))}
                 </div>
 
-                <AnimatePresence mode="wait" initial={false}>
+                <AnimatePresence mode="wait">
                   <motion.div
                     key={tab}
-                    initial={isRouteChange ? { opacity: 0, y: 8 } : false}
+                    initial={{ opacity: 0, y: 8 }}
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -8 }}
                     transition={{ duration: 0.4, ease: EASE }}
@@ -293,7 +291,7 @@ export default function ProjectDetails() {
                           {/* Hero image */}
                           <motion.div
                             key={activeImage}
-                            initial={isRouteChange ? { opacity: 0, y: 8 } : false}
+                            initial={{ opacity: 0, y: 8 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.4, ease: EASE }}
                             className="relative overflow-hidden border border-border bg-elev1"

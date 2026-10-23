@@ -11,12 +11,10 @@ import { StatusPulse } from "../../primitives/StatusPulse";
 import { Caret } from "../../primitives/Caret";
 import { Kbd } from "../../primitives/Kbd";
 import { EASE } from "../../lib/ease";
-import { useNavigationStatus } from "../../context/NavigationContext";
 
 const INITIAL = { email: "", subject: "", message: "" };
 
 export default function Contacts() {
-  const { isRouteChange } = useNavigationStatus();
   const [form, setForm] = useState(INITIAL);
   const [status, setStatus] = useState("idle"); // idle | sending | sent | error
   const [focused, setFocused] = useState(null);
@@ -153,7 +151,7 @@ export default function Contacts() {
             {/* Right: query-card form */}
             <div className="md:col-span-8">
               <motion.form
-                initial={isRouteChange ? { opacity: 0, y: 20 } : false}
+                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.9, ease: EASE }}
                 onSubmit={onSubmit}
