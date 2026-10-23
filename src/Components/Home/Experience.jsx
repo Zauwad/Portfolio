@@ -56,32 +56,29 @@ export default function Experience() {
                 as="li"
                 key={item.id}
                 delay={i * 0.08}
-                className="group relative grid grid-cols-1 gap-6 py-4 md:grid-cols-12 md:gap-8"
+                className="group relative grid grid-cols-1 gap-4 py-3 md:grid-cols-12 md:gap-8 md:py-4"
               >
                 {/* Node & Timestamp */}
                 <div className="relative flex items-start md:col-span-3">
                   <span
                     aria-hidden
-                    className="absolute left-0 top-3 inline-block h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-[var(--border-hi)] bg-[var(--bg-base)] transition-all duration-500 group-hover:scale-125 group-hover:border-fg group-hover:shadow-[0_0_12px_var(--fg)] md:left-[19px]"
+                    className="absolute left-[7px] top-3 inline-block h-3.5 w-3.5 -translate-x-1/2 rounded-full border-2 border-border-hi bg-bg-base transition-all duration-500 group-hover:scale-125 group-hover:border-fg group-hover:shadow-[0_0_12px_var(--fg)] md:left-[19px]"
                   />
-                  <span
-                    className="mono-data pl-8 tabular font-mono text-[12px] transition-colors duration-300 group-hover:text-fg md:pl-12"
-                    style={{ color: "var(--fg-muted)" }}
-                  >
+                  <span className="mono-data pl-7 tabular font-mono text-xs text-fg-muted transition-colors duration-300 group-hover:text-fg md:pl-12">
                     {item.when}
                   </span>
                 </div>
 
                 {/* Milestone Content Card */}
-                <div className="md:col-span-9">
-                  <div className="rounded-xl border border-border/80 bg-[var(--bg-elev1)] p-6 transition-all duration-500 hover:border-border-hi hover:bg-[var(--bg-elev2)] hover:shadow-xl md:p-7">
-                    <div className="mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-border/60 pb-3">
+                <div className="pl-7 md:pl-0 md:col-span-9">
+                  <div className="rounded-xl border border-border/80 bg-elev1 p-5 md:p-7 transition-all duration-500 hover:border-border-hi hover:bg-elev2 hover:shadow-xl">
+                    <div className="mb-3 md:mb-4 flex flex-wrap items-baseline justify-between gap-2 border-b border-border/60 pb-3">
                       <h3
                         className="h3-card font-serif text-fg transition-colors"
-                        style={{ fontSize: "clamp(20px, 1.8vw, 26px)" }}
+                        style={{ fontSize: "clamp(18px, 1.8vw, 26px)" }}
                       >
                         {item.role}{" "}
-                        <span className="font-sans text-base font-normal text-[var(--fg-muted)]">
+                        <span className="font-sans text-sm md:text-base font-normal text-fg-muted">
                           · {item.org}
                         </span>
                       </h3>
@@ -90,15 +87,14 @@ export default function Experience() {
                       </span>
                     </div>
 
-                    <ul className="space-y-2.5 body-m">
+                    <ul className="space-y-2 md:space-y-2.5 body-m">
                       {item.points.map((point, j) => (
                         <li
                           key={j}
-                          className="flex items-baseline gap-3"
-                          style={{ color: "var(--fg-muted)" }}
+                          className="flex items-baseline gap-2.5 md:gap-3 text-fg-muted text-xs md:text-sm"
                         >
                           <span
-                            className="mono-data font-bold text-accent"
+                            className="mono-data font-bold text-accent shrink-0"
                             aria-hidden
                           >
                             ›

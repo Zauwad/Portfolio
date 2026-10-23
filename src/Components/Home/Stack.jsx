@@ -66,7 +66,7 @@ export default function Stack({ showTopBorder = true }) {
           body="A pragmatic stack — frontend depth, backend fundamentals, and the cloud glue that ships. Hover any technology to inspect its ecosystem."
         />
 
-        <div className="grid grid-cols-1 gap-px bg-border md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-4 rounded-xl overflow-hidden shadow-lg">
           {COLUMNS.map((col, idx) => {
             const items = skills[col.id] || [];
             const data = makeSpark(idx * 97 + 13);
@@ -75,26 +75,20 @@ export default function Stack({ showTopBorder = true }) {
               <Reveal
                 key={col.id}
                 delay={idx * 0.08}
-                className="flex flex-col justify-between bg-[var(--bg-elev1)] p-6 md:p-7 transition-colors duration-300 hover:bg-[var(--bg-elev2)]"
+                className="flex flex-col justify-between bg-elev1 p-5 sm:p-6 md:p-7 transition-colors duration-300 hover:bg-elev2"
               >
                 <div>
                   {/* Column header */}
-                  <header className="mb-5 flex items-baseline justify-between border-b border-border pb-3">
-                    <span
-                      className="font-mono text-[13px]"
-                      style={{ color: "var(--fg-dim)" }}
-                    >
+                  <header className="mb-4 md:mb-5 flex items-baseline justify-between border-b border-border pb-3">
+                    <span className="font-mono text-xs sm:text-[13px] text-fg-dim">
                       {col.icon} {col.label}
                     </span>
-                    <span
-                      className="mono-label font-mono"
-                      style={{ color: "var(--fg-dim)" }}
-                    >
+                    <span className="mono-label font-mono text-fg-dim">
                       {String(idx + 1).padStart(2, "0")}
                     </span>
                   </header>
 
-                  <p className="body-s mb-6 text-[13px] leading-relaxed italic text-[var(--fg-muted)]">
+                  <p className="body-s mb-5 md:mb-6 text-xs sm:text-[13px] leading-relaxed italic text-fg-muted">
                     "{col.tagline}"
                   </p>
 
@@ -111,7 +105,7 @@ export default function Stack({ showTopBorder = true }) {
                           onMouseLeave={() => setHoveredTech(null)}
                           whileHover={{ x: 3 }}
                           transition={{ duration: 0.2 }}
-                          className="group/badge relative flex items-center justify-between rounded-md border border-border bg-[var(--bg-base)] px-3 py-2 transition-all duration-300 hover:border-[var(--border-hi)] hover:shadow-sm"
+                          className="group/badge relative flex items-center justify-between rounded-md border border-border bg-bg-base px-3 py-2 transition-all duration-300 hover:border-border-hi hover:shadow-sm"
                           style={{
                             borderColor: isHovered ? iconMeta.color : undefined,
                             boxShadow: isHovered
@@ -119,14 +113,14 @@ export default function Stack({ showTopBorder = true }) {
                               : undefined,
                           }}
                         >
-                          <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-2.5 sm:gap-3">
                             <span
                               className="flex h-5 w-5 shrink-0 items-center justify-center transition-transform duration-300 group-hover/badge:scale-110"
                               style={{ color: iconMeta.color }}
                             >
                               {iconMeta.svg || <span className="font-mono text-xs">◇</span>}
                             </span>
-                            <span className="font-mono text-[12px] font-medium tracking-tight text-fg">
+                            <span className="font-mono text-xs font-medium tracking-tight text-fg">
                               {item}
                             </span>
                           </div>
@@ -145,12 +139,9 @@ export default function Stack({ showTopBorder = true }) {
                 </div>
 
                 {/* Bottom sparkline & activity */}
-                <div className="mt-8 border-t border-border pt-4">
+                <div className="mt-6 md:mt-8 border-t border-border pt-4">
                   <div className="mb-2 flex items-center justify-between">
-                    <span
-                      className="mono-label font-mono text-[10px]"
-                      style={{ color: "var(--fg-dim)" }}
-                    >
+                    <span className="mono-label font-mono text-[10px] text-fg-dim">
                       Production Activity
                     </span>
                     <span className="mono-micro font-mono text-[10px] text-accent/80">

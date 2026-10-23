@@ -5,6 +5,8 @@
   --color-bg-base: var(--bg-base);
   --color-bg-elev1: var(--bg-elev1);
   --color-bg-elev2: var(--bg-elev2);
+  --color-elev1: var(--bg-elev1);
+  --color-elev2: var(--bg-elev2);
 
   --color-fg: var(--fg);
   --color-fg-muted: var(--fg-muted);
@@ -122,7 +124,11 @@ html.light .footer-watermark {
 
 /* Light mode frosted glass enhancements */
 :root.light [class*="bg-[var(--bg-elev1)]"],
-:root.light [class*="bg-[var(--bg-elev2)]"] {
+:root.light [class*="bg-[var(--bg-elev2)]"],
+:root.light [class*="bg-elev1"],
+:root.light [class*="bg-elev2"],
+:root.light [class*="bg-bg-elev1"],
+:root.light [class*="bg-bg-elev2"] {
   backdrop-filter: blur(24px) saturate(180%);
   -webkit-backdrop-filter: blur(24px) saturate(180%);
 }

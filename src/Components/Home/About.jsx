@@ -7,6 +7,7 @@ import { EASE } from "../../lib/ease";
 import { SvgSignature } from "../../primitives/SvgSignature";
 import { TiltCard } from "../../primitives/TiltCard";
 import amazeLogo from "../../../assets/A Maze Venture.png";
+import { useNavigationStatus } from "../../context/NavigationContext";
 
 const ICONS = {
   github: (
@@ -27,7 +28,7 @@ function ScrubbedWord({ word, progress, range, isLead }) {
     <motion.span
       style={{ opacity }}
       className={`inline-block mr-[0.28em] transition-opacity duration-100 ${
-        isLead ? "text-fg font-medium" : "text-[var(--fg-muted)]"
+        isLead ? "text-fg font-medium" : "text-fg-muted"
       }`}
     >
       {word}
@@ -86,6 +87,7 @@ const ABOUT_PARAGRAPHS = [
 ];
 
 export default function About({ showTopBorder = true }) {
+  const { isRouteChange } = useNavigationStatus();
   return (
     <section
       id="about"
@@ -104,14 +106,14 @@ export default function About({ showTopBorder = true }) {
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-10">
           {/* Left: bio paragraphs with scroll-scrubbed reading highlight */}
           <div className="md:col-span-7">
-            <div className="space-y-7">
+            <div className="space-y-6 md:space-y-7">
               {ABOUT_PARAGRAPHS.map((p, i) => (
                 <ScrubbedBioParagraph key={i} lead={p.lead} body={p.body} />
               ))}
             </div>
 
-            <Reveal delay={0.3} className="mt-10">
-              <div className="flex flex-wrap gap-3">
+            <Reveal delay={0.3} className="mt-8 md:mt-10">
+              <div className="flex flex-wrap gap-2.5 md:gap-3">
                 {[
                   "Calm under pressure",
                   "Accountability",
@@ -120,7 +122,7 @@ export default function About({ showTopBorder = true }) {
                 ].map((tag) => (
                   <span
                     key={tag}
-                    className="mono-label rounded-sm border border-border bg-[var(--bg-elev1)] px-3 py-1.5 text-[var(--fg-muted)]"
+                    className="mono-label rounded-sm border border-border bg-elev1 px-3 py-1.5 text-fg-muted text-xs"
                   >
                     {tag}
                   </span>
@@ -129,7 +131,7 @@ export default function About({ showTopBorder = true }) {
             </Reveal>
 
             {/* Recipe 7: SVG Signature Handwriting Draw */}
-            <Reveal delay={0.4} className="mt-12">
+            <Reveal delay={0.4} className="mt-10 md:mt-12">
               <SvgSignature />
             </Reveal>
           </div>
@@ -138,115 +140,106 @@ export default function About({ showTopBorder = true }) {
           <div className="md:col-span-5">
             <TiltCard maxTilt={8}>
               <motion.div
-                initial={{ opacity: 0, y: 24 }}
+                initial={isRouteChange ? { opacity: 0, y: 24 } : false}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-10% 0px" }}
                 transition={{ duration: 0.9, ease: EASE }}
-                className="relative border border-border bg-[var(--bg-elev1)] p-6 md:p-8"
+                className="relative border border-border bg-elev1 p-5 md:p-8 rounded-xl shadow-lg"
               >
-                <span
-                  className="mono-label absolute right-5 top-5"
-                  style={{ color: "var(--fg-dim)" }}
-                >
+                <span className="mono-label absolute right-5 top-5 text-fg-dim">
                   Current Focus
                 </span>
-              <h3
-                className="h3-card"
-                style={{ fontSize: "clamp(20px, 1.6vw, 24px)" }}
-              >
-                Where I am right now
-              </h3>
-
-              <div className="mt-8 grid grid-cols-2 gap-px bg-border">
-                {/* Row 1: Amaze Venture — full width */}
-                <a
-                  href="/contacts"
-                  className="group col-span-2 flex flex-col items-center justify-center gap-3 bg-[var(--bg-elev1)] p-8 transition-colors hover:bg-[var(--bg-elev2)]"
+                <h3
+                  className="h3-card text-fg"
+                  style={{ fontSize: "clamp(20px, 1.6vw, 24px)" }}
                 >
-                  <img
-                    src={amazeLogo}
-                    alt="Amaze Venture"
-                    className="h-10 w-auto max-w-full shrink-0 dark:brightness-0 dark:invert opacity-90 md:h-12 transition-all"
-                  />
-                  <span
-                    className="mono-label"
-                    style={{ color: "var(--fg-muted)" }}
-                  >
-                    Associate Software Engineer
-                  </span>
-                </a>
+                  Where I am right now
+                </h3>
 
-                {/* Row 2: github + linkedin — logo only, centered */}
-                {[
-                  {
-                    href: "https://github.com/Zauwad",
-                    external: true,
-                    icon: ICONS.github,
-                    label: "GitHub",
-                  },
-                  {
-                    href: "https://www.linkedin.com/in/ridwanul-azim-zawad",
-                    external: true,
-                    icon: ICONS.linkedin,
-                    label: "LinkedIn",
-                  },
-                ].map((s, i) => (
+                <div className="mt-6 md:mt-8 grid grid-cols-2 gap-px bg-border rounded-lg overflow-hidden">
+                  {/* Row 1: Amaze Venture — full width */}
                   <a
-                    key={i}
-                    href={s.href}
-                    target="_blank"
-                    rel="noreferrer"
-                    aria-label={s.label}
-                    title={s.label}
-                    className="group flex items-center justify-center bg-[var(--bg-elev1)] p-8 transition-colors hover:bg-[var(--bg-elev2)]"
+                    href="/contacts"
+                    className="group col-span-2 flex flex-col items-center justify-center gap-2.5 md:gap-3 bg-elev1 p-6 md:p-8 transition-colors hover:bg-elev2"
                   >
-                    <span className="flex items-center justify-center text-fg">
-                      {s.icon}
+                    <img
+                      src={amazeLogo}
+                      alt="Amaze Venture"
+                      className="h-9 w-auto max-w-full shrink-0 dark:brightness-0 dark:invert opacity-90 md:h-12 transition-all"
+                    />
+                    <span className="mono-label text-fg-muted text-center">
+                      Associate Software Engineer
                     </span>
                   </a>
-                ))}
-              </div>
 
-              <div className="mt-8 border-t border-border pt-6">
-                <span
-                  className="mono-label mb-3 block"
-                  style={{ color: "var(--fg-dim)" }}
-                >
-                  Currently
-                </span>
-                <ul className="space-y-2 body-m">
-                  <li className="flex items-center gap-3">
-                    <span
-                      className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
-                      aria-hidden
-                    />
-                    <span style={{ color: "var(--fg-muted)" }}>
-                      Building full-stack at Amaze Venture
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <span
-                      className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
-                      aria-hidden
-                    />
-                    <span style={{ color: "var(--fg-muted)" }}>
-                      Studying system design and data modeling on the side
-                    </span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <span
-                      className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
-                      aria-hidden
-                    />
-                    <span style={{ color: "var(--fg-muted)" }}>
-                      Exploring RAG, MCP, and AI-first workflows
-                    </span>
-                  </li>
-                </ul>
-              </div>
-            </motion.div>
-          </TiltCard>
-        </div>
+                  {/* Row 2: github + linkedin — logo only, centered */}
+                  {[
+                    {
+                      href: "https://github.com/Zauwad",
+                      external: true,
+                      icon: ICONS.github,
+                      label: "GitHub",
+                    },
+                    {
+                      href: "https://www.linkedin.com/in/ridwanul-azim-zawad",
+                      external: true,
+                      icon: ICONS.linkedin,
+                      label: "LinkedIn",
+                    },
+                  ].map((s, i) => (
+                    <a
+                      key={i}
+                      href={s.href}
+                      target="_blank"
+                      rel="noreferrer"
+                      aria-label={s.label}
+                      title={s.label}
+                      className="group flex items-center justify-center bg-elev1 p-6 md:p-8 transition-colors hover:bg-elev2"
+                    >
+                      <span className="flex items-center justify-center text-fg">
+                        {s.icon}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+
+                <div className="mt-6 md:mt-8 border-t border-border pt-5 md:pt-6">
+                  <span className="mono-label mb-3 block text-fg-dim">
+                    Currently
+                  </span>
+                  <ul className="space-y-2 body-m">
+                    <li className="flex items-center gap-3">
+                      <span
+                        className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
+                        aria-hidden
+                      />
+                      <span className="text-fg-muted text-sm md:text-base">
+                        Building full-stack at Amaze Venture
+                      </span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span
+                        className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
+                        aria-hidden
+                      />
+                      <span className="text-fg-muted text-sm md:text-base">
+                        Studying system design and data modeling on the side
+                      </span>
+                    </li>
+                    <li className="flex items-center gap-3">
+                      <span
+                        className="inline-block h-1.5 w-1.5 rounded-full bg-fg"
+                        aria-hidden
+                      />
+                      <span className="text-fg-muted text-sm md:text-base">
+                        Exploring RAG, MCP, and AI-first workflows
+                      </span>
+                    </li>
+                  </ul>
+                </div>
+              </motion.div>
+            </TiltCard>
+          </div>
         </div>
       </Container>
     </section>

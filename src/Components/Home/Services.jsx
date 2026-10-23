@@ -28,23 +28,26 @@ function CheckmarkIcon() {
 }
 
 function ScrollStageCard({ s, i, scrollYProgress }) {
-  // Clear, non-overlapping scroll intervals linked to scroll pin:
-  // Card 0 (Plan): arrives from right between 0.05 and 0.28, then stays settled
-  // Card 1 (Build): hidden until 0.35, arrives from right between 0.35 and 0.58, then stays settled
-  // Card 2 (Ship): hidden until 0.66, arrives from right between 0.66 and 0.88, then stays settled
-  const start = 0.05 + i * 0.30;
-  const end = start + 0.23;
+  // Sequential scroll pipeline:
+  // Initial stage (0.00 -> 0.04): stage is blank, all cards offscreen to the right (55vw, opacity 0).
+  // Phase 01 (Plan): glides in from right between 0.04 and 0.21.
+  // Phase 02 (Build): glides in from right between 0.24 and 0.41.
+  // Phase 03 (Ship): glides in from right between 0.44 and 0.61.
+  // Generous locked dwell window (0.61 -> 1.00): all 3 cards docked, CTA revealed (0.63 -> 0.75) before unpinning.
 
-  const rawX = useTransform(
+  const start = 0.04 + i * 0.20;
+  const end = start + 0.17;
+
+  const rawXNum = useTransform(
     scrollYProgress,
     [0, start, end, 1],
-    ["55vw", "55vw", "0vw", "0vw"],
+    [55, 55, 0, 0],
     { clamp: true }
   );
 
   const rawOpacity = useTransform(
     scrollYProgress,
-    [0, start, start + 0.10, 1],
+    [0, start, start + 0.08, 1],
     [0, 0, 1, 1],
     { clamp: true }
   );
@@ -57,9 +60,10 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
   );
 
   // Fluid spring physics for gentle, luxury deceleration when gliding in from the right
-  const x = useSpring(rawX, { stiffness: 55, damping: 18, mass: 0.7 });
+  const springX = useSpring(rawXNum, { stiffness: 60, damping: 18, mass: 0.7 });
+  const x = useTransform(springX, (v) => `${v}vw`);
   const opacity = useSpring(rawOpacity, { stiffness: 75, damping: 20 });
-  const scale = useSpring(rawScale, { stiffness: 55, damping: 18 });
+  const scale = useSpring(rawScale, { stiffness: 60, damping: 18 });
 
   return (
     <motion.div
@@ -186,7 +190,7 @@ export default function Services() {
     offset: ["start start", "end end"],
   });
 
-  const rawCtaOpacity = useTransform(scrollYProgress, [0.85, 0.96], [0, 1]);
+  const rawCtaOpacity = useTransform(scrollYProgress, [0.63, 0.75], [0, 1]);
   const ctaOpacity = useSpring(rawCtaOpacity, { stiffness: 80, damping: 20 });
 
   const validServices = services.filter((s) => s.id !== "design");
@@ -230,7 +234,7 @@ export default function Services() {
     <section
       ref={containerRef}
       id="engagements"
-      className="relative h-[260vh] border-t border-border"
+      className="relative h-[320vh] border-t border-border"
     >
       {/* Pinned viewport frame with transparent background matching all other sections */}
       <div className="sticky top-0 flex h-screen w-full flex-col justify-center overflow-hidden">
@@ -247,10 +251,6 @@ export default function Services() {
               body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
               className="mb-0"
             />
-            <div className="flex items-center gap-2 font-mono text-[11px] text-[var(--fg-dim)]">
-              <span className="h-1.5 w-1.5 rounded-full bg-accent animate-pulse" />
-              <span>PINNED SEQUENCE // SCROLL TO ADVANCE</span>
-            </div>
           </div>
 
           {/* Sequential Phase Pipeline Connector */}

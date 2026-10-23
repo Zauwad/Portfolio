@@ -8,6 +8,7 @@ import { TiltCard } from "../../primitives/TiltCard";
 import { getTechIcon } from "../../lib/techIcons";
 import { EASE } from "../../lib/ease";
 import { Helmet } from "react-helmet";
+import { useNavigationStatus } from "../../context/NavigationContext";
 
 const FILTERS = [
   { id: "all", label: "All" },
@@ -26,7 +27,7 @@ function matchesFilter(project, filterId) {
   return true;
 }
 
-function ScrollProjectArticle({ project, index }) {
+function ScrollProjectArticle({ project, index, isRouteChange }) {
   const cardRef = useRef(null);
   const [mousePos, setMousePos] = useState({ x: 0, y: 0, active: false });
 
@@ -50,7 +51,7 @@ function ScrollProjectArticle({ project, index }) {
       ref={cardRef}
       onMouseMove={handleMouseMove}
       onMouseLeave={handleMouseLeave}
-      initial={{ opacity: 0, scale: 0.96 }}
+      initial={isRouteChange ? { opacity: 0, scale: 0.96 } : false}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.94, transition: { duration: 0.2 } }}
       transition={{
@@ -58,7 +59,7 @@ function ScrollProjectArticle({ project, index }) {
         opacity: { duration: 0.3 },
         scale: { duration: 0.3 },
       }}
-      className="group relative flex flex-col justify-between overflow-hidden bg-[var(--bg-elev1)] p-6 transition-colors duration-500 hover:bg-[var(--bg-elev2)] md:p-8"
+      className="group relative flex flex-col justify-between overflow-hidden bg-elev1 p-5 md:p-8 transition-colors duration-500 hover:bg-elev2"
     >
       {/* Interactive spotlight cursor mask effect */}
       {mousePos.active && (
@@ -72,18 +73,18 @@ function ScrollProjectArticle({ project, index }) {
       )}
 
       <div>
-        <div className="flex items-center justify-between border-b border-border/80 pb-4 mb-6">
-          <div className="flex items-center gap-3">
-            <span className="mono-data font-mono text-[12px] text-accent">
+        <div className="flex items-center justify-between border-b border-border/80 pb-3 md:pb-4 mb-5 md:mb-6">
+          <div className="flex items-center gap-2.5 md:gap-3">
+            <span className="mono-data font-mono text-xs text-accent">
               PROJECT // {String(project.id).padStart(2, "0")}
             </span>
-            <span className="mono-micro font-mono text-[11px] text-[var(--fg-dim)]">
+            <span className="mono-micro font-mono text-[11px] text-fg-dim">
               · {project.role}
             </span>
           </div>
           <span
             aria-hidden
-            className="font-mono text-[13px] text-[var(--fg-dim)] transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-fg"
+            className="font-mono text-[13px] text-fg-dim transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1 group-hover:text-fg"
           >
             ↗
           </span>
@@ -93,7 +94,7 @@ function ScrollProjectArticle({ project, index }) {
         <TiltCard maxTilt={5} glare={false}>
           <Link
             to={`/projects/${project.id}`}
-            className="relative block aspect-[16/10] overflow-hidden rounded-sm border border-border bg-[var(--bg-base)]"
+            className="relative block aspect-[16/10] overflow-hidden rounded-sm border border-border bg-bg-base"
           >
             <img
               src={project.images[0]}
@@ -122,28 +123,26 @@ function ScrollProjectArticle({ project, index }) {
           </Link>
         </TiltCard>
 
-        <header className="mt-6">
+        <header className="mt-5 md:mt-6">
           <Link to={`/projects/${project.id}`}>
             <h3
               className="h3-card font-serif text-fg transition-colors group-hover:text-accent"
-              style={{ fontSize: "clamp(24px, 2.2vw, 30px)" }}
+              style={{ fontSize: "clamp(22px, 2.2vw, 30px)" }}
             >
               {project.title}
             </h3>
-            <p
-              className="body-s mt-1 font-sans text-[var(--fg-muted)] italic"
-            >
+            <p className="body-s mt-1 font-sans text-fg-muted italic">
               "{project.subtitle}"
             </p>
           </Link>
         </header>
 
-        <p className="body-m mt-4 text-[var(--fg-muted)] leading-relaxed">
+        <p className="body-m mt-3 md:mt-4 text-fg-muted leading-relaxed">
           {project.desc}
         </p>
 
         {project.difficulty && (
-          <div className="mt-4 rounded-md border border-border/80 bg-[var(--bg-base)]/60 p-3 text-xs text-[var(--fg-muted)]">
+          <div className="mt-4 rounded-md border border-border/80 bg-bg-base/60 p-3 text-xs text-fg-muted">
             <span className="mono-micro font-mono text-[10px] text-accent block mb-1">
               CORE CHALLENGE
             </span>
@@ -152,13 +151,13 @@ function ScrollProjectArticle({ project, index }) {
         )}
 
         {/* Stack chips with official SVG icons */}
-        <div className="mt-6 flex flex-wrap gap-2">
+        <div className="mt-5 md:mt-6 flex flex-wrap gap-2">
           {project.stack.map((s) => {
             const iconData = getTechIcon(s);
             return (
               <span
                 key={s}
-                className="mono-micro font-mono inline-flex items-center gap-1.5 rounded-sm border border-border bg-[var(--bg-base)] px-2.5 py-1 text-[11px] text-[var(--fg)] transition-all hover:border-border-hi"
+                className="mono-micro font-mono inline-flex items-center gap-1.5 rounded-sm border border-border bg-bg-base px-2.5 py-1 text-[11px] text-fg transition-all hover:border-border-hi"
               >
                 {iconData?.svg && (
                   <span className="h-3 w-3 shrink-0 opacity-75 flex items-center justify-center [&>svg]:h-3 [&>svg]:w-3">
@@ -173,7 +172,7 @@ function ScrollProjectArticle({ project, index }) {
       </div>
 
       {/* Actions */}
-      <div className="mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-border/80 pt-4">
+      <div className="mt-6 md:mt-8 flex flex-wrap items-center justify-between gap-3 border-t border-border/80 pt-4">
         <div className="flex items-center gap-2">
           {project.link && (
             <PrimaryCTA
@@ -206,7 +205,7 @@ function ScrollProjectArticle({ project, index }) {
 
         <Link
           to={`/projects/${project.id}`}
-          className="mono-label font-mono text-[11px] text-[var(--fg-dim)] transition-colors hover:text-fg"
+          className="mono-label font-mono text-[11px] text-fg-dim transition-colors hover:text-fg"
         >
           Read brief →
         </Link>
@@ -216,6 +215,7 @@ function ScrollProjectArticle({ project, index }) {
 }
 
 export default function Projects() {
+  const { isRouteChange } = useNavigationStatus();
   const [filter, setFilter] = useState("all");
   const filtered = useMemo(
     () => projects.filter((p) => matchesFilter(p, filter)),
@@ -228,7 +228,7 @@ export default function Projects() {
         <title>Work — Ridwanul.dev</title>
         <meta
           name="description"
-          content="Selected full-stack and frontend projects by Ridwanul Azim Zawad — React, Node, MongoDB, Firebase, Stripe."
+          content="Selected full-stack and frontend projects by Ridwanul Azim Zawad"
         />
       </Helmet>
 
@@ -236,8 +236,8 @@ export default function Projects() {
         <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
         <Container size="wide" className="relative">
           {/* Masked Editorial Headline */}
-          <div className="mb-10 max-w-[800px]">
-            <div className="mono-data mb-4 flex items-center gap-2 text-[var(--fg-dim)]">
+          <div className="mb-8 md:mb-10 max-w-[800px]">
+            <div className="mono-data mb-3 md:mb-4 flex items-center gap-2 text-fg-dim">
               <span className="h-1 w-1 rounded-full bg-accent" />
               <span>02 // SELECTED CASE STUDIES</span>
             </div>
@@ -246,7 +246,7 @@ export default function Projects() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block"
-                  initial={{ y: "115%" }}
+                  initial={isRouteChange ? { y: "115%" } : false}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
@@ -255,8 +255,8 @@ export default function Projects() {
               </span>
               <span className="block overflow-hidden py-1">
                 <motion.span
-                  className="block text-[var(--fg-muted)] font-serif italic"
-                  initial={{ y: "115%" }}
+                  className="block text-fg-muted font-serif italic"
+                  initial={isRouteChange ? { y: "115%" } : false}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 >
@@ -266,35 +266,21 @@ export default function Projects() {
             </h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
-              className="body-l mt-6 max-w-[58ch] text-[var(--fg-muted)] leading-relaxed"
+              className="body-l mt-4 md:mt-6 max-w-[58ch] text-fg-muted leading-relaxed"
             >
               Filter by discipline or explore the full roster. Every card opens to an
               in-depth brief — architecture, data models, build decisions, and live links.
             </motion.p>
           </div>
 
-          {/* Architectural Live HUD */}
-          <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-y border-border/80 py-3 font-mono text-[11px] uppercase tracking-[0.2em] text-[var(--fg-dim)]">
-            <div className="flex items-center gap-4">
-              <span className="flex items-center gap-2 text-fg font-medium">
-                <span className="h-1.5 w-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                <span>{projects.length} CASE STUDIES</span>
-              </span>
-              <span>·</span>
-              <span>MULTI-TENANT / REALTIME / AI WORKSPACES</span>
-            </div>
-            <span className="hidden md:inline tabular">SCROLL TO EXPLORE ARCHITECTURE ↓</span>
-          </div>
+
 
           {/* Filter row */}
-          <div className="mb-10 flex flex-wrap items-center gap-3">
-            <span
-              className="mono-label font-mono text-[11px] uppercase tracking-[0.2em]"
-              style={{ color: "var(--fg-dim)" }}
-            >
+          <div className="mb-8 md:mb-10 flex flex-wrap items-center gap-3">
+            <span className="mono-label font-mono text-[11px] uppercase tracking-[0.2em] text-fg-dim">
               FILTER:
             </span>
             <div className="flex flex-wrap gap-2">
@@ -304,10 +290,9 @@ export default function Projects() {
                   <button
                     key={f.id}
                     onClick={() => setFilter(f.id)}
-                    className="relative rounded-sm px-4 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 select-none cursor-pointer"
-                    style={{
-                      color: isActive ? "var(--bg-base)" : "var(--fg-muted)",
-                    }}
+                    className={`relative rounded-sm px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.2em] transition-colors duration-300 select-none cursor-pointer ${
+                      isActive ? "text-bg-base font-semibold" : "text-fg-muted hover:text-fg"
+                    }`}
                   >
                     <span className="relative z-10">{f.label}</span>
                     {isActive ? (
@@ -317,54 +302,52 @@ export default function Projects() {
                         transition={{ type: "spring", stiffness: 420, damping: 30 }}
                       />
                     ) : (
-                      <span className="absolute inset-0 rounded-sm border border-border bg-[var(--bg-base)] transition-colors hover:border-[var(--border-hi)]" />
+                      <span className="absolute inset-0 rounded-sm border border-border bg-bg-base transition-colors hover:border-border-hi" />
                     )}
                   </button>
                 );
               })}
             </div>
-            <span
-              className="mono-data ml-auto tabular font-mono text-[11px]"
-              style={{ color: "var(--fg-dim)" }}
-            >
-              Showing {filtered.length} of {projects.length} projects
+            <span className="mono-data ml-auto tabular font-mono text-[11px] text-fg-dim">
+              <span className="hidden sm:inline">Showing </span>{filtered.length} of {projects.length} projects
             </span>
           </div>
 
           {/* Projects grid with Spring Layout Transitions */}
           <motion.div
             layout
-            className="grid grid-cols-1 gap-px bg-border lg:grid-cols-2"
+            className="grid grid-cols-1 gap-px bg-border lg:grid-cols-2 rounded-xl overflow-hidden shadow-xl"
           >
             <AnimatePresence mode="popLayout" initial={false}>
               {filtered.map((p, i) => (
-                <ScrollProjectArticle key={p.id} project={p} index={i} />
+                <ScrollProjectArticle
+                  key={p.id}
+                  project={p}
+                  index={i}
+                  isRouteChange={isRouteChange}
+                />
               ))}
             </AnimatePresence>
 
             {/* CTA tile — fills the empty slot beside an odd-numbered last card */}
             <motion.div
               layout
-              initial={{ opacity: 0, y: 16 }}
+              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-10% 0px" }}
               transition={{ duration: 0.9, ease: EASE }}
-              className="flex flex-col items-center justify-center gap-6 bg-[var(--bg-elev1)] p-8 text-center md:p-12"
+              className="flex flex-col items-center justify-center gap-5 md:gap-6 bg-elev1 p-6 text-center md:p-12"
             >
-              <span
-                className="mono-label font-mono text-[11px] text-[var(--fg-dim)]"
-              >
+              <span className="mono-label font-mono text-[11px] text-fg-dim">
                 ✕ 08 · NEXT CHAPTER
               </span>
               <h3
                 className="h3-card font-serif text-fg"
-                style={{ fontSize: "clamp(24px, 2.4vw, 32px)" }}
+                style={{ fontSize: "clamp(22px, 2.4vw, 32px)" }}
               >
                 Have a project in mind?
               </h3>
-              <p
-                className="body-m max-w-[44ch] text-[var(--fg-muted)] leading-relaxed"
-              >
+              <p className="body-m max-w-[44ch] text-fg-muted leading-relaxed">
                 Open to freelance, contract, and hybrid roles — let's build
                 something resilient and considered together.
               </p>

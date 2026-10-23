@@ -28,7 +28,7 @@ export function BrandMark({
       </span>
       {showTag && tag && (
         <span
-          className={cn("font-mono text-[var(--fg-dim)]", sz.tag)}
+          className={cn("font-mono text-fg-dim", sz.tag)}
           style={{ letterSpacing: "0.18em" }}
         >
           /{tag}

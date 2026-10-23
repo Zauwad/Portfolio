@@ -83,7 +83,7 @@ export function SvgSignature({ className, showLabel = true }) {
           transition={{ duration: 0.8, delay: 1.8, ease: "easeOut" }}
           className="flex items-center gap-3 pt-1 border-t border-border/60"
         >
-          <span className="mono-data text-[11px]" style={{ color: "var(--fg-dim)" }}>
+          <span className="mono-data text-[11px] text-fg-dim">
             Ridwanul Azim · Software Engineer
           </span>
         </motion.div>

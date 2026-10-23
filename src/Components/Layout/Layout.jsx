@@ -1,14 +1,52 @@
 import { useState, useEffect, useLayoutEffect } from "react";
-import { Outlet, useLocation } from "react-router";
+import { useOutlet, useLocation } from "react-router";
+import { motion, AnimatePresence } from "framer-motion";
 import Lenis from "lenis";
 import Navbar from "../Navbar/Navbar";
 import Footer from "../Footer/Footer";
 import CommandPalette from "../CommandPalette/CommandPalette";
 import { CustomCursor } from "../../primitives/CustomCursor";
+import { useReducedMotion } from "../../hooks/useReducedMotion";
+import { NavigationProvider, useNavigationStatus } from "../../context/NavigationContext";
+
+function LayoutContent({ paletteOpen, setPaletteOpen, location, outlet, reduced }) {
+  const { isRouteChange } = useNavigationStatus();
+
+  return (
+    <div className="flex min-h-[100svh] flex-col overflow-x-clip bg-bg-base text-fg selection:bg-fg selection:text-bg-base">
+      <CustomCursor />
+      <Navbar onOpenPalette={() => setPaletteOpen(true)} />
+      <main className="flex-1 pt-20 md:pt-24">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.div
+            key={location.pathname}
+            initial={isRouteChange && !reduced ? { opacity: 0, y: 10 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduced ? { opacity: 1 } : { opacity: 0, y: -10 }}
+            transition={{
+              duration: reduced ? 0 : 0.28,
+              ease: [0.22, 1, 0.36, 1],
+            }}
+            className="w-full flex-1"
+          >
+            {outlet}
+          </motion.div>
+        </AnimatePresence>
+      </main>
+      <Footer />
+      <CommandPalette
+        open={paletteOpen}
+        onClose={() => setPaletteOpen(false)}
+      />
+    </div>
+  );
+}
 
 export default function Layout() {
   const [paletteOpen, setPaletteOpen] = useState(false);
   const location = useLocation();
+  const outlet = useOutlet();
+  const reduced = useReducedMotion();
 
   // Initialize smooth inertia scroll (Lenis)
   useEffect(() => {
@@ -34,7 +72,7 @@ export default function Layout() {
     };
   }, []);
 
-  // Normally start at top on route change without any scroll animation
+  // Ensure scroll is immediately reset to top on route change
   useLayoutEffect(() => {
     window.scrollTo(0, 0);
     document.documentElement.scrollTop = 0;
@@ -59,17 +97,14 @@ export default function Layout() {
   }, []);
 
   return (
-    <div className="flex min-h-[100svh] flex-col">
-      <CustomCursor />
-      <Navbar onOpenPalette={() => setPaletteOpen(true)} />
-      <main className="flex-1 pt-20 md:pt-24">
-        <Outlet />
-      </main>
-      <Footer />
-      <CommandPalette
-        open={paletteOpen}
-        onClose={() => setPaletteOpen(false)}
+    <NavigationProvider>
+      <LayoutContent
+        paletteOpen={paletteOpen}
+        setPaletteOpen={setPaletteOpen}
+        location={location}
+        outlet={outlet}
+        reduced={reduced}
       />
-    </div>
+    </NavigationProvider>
   );
 }

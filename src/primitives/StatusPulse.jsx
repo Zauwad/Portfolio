@@ -8,8 +8,8 @@ export function StatusPulse({
 }) {
   const dotColor = {
     live: "bg-fg",
-    idle: "bg-[var(--fg-muted)]",
-    error: "bg-[var(--fg-dim)]",
+    idle: "bg-fg-muted",
+    error: "bg-fg-dim",
   }[variant];
 
   return (
@@ -35,10 +35,7 @@ export function StatusPulse({
         )}
       </span>
       {label && (
-        <span
-          className="mono-label"
-          style={{ color: "var(--fg-muted)" }}
-        >
+        <span className="mono-label text-fg-muted text-xs">
           {label}
         </span>
       )}

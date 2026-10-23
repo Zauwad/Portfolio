@@ -24,6 +24,9 @@ export function PrimaryCTA({
 
   const handleMouseMove = (e) => {
     if (!magnetic || !btnRef.current) return;
+    if (typeof window !== "undefined" && !window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      return;
+    }
     const rect = btnRef.current.getBoundingClientRect();
     const x = e.clientX - (rect.left + rect.width / 2);
     const y = e.clientY - (rect.top + rect.height / 2);
@@ -38,17 +41,17 @@ export function PrimaryCTA({
   };
 
   const sizes = {
-    sm: "px-3 py-1.5 text-[12px]",
-    md: "px-5 py-2.5 text-[13px]",
-    lg: "px-6 py-3 text-[13px]",
+    sm: "px-3 py-1.5 text-xs",
+    md: "px-4 py-2 text-xs md:px-5 md:py-2.5 md:text-sm",
+    lg: "px-5 py-2.5 text-xs md:px-6 md:py-3 md:text-sm",
   };
 
   const base =
     "cta group/cta relative inline-flex items-center justify-center gap-2 overflow-hidden rounded-sm font-mono uppercase tracking-[0.18em] transition-colors duration-300 select-none cursor-pointer";
 
   const variants = {
-    outline: "border border-[var(--border-hi)] text-fg hover:border-fg",
-    solid: "border border-fg bg-fg text-[var(--bg-base)]",
+    outline: "border border-border-hi text-fg hover:border-fg",
+    solid: "border border-fg bg-fg text-bg-base",
     ghost: "text-fg-muted hover:text-fg",
   };
 
@@ -65,7 +68,7 @@ export function PrimaryCTA({
       <span
         className={cn(
           "relative z-10 flex items-center gap-2 transition-colors duration-500",
-          variant === "outline" && "group-hover/cta:text-[var(--bg-base)]"
+          variant === "outline" && "group-hover/cta:text-bg-base"
         )}
       >
         {children}

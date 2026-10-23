@@ -53,14 +53,14 @@ export function Sparkline({
       >
         <defs>
           <linearGradient id="spark-grad" x1="0" x2="0" y1="0" y2="1">
-            <stop offset="0%" stopColor="rgba(250,250,250,0.18)" />
-            <stop offset="100%" stopColor="rgba(250,250,250,0)" />
+            <stop offset="0%" stopColor="currentColor" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="currentColor" stopOpacity="0" />
           </linearGradient>
         </defs>
         <path d={areaPath} fill="url(#spark-grad)" />
         <path
           d={linePath}
-          stroke="#fafafa"
+          stroke="currentColor"
           strokeWidth="1.25"
           fill="none"
           strokeLinecap="round"
@@ -73,7 +73,7 @@ export function Sparkline({
               x2={hoverPoint[0]}
               y1={0}
               y2={h}
-              stroke="rgba(250,250,250,0.12)"
+              stroke="var(--border-hi)"
               strokeWidth="1"
               strokeDasharray="3 3"
             />
@@ -82,14 +82,14 @@ export function Sparkline({
               cy={hoverPoint[1]}
               r="4"
               fill="none"
-              stroke="rgba(250,250,250,0.4)"
+              stroke="var(--fg-muted)"
               strokeWidth="1.5"
             />
             <circle
               cx={hoverPoint[0]}
               cy={hoverPoint[1]}
               r="2"
-              fill="#fafafa"
+              fill="currentColor"
             />
           </>
         )}

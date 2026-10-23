@@ -33,8 +33,13 @@ export function ParticleField({ className = "" }) {
     };
     window.addEventListener("mousemove", onMouseMove);
 
-    // Generate floating 3D dust particles
-    const PARTICLE_COUNT = 75;
+    // Check reduced motion
+    const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (prefersReducedMotion) return;
+
+    // Responsive particle count (lighter on mobile)
+    const isMobile = width < 768;
+    const PARTICLE_COUNT = isMobile ? 28 : 65;
     const particles = [];
     for (let i = 0; i < PARTICLE_COUNT; i++) {
       particles.push({

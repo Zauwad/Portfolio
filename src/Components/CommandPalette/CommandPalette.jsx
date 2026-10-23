@@ -171,7 +171,7 @@ export default function CommandPalette({ open, onClose }) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.18 }}
-          className="fixed inset-0 z-[100] flex items-start justify-center bg-[var(--bg-base)]/70 px-4 pt-[12vh] backdrop-blur-sm"
+          className="fixed inset-0 z-[100] flex items-start justify-center bg-bg-base/75 px-3 sm:px-4 pt-[10vh] sm:pt-[12vh] backdrop-blur-sm"
           onClick={onClose}
         >
           <motion.div
@@ -182,15 +182,12 @@ export default function CommandPalette({ open, onClose }) {
               duration: reduced ? 0 : 0.24,
               ease: EASE,
             }}
-            className="relative w-full max-w-[620px] overflow-hidden rounded-md border border-[var(--border-hi)] bg-[var(--bg-elev1)] shadow-2xl"
+            className="relative w-full max-w-[620px] overflow-hidden rounded-md border border-border-hi bg-elev1 shadow-2xl"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Input row */}
             <div className="flex items-center gap-3 border-b border-border px-4 py-3.5">
-              <span
-                className="mono-label"
-                style={{ color: "var(--fg-dim)" }}
-              >
+              <span className="mono-label text-fg-dim text-xs">
                 ⌘K
               </span>
               <input
@@ -199,12 +196,9 @@ export default function CommandPalette({ open, onClose }) {
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 placeholder="Jump to · section · project · action"
-                className="flex-1 bg-transparent text-[15px] text-fg outline-none placeholder:text-[var(--fg-dim)]"
+                className="flex-1 bg-transparent text-sm sm:text-[15px] text-fg outline-none placeholder:text-fg-dim"
               />
-              <span
-                className="mono-label"
-                style={{ color: "var(--fg-dim)" }}
-              >
+              <span className="mono-label text-fg-dim text-xs">
                 esc
               </span>
             </div>
@@ -212,10 +206,7 @@ export default function CommandPalette({ open, onClose }) {
             {/* Items */}
             <div className="max-h-[60vh] overflow-y-auto p-2">
               {filtered.length === 0 ? (
-                <div
-                  className="body-m px-4 py-12 text-center"
-                  style={{ color: "var(--fg-dim)" }}
-                >
+                <div className="body-m px-4 py-12 text-center text-fg-dim">
                   No matches for "{query}"
                 </div>
               ) : (
@@ -228,18 +219,15 @@ export default function CommandPalette({ open, onClose }) {
                           item.action();
                           onClose();
                         }}
-                        className={`flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-left text-[13px] transition-colors ${
+                        className={`flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-left text-xs sm:text-[13px] transition-colors ${
                           i === active
-                            ? "bg-[var(--bg-elev2)] text-fg"
-                            : "text-[var(--fg-muted)] hover:bg-[var(--bg-elev2)] hover:text-fg"
+                            ? "bg-elev2 text-fg font-medium"
+                            : "text-fg-muted hover:bg-elev2 hover:text-fg"
                         }`}
                       >
                         <span>{item.label}</span>
                         {item.shortcut && (
-                          <span
-                            className="mono-label"
-                            style={{ color: "var(--fg-dim)" }}
-                          >
+                          <span className="mono-label text-fg-dim text-xs">
                             {item.shortcut}
                           </span>
                         )}
@@ -251,11 +239,9 @@ export default function CommandPalette({ open, onClose }) {
             </div>
 
             {/* Footer */}
-            <div
-              className="mono-label flex items-center justify-between border-t border-border px-4 py-2.5"
-              style={{ color: "var(--fg-dim)" }}
-            >
-              <span>↑↓ navigate · ↵ run</span>
+            <div className="mono-label flex items-center justify-between border-t border-border px-4 py-2.5 text-fg-dim text-xs">
+              <span className="hidden sm:inline">↑↓ navigate · ↵ run</span>
+              <span className="sm:hidden">Tap to select</span>
               <span>{filtered.length} commands</span>
               <span>esc close</span>
             </div>

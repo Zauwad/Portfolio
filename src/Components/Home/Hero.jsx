@@ -7,8 +7,10 @@ import { Marquee } from "../../primitives/Marquee";
 import { ParticleField } from "../../primitives/ParticleField";
 import { TiltCard } from "../../primitives/TiltCard";
 import { EASE } from "../../lib/ease";
+import { useNavigationStatus } from "../../context/NavigationContext";
 
 export default function Hero() {
+  const { isRouteChange } = useNavigationStatus();
   const heroRef = useRef(null);
   const { scrollYProgress } = useScroll({
     target: heroRef,
@@ -37,21 +39,21 @@ export default function Hero() {
       {/* Floating glyphs - positioned to not overlap text */}
       <span
         aria-hidden
-        className="mono-data pointer-events-none absolute right-[3%] top-[10%] hidden text-[var(--fg-dim)] md:block"
+        className="mono-data pointer-events-none absolute right-[3%] top-[10%] hidden text-fg-dim md:block"
         style={{ fontSize: 64, lineHeight: 1 }}
       >
         ∇
       </span>
       <span
         aria-hidden
-        className="mono-data pointer-events-none absolute left-[3%] bottom-[12%] hidden text-[var(--fg-dim)] md:block"
+        className="mono-data pointer-events-none absolute left-[3%] bottom-[12%] hidden text-fg-dim md:block"
         style={{ fontSize: 48, lineHeight: 1 }}
       >
         ◇
       </span>
       <span
         aria-hidden
-        className="mono-data pointer-events-none absolute right-[8%] bottom-[24%] hidden text-[var(--fg-dim)] md:block"
+        className="mono-data pointer-events-none absolute right-[8%] bottom-[24%] hidden text-fg-dim md:block"
         style={{ fontSize: 32, lineHeight: 1 }}
       >
         Σ
@@ -60,32 +62,30 @@ export default function Hero() {
       <Container size="wide" className="relative py-20 md:py-28 lg:py-36">
         {/* Top editorial index row - calm, non-needy, museum-grade */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={isRouteChange ? { opacity: 0, y: 12 } : false}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, ease: EASE }}
-          className="mb-10 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] md:mb-14"
-          style={{ color: "var(--fg-dim)" }}
+          className="mb-8 flex items-center justify-between font-mono text-[11px] uppercase tracking-[0.2em] text-fg-dim md:mb-14"
         >
-          <span className="hidden md:inline-flex items-center gap-2">
-            <span>DHAKA, BANGLADESH</span>
+          <span className="inline-flex items-center gap-2">
+            <span>DHAKA <span className="hidden sm:inline">· BANGLADESH</span></span>
             <span aria-hidden>·</span>
             <span className="tabular">UTC+6</span>
           </span>
         </motion.div>
 
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-12 md:gap-10 lg:gap-16">
+        <div className="grid grid-cols-1 items-center gap-10 md:grid-cols-12 md:gap-10 lg:gap-16">
           {/* Portrait with 3D Holographic Perspective Tilt */}
           <motion.figure
             style={{ y: portraitY }}
-            initial={{ opacity: 0, y: 16 }}
+            initial={isRouteChange ? { opacity: 0, y: 16 } : false}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, ease: EASE, delay: 0.05 }}
-            className="order-1 mx-auto w-full max-w-[280px] md:order-2 md:col-span-5 md:max-w-none md:justify-self-end lg:col-span-5 lg:max-w-[360px]"
+            className="order-1 mx-auto w-full max-w-[260px] md:order-2 md:col-span-5 md:max-w-none md:justify-self-end lg:col-span-5 lg:max-w-[360px]"
           >
             {/* Outer ring — sits behind the panel, gives the accent halo */}
             <div
-              className="relative"
-              style={{ padding: 14 }}
+              className="relative p-2.5 md:p-3.5"
             >
               <div
                 aria-hidden
@@ -126,7 +126,7 @@ export default function Hero() {
 
               {/* Photo with 3D tilt only, outer borders stay completely static */}
               <TiltCard maxTilt={8} glare={false}>
-                <div className="relative overflow-hidden border border-border bg-[var(--bg-elev1)]">
+                <div className="relative overflow-hidden border border-border bg-elev1">
                   <div
                     aria-hidden
                     className="pointer-events-none absolute inset-0"
@@ -146,8 +146,7 @@ export default function Hero() {
             </div>
 
             <figcaption
-              className="mono-data mt-4 flex items-center justify-between"
-              style={{ color: "var(--fg-dim)" }}
+              className="mono-data mt-3 md:mt-4 flex items-center justify-between text-fg-dim"
             >
               <span>✕ me</span>
               <span className="tabular font-mono">548 × 455</span>
@@ -163,7 +162,7 @@ export default function Hero() {
               <span className="block overflow-hidden py-1">
                 <motion.span
                   className="block"
-                  initial={{ y: "115%" }}
+                  initial={isRouteChange ? { y: "115%" } : false}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 >
@@ -172,8 +171,8 @@ export default function Hero() {
               </span>
               <span className="block overflow-hidden py-1">
                 <motion.span
-                  className="block text-[var(--fg-muted)]"
-                  initial={{ y: "115%" }}
+                  className="block text-fg-muted font-serif italic"
+                  initial={isRouteChange ? { y: "115%" } : false}
                   animate={{ y: 0 }}
                   transition={{ duration: 1.1, ease: [0.16, 1, 0.3, 1], delay: 0.25 }}
                 >
@@ -183,22 +182,26 @@ export default function Hero() {
             </h1>
 
             <motion.p
-              initial={{ opacity: 0, y: 16 }}
+              initial={isRouteChange ? { opacity: 0, y: 16 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.4 }}
-              className="body-l mt-8 max-w-[58ch]"
-              style={{ color: "var(--fg-muted)" }}
+              className="body-l mt-6 md:mt-8 max-w-[58ch] text-fg-muted leading-relaxed"
             >
-              Ridwanul Azim Zawad — I build, ship, and design full-stack web
-              products. I care about clean code, calm interfaces, and getting
-              things into the hands of real users.
+              <span className="md:hidden">
+                I build and ship products with clean code, calm interfaces, and resilient performance.
+              </span>
+              <span className="hidden md:inline">
+                Ridwanul Azim Zawad — I build, ship, and design
+                products. I care about clean code, calm interfaces, and getting
+                things into the hands of real users.
+              </span>
             </motion.p>
 
             <motion.div
-              initial={{ opacity: 0, y: 12 }}
+              initial={isRouteChange ? { opacity: 0, y: 12 } : false}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.9, ease: EASE, delay: 0.55 }}
-              className="mt-12 flex flex-wrap items-center gap-3"
+              className="mt-8 md:mt-12 flex flex-wrap items-center gap-3"
             >
               <PrimaryCTA variant="solid" size="lg" to="/projects">
                 View Work
@@ -210,7 +213,7 @@ export default function Hero() {
                 href="/Ridwanul_Azim_Resume.pdf"
                 target="_blank"
                 rel="noreferrer"
-                className="mono-label ml-2 inline-flex items-center gap-2 text-[var(--fg-muted)] transition-colors hover:text-fg"
+                className="mono-label ml-2 inline-flex items-center gap-2 text-fg-muted transition-colors hover:text-fg text-xs"
               >
                 Resume <span aria-hidden>↓</span>
               </a>

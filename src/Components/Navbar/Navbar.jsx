@@ -52,8 +52,8 @@ export default function Navbar({ onOpenPalette }) {
           className={cn(
             "mx-auto flex max-w-[1360px] items-center justify-between rounded-md border px-4 py-2.5 md:px-7 md:py-2.5 transition-all duration-300 pointer-events-auto",
             scrolled
-              ? "border-border-hi bg-[var(--bg-base)]/90 backdrop-blur-md shadow-lg shadow-black/[0.04]"
-              : "border-border/80 bg-[var(--bg-base)]/75 backdrop-blur-md shadow-sm"
+              ? "border-border-hi bg-bg-base/90 backdrop-blur-md shadow-lg shadow-black/[0.04]"
+              : "border-border/80 bg-bg-base/75 backdrop-blur-md shadow-sm"
           )}
         >
           <div className="flex items-center gap-8">
@@ -65,7 +65,7 @@ export default function Navbar({ onOpenPalette }) {
               {NAV_ITEMS.map((item) => {
                 const isHovered = hoveredNav === item.id;
                 const baseCls =
-                  "relative rounded-sm px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 text-[var(--fg-muted)] hover:text-fg";
+                  "relative rounded-sm px-3.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] transition-colors duration-300 text-fg-muted hover:text-fg";
 
                 return (
                   <NavLink
@@ -82,7 +82,7 @@ export default function Navbar({ onOpenPalette }) {
                         {(isHovered || (isActive && !hoveredNav)) && (
                           <motion.span
                             layoutId="nav-pill"
-                            className="absolute inset-0 rounded-sm bg-[var(--bg-elev2)] border border-[var(--border-hi)] shadow-sm"
+                            className="absolute inset-0 rounded-sm bg-elev2 border border-border-hi shadow-sm"
                             transition={{ type: "spring", stiffness: 400, damping: 30 }}
                           />
                         )}
@@ -98,13 +98,13 @@ export default function Navbar({ onOpenPalette }) {
           <div className="flex items-center gap-2 md:gap-3">
             <button
               onClick={onOpenPalette}
-              className="hidden items-center gap-2 rounded-sm border border-border bg-[var(--bg-elev1)] px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg md:inline-flex"
+              className="hidden items-center gap-2 rounded-sm border border-border bg-elev1 px-2.5 py-1.5 font-mono text-[11px] uppercase tracking-[0.22em] text-fg-muted transition-colors duration-300 hover:border-border-hi hover:text-fg md:inline-flex"
               aria-label="Open command palette"
             >
               <span>Search</span>
               <Kbd>⌘K</Kbd>
             </button>
-            <div className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-[var(--bg-elev1)] text-[var(--fg-muted)] transition-colors duration-300 hover:border-[var(--border-hi)] hover:text-fg md:h-[34px] md:w-[34px]">
+            <div className="inline-flex h-9 w-9 items-center justify-center rounded-sm border border-border bg-elev1 text-fg-muted transition-colors duration-300 hover:border-border-hi hover:text-fg md:h-[34px] md:w-[34px]">
               <ToggleTheme animationType="circle-spread" duration={600} />
             </div>
             <div className="hidden md:block">
@@ -150,7 +150,7 @@ export default function Navbar({ onOpenPalette }) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
-            className="fixed inset-0 z-40 bg-[var(--bg-base)]/80 backdrop-blur-md md:hidden"
+            className="fixed inset-0 z-40 bg-bg-base/80 backdrop-blur-md md:hidden"
             onClick={() => setOpen(false)}
           >
             <motion.div
@@ -158,7 +158,7 @@ export default function Navbar({ onOpenPalette }) {
               animate={{ y: 0, opacity: 1 }}
               exit={{ y: -20, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-              className="border-b border-border bg-[var(--bg-base)] px-6 pb-8 pt-24"
+              className="border-b border-border bg-bg-base px-6 pb-8 pt-24"
               onClick={(e) => e.stopPropagation()}
             >
               <nav className="flex flex-col gap-1">
@@ -169,17 +169,28 @@ export default function Navbar({ onOpenPalette }) {
                     onClick={() => setOpen(false)}
                     className={({ isActive }) =>
                       cn(
-                        "block border-b border-border px-2 py-4 text-[28px] font-medium tracking-tight transition-colors",
-                        isActive ? "text-fg font-semibold" : "text-[var(--fg-muted)] hover:text-fg"
+                        "block border-b border-border px-2 py-3.5 text-2xl font-medium tracking-tight transition-colors",
+                        isActive ? "text-fg font-semibold" : "text-fg-muted hover:text-fg"
                       )
                     }
                   >
                     {item.label}
                   </NavLink>
                 ))}
+                <button
+                  type="button"
+                  onClick={() => {
+                    setOpen(false);
+                    onOpenPalette?.();
+                  }}
+                  className="flex items-center justify-between border-b border-border px-2 py-3.5 text-left font-mono text-xs uppercase tracking-[0.2em] text-fg-muted hover:text-fg transition-colors"
+                >
+                  <span>Quick Search / Jump</span>
+                  <Kbd>⌘K</Kbd>
+                </button>
               </nav>
-              <div className="mt-8 flex items-center justify-between gap-4">
-                <span className="mono-label" style={{ color: "var(--fg-dim)" }}>
+              <div className="mt-6 flex items-center justify-between gap-4">
+                <span className="mono-label text-fg-dim text-xs">
                   Portfolio · Ridwanul
                 </span>
                 <PrimaryCTA

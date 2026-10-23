@@ -44,10 +44,7 @@ export default function Footer() {
           {/* Column 1: Manifesto / Bold Statement (6 cols) */}
           <div className="flex flex-col justify-between lg:col-span-6">
             <div>
-              <div className="mono-micro mb-6 flex items-center gap-2 text-[var(--fg-dim)]">
-                <span className="h-1 w-1 rounded-full bg-accent" />
-                <span>FULL-STACK ARCHITECTURE & CODE</span>
-              </div>
+
 
               <h2
                 className="display text-fg text-balance font-medium leading-[1.04]"
@@ -61,7 +58,7 @@ export default function Footer() {
               </h2>
 
               <p className="body-l mt-6 max-w-[46ch] text-[var(--fg-muted)] leading-relaxed">
-                Full-stack web architecture, resilient backend infrastructure, and calm,
+                Production-grade web architecture, resilient backend infrastructure, and calm,
                 considered interfaces. Designed to last and built to scale.
               </p>
             </div>
@@ -165,11 +162,12 @@ export default function Footer() {
           </div>
         </div>
 
-        {/* Monumental Watermark Display Typography (The Apricode signature effect) */}
+        {/* Monumental Watermark Display Typography (The Apricode signature effect - Double line on all devices) */}
         <div className="pointer-events-none mt-16 md:mt-24 select-none overflow-hidden border-t border-border/40 pt-10 pb-2">
-          <span className="footer-watermark block text-center font-serif text-[11vw] font-bold uppercase tracking-tight leading-none text-fg opacity-[0.06] transition-all duration-500">
-            RIDWANUL AZIM
-          </span>
+          <div className="footer-watermark flex flex-col items-center justify-center text-center font-serif text-[11vw] font-bold uppercase tracking-tight leading-none text-fg opacity-[0.06] transition-all duration-500">
+            <span className="block">RIDWANUL</span>
+            <span className="block">AZIM</span>
+          </div>
         </div>
 
         {/* Bottom architecture metadata bar */}

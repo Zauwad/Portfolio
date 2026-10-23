@@ -11,25 +11,24 @@ export function SectionHeading({
 }) {
   return (
     <header
-      className={`mb-16 md:mb-20 ${align === "center" ? "text-center" : "text-left"} ${className}`}
+      className={`mb-12 md:mb-16 lg:mb-20 ${align === "center" ? "text-center" : "text-left"} ${className}`}
     >
       {(eyebrow || index) && (
         <Reveal as="div" delay={0}>
           <div
-            className={`mono-label mb-6 flex items-center gap-3 ${
+            className={`mono-label mb-4 md:mb-6 flex items-center gap-3 text-fg-dim ${
               align === "center" ? "justify-center" : ""
             }`}
-            style={{ color: "var(--fg-dim)" }}
           >
             {index && (
-              <span className="tabular" style={{ color: "var(--fg-muted)" }}>
+              <span className="tabular text-fg-muted">
                 {String(index).padStart(2, "0")}
               </span>
             )}
             {eyebrow && (
               <>
                 {index && (
-                  <span aria-hidden style={{ color: "var(--fg-dim)" }}>
+                  <span aria-hidden className="text-fg-dim">
                     ·
                   </span>
                 )}
@@ -40,19 +39,16 @@ export function SectionHeading({
         </Reveal>
       )}
       <Reveal delay={0.05}>
-        <h2 className="h2">
+        <h2 className="h2 text-fg">
           {title}{" "}
           {muted && (
-            <span style={{ color: "var(--fg-muted)" }}>{muted}</span>
+            <span className="text-fg-muted">{muted}</span>
           )}
         </h2>
       </Reveal>
       {body && (
         <Reveal delay={0.12}>
-          <p
-            className="body-l mt-6 max-w-[60ch]"
-            style={{ color: "var(--fg-muted)" }}
-          >
+          <p className="body-l mt-4 md:mt-6 max-w-[60ch] text-fg-muted">
             {body}
           </p>
         </Reveal>

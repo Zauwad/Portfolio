@@ -10,10 +10,10 @@ export default function Home() {
   return (
     <div className="relative">
       <Helmet>
-        <title>Ridwanul.dev — Full-stack Engineer</title>
+        <title>Ridwanul.dev — Software Engineer</title>
         <meta
           name="description"
-          content="Ridwanul Azim Zawad — full-stack engineer building web platforms with modern tech stacks"
+          content="Ridwanul Azim Zawad — software engineer building platforms with modern tech stacks"
         />
       </Helmet>
       <Hero />
