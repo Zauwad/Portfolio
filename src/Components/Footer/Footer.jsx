@@ -58,8 +58,7 @@ export default function Footer() {
               </h2>
 
               <p className="body-l mt-6 max-w-[46ch] text-[var(--fg-muted)] leading-relaxed">
-                Production-grade web architecture, resilient backend infrastructure, and calm,
-                considered interfaces. Designed to last and built to scale.
+                Full-stack web applications with Python and Node backends, relational databases, and modern frontends.
               </p>
             </div>
 

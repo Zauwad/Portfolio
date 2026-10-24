@@ -3,7 +3,7 @@ export const projects = [
     id: 1,
     title: "PettyCash",
     subtitle: "Hackathon 2nd place · Multi-tenant OMS",
-    desc: "Cross-company office hackathon — 2nd place. Multi-tenant Operations Management System (A Maze Venture, mYnt Connect, Braincount) — Django REST + JWT, row-level data isolation, approval delegation engine, role-scoped audit log, PDF disbursement vouchers.",
+    desc: "Internal hackathon second place winner. A multi-tenant operations management system designed to support A Maze Venture, mYnt Connect, and Braincount. The platform streamlines petty cash requisition, manager approval, and financial disbursement workflows, ensuring strict tenant isolation while maintaining seamless cross-company collaboration.",
     link: "http://20.219.32.255",
     repo: "https://github.com/Zauwad/PettyCash",
     role: "Full-stack",
@@ -76,9 +76,9 @@ export const projects = [
   },
   {
     id: 2,
-    title: "FitTrack Pro",
+    title: "FitTrack",
     subtitle: "Fitness platform with subscriptions",
-    desc: "A complete fitness ecosystem built with the MERN stack — members track progress, book trainers, join classes, and engage with a community. Features role-based access control (Admin, Trainer, Member dashboards), Stripe recurring subscriptions, and JWT-authenticated routes.",
+    desc: "A fitness management platform built with the MERN stack, designed to support seamless health tracking and community engagement. The application features distinct role-based dashboards for Admins, Trainers, and Members, facilitating streamlined operations from membership management to personalized fitness planning.",
     link: "https://fitness-tracker-d03b6.web.app/",
     repo: "https://github.com/Zauwad/Project-12-FitTracker-client-side",
     serverRepo: "https://github.com/Zauwad/Project-12-FitTracker-server-side",
@@ -142,7 +142,7 @@ export const projects = [
     id: 3,
     title: "x-AI",
     subtitle: "Intelligence workspace prototype",
-    desc: "Interactive intelligence workspace — GLSL particle hero, natural-language query surface, scroll-pinned pipeline, hand-rolled dashboard with animated KPIs, automations grid, R3F icosahedron signature. ⌘K command palette.",
+    desc: "Interactive workspace prototype built with Next.js 14, React Three Fiber, and custom GLSL shaders. Features real-time particle morphing, a keyboard-driven command palette, and SVG telemetry charts.",
     link: "https://xai-psi.vercel.app/",
     repo: "https://github.com/Zauwad/xAI-Frontend",
     role: "Frontend",
@@ -207,7 +207,7 @@ export const projects = [
     id: 4,
     title: "Plant Pal",
     subtitle: "Plant care tracker",
-    desc: "A gentle, focused tool for plant people — track daily care, set reminders, and keep health records for every plant in your collection. Cloud-synced data with a UI designed to feel calm, not cluttered.",
+    desc: "Plant care tracking tool with automated watering countdowns, Firestore offline persistence, and cross-device cloud synchronization.",
     link: "https://plant-track-4558e.web.app/",
     repo: "https://github.com/Zauwad/Project-10-Plant-Care-Tracker",
     role: "Frontend · Backend",
@@ -448,9 +448,9 @@ export const services = [
     title: "Plan",
     subtitle: "Scope it tightly, then sequence it",
     points: [
-      "Data model, contracts, and interface boundaries",
-      "Milestones with what gets shipped first",
-      "Risks called out before code is written",
+      "Data models, API contracts, and interface boundaries",
+      "Milestone breakdown prioritized by release dependencies",
+      "Architecture risks identified before writing code",
     ],
   },
   {
@@ -458,9 +458,9 @@ export const services = [
     title: "Build",
     subtitle: "Write it, end-to-end",
     points: [
-      "Backend services, auth, persistence, and APIs",
-      "Frontend wired to the system it sits on",
-      "Continuous review and small commits",
+      "Backend services, authentication, database persistence, and APIs",
+      "Frontend components wired to backend data contracts",
+      "Test coverage, structured code review, and incremental commits",
     ],
   },
   {
@@ -468,9 +468,9 @@ export const services = [
     title: "Ship",
     subtitle: "Land it and keep it healthy",
     points: [
-      "Deploys to staging, then production — not just once",
+      "Automated deployment pipelines for staging and production",
       "Performance, accessibility, and basic hygiene",
-      "Maintain, monitor, and iterate after launch",
+      "Error monitoring, log inspection, and post-launch updates",
     ],
   },
 ];
@@ -482,10 +482,10 @@ export const experience = [
     org: "Amaze Venture",
     when: "Current · In Production",
     points: [
-      "Build full-stack web platforms alongside the team — backend, frontend, and the parts in between.",
-      "Designing and managing databases.",
-      "Translate briefs into scoped, deployable work in collaboration with stakeholders.",
-      "Care about the handoff — clean contracts, readable code, and things that don't break later.",
+      "Build full-stack web applications across backend services, database persistence, and frontend interfaces.",
+      "Design and optimize relational database schemas and queries.",
+      "Scope technical requirements and deliver milestone builds with stakeholders.",
+      "Document API contracts and maintain code review standards for clean handoffs.",
     ],
   },
   {
@@ -495,8 +495,8 @@ export const experience = [
     when: "Foundations → ongoing",
     points: [
       "Grounded in algorithms, data structures, and software engineering fundamentals.",
-      "Continuously learning — AI tooling, retrieval patterns, and modern backend architecture.",
-      "Treat every shipped project as a way to deepen the craft, not just close a ticket.",
+      "Study systems design, distributed data patterns, and LLM orchestration.",
+      "Focus on architectural maintainability and test coverage across all shipped projects.",
     ],
   },
 ];

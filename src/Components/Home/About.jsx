@@ -68,20 +68,20 @@ function ScrubbedBioParagraph({ lead, body }) {
 
 const ABOUT_PARAGRAPHS = [
   {
-    lead: "I build systems, not just screens.",
-    body: "Backend-first by habit — I think in data flow, contracts, and reliability before I sketch a single layout. System design, persistence, and the seam between server and client are where I do my best work.",
+    lead: "I build backend systems and web applications.",
+    body: "Backend-first by habit. I define data models and API contracts before touching UI layouts. Most of my work centers on database schemas, server architecture, and clean integration boundaries.",
   },
   {
-    lead: "Frontend, by love.",
-    body: "I love the part where the system meets the user — calm interfaces, considered motion, and the quiet details that make a product feel right. I just don't lead with it. The frontend is where the backend gets to express itself.",
+    lead: "Frontend craft.",
+    body: "The interface is where the system meets the user. I focus on clear typography, accessible markup, and smooth transitions that reflect underlying state.",
   },
   {
-    lead: "AI in the loop.",
-    body: "I use AI coding assistants daily — not as shortcuts but as a second pass on thinking, refactoring, and exploring unfamiliar ground. I'm actively working with retrieval patterns, tool protocols, and systems thinking for the next generation of products.",
+    lead: "AI in development.",
+    body: "I use AI tools daily to catch edge cases, accelerate refactoring, and draft tests for unfamiliar APIs.",
   },
   {
     lead: "Proudest build so far.",
-    body: "PettyCash — a multi-tenant operations platform (Django REST + React), shipped at an office hackathon and awarded 2nd place. Row-level data isolation across three companies, approval delegation, and a polished UI that didn't feel hacked together.",
+    body: "PettyCash won 2nd place at an internal hackathon. An enterprise operations management platform for employee requisitions, leave management, approval workflows, team administration, delegation, notifications, and organizational analytics.",
   },
 ];
 
@@ -98,7 +98,7 @@ export default function About({ showTopBorder = true }) {
           eyebrow="About"
           title="Backend first,"
           muted="frontend by love."
-          body="A short, honest read on how I think, what I care about, and how I work. Words light up as you read down."
+          body="A short, honest read on how I think, what I care about, and how I work."
         />
 
         <div className="grid grid-cols-1 gap-12 md:grid-cols-12 md:gap-10">

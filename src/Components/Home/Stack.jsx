@@ -63,7 +63,7 @@ export default function Stack({ showTopBorder = true }) {
           eyebrow="Stack"
           title="Tools I reach for,"
           muted="shaped by what I'm building."
-          body="A pragmatic stack — frontend depth, backend fundamentals, and the cloud glue that ships. Hover any technology to inspect its ecosystem."
+          body="A pragmatic stack — frontend depth, backend fundamentals, and the cloud glue that ships."
         />
 
         <div className="grid grid-cols-1 gap-px bg-border sm:grid-cols-2 lg:grid-cols-4 rounded-xl overflow-hidden shadow-lg">
@@ -142,10 +142,7 @@ export default function Stack({ showTopBorder = true }) {
                 <div className="mt-6 md:mt-8 border-t border-border pt-4">
                   <div className="mb-2 flex items-center justify-between">
                     <span className="mono-label font-mono text-[10px] text-fg-dim">
-                      Production Activity
-                    </span>
-                    <span className="mono-micro font-mono text-[10px] text-accent/80">
-                      Active
+                      Activity
                     </span>
                   </div>
                   <Sparkline data={data} height={28} />

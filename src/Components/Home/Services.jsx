@@ -208,7 +208,7 @@ export default function Services() {
             eyebrow="Engagements"
             title="What I can do,"
             muted="and how I like to work."
-            body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
+            body="Available for initial technical planning, full-stack implementation, or production deployments."
           />
 
           <div className="mt-10 flex flex-col gap-6">
@@ -248,7 +248,7 @@ export default function Services() {
               eyebrow="Engagements"
               title="What I can do,"
               muted="and how I like to work."
-              body="Three overlapping modes — planning, building, and shipping. Pick one or the whole loop."
+              body="Available for initial technical planning, full-stack implementation, or production deployments."
               className="mb-0"
             />
           </div>

@@ -214,7 +214,7 @@ export default function FeaturedWork() {
             eyebrow="Featured work"
             title="A small set,"
             muted="shipped end-to-end."
-            body="A curated showcase of engineering — scroll through the stack deck."
+            body="A curated showcase of engineering. Explore case studies diving into architecture, technical challenges, and outcomes.  "
             className="mb-0"
           />
           <div className="flex flex-col items-start md:items-end gap-3">
