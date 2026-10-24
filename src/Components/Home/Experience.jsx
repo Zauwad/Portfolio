@@ -29,7 +29,6 @@ export default function Experience() {
       />
       <Container size="default" className="relative">
         <SectionHeading
-          index="04"
           eyebrow="Trajectory"
           title="Building,"
           muted="in chapters."

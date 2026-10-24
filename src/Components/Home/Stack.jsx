@@ -59,7 +59,6 @@ export default function Stack({ showTopBorder = true }) {
       <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
       <Container size="default" className="relative">
         <SectionHeading
-          index="03"
           eyebrow="Stack"
           title="Tools I reach for,"
           muted="shaped by what I'm building."

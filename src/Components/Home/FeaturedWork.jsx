@@ -210,7 +210,6 @@ export default function FeaturedWork() {
         {/* Section headline */}
         <div className="mb-12 flex flex-col items-start justify-between gap-6 md:mb-16 md:flex-row md:items-end">
           <SectionHeading
-            index="02"
             eyebrow="Featured work"
             title="A small set,"
             muted="shipped end-to-end."

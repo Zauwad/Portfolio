@@ -34,28 +34,7 @@ export default function Hero() {
         }}
         aria-hidden
       />
-      {/* Floating glyphs - positioned to not overlap text */}
-      <span
-        aria-hidden
-        className="mono-data pointer-events-none absolute right-[3%] top-[10%] hidden text-fg-dim md:block"
-        style={{ fontSize: 64, lineHeight: 1 }}
-      >
-        ∇
-      </span>
-      <span
-        aria-hidden
-        className="mono-data pointer-events-none absolute left-[3%] bottom-[12%] hidden text-fg-dim md:block"
-        style={{ fontSize: 48, lineHeight: 1 }}
-      >
-        ◇
-      </span>
-      <span
-        aria-hidden
-        className="mono-data pointer-events-none absolute right-[8%] bottom-[24%] hidden text-fg-dim md:block"
-        style={{ fontSize: 32, lineHeight: 1 }}
-      >
-        Σ
-      </span>
+
 
       <Container size="wide" className="relative py-20 md:py-28 lg:py-36">
         {/* Top editorial index row - calm, non-needy, museum-grade */}
@@ -143,12 +122,7 @@ export default function Hero() {
               </TiltCard>
             </div>
 
-            <figcaption
-              className="mono-data mt-3 md:mt-4 flex items-center justify-between text-fg-dim"
-            >
-              <span>✕ me</span>
-              <span className="tabular font-mono">548 × 455</span>
-            </figcaption>
+
           </motion.figure>
 
           {/* Copy with Masked Editorial Line Reveals & Scroll Parallax */}

@@ -235,10 +235,6 @@ export default function Projects() {
         <Container size="wide" className="relative">
           {/* Masked Editorial Headline */}
           <div className="mb-8 md:mb-10 max-w-[800px]">
-            <div className="mono-data mb-3 md:mb-4 flex items-center gap-2 text-fg-dim">
-              <span className="h-1 w-1 rounded-full bg-accent" />
-              <span>02 // SELECTED CASE STUDIES</span>
-            </div>
 
             <h1 className="hero-display text-balance">
               <span className="block overflow-hidden py-1">

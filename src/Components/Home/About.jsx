@@ -94,7 +94,6 @@ export default function About({ showTopBorder = true }) {
       <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
       <Container size="default" className="relative">
         <SectionHeading
-          index="01"
           eyebrow="About"
           title="Backend first,"
           muted="frontend by love."

@@ -55,7 +55,6 @@ export default function Contacts() {
         <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
         <Container size="default" className="relative">
           <SectionHeading
-            index="06"
             eyebrow="Contact"
             title="Let's start a"
             muted="conversation."

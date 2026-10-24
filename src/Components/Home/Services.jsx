@@ -72,17 +72,7 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
     >
       <TiltCard maxTilt={6} className="h-full">
         <div className="group relative flex h-full flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 md:p-7 transition-all duration-500 hover:border-border-hi hover:bg-[var(--bg-elev2)] hover:shadow-2xl">
-          {/* Top row */}
           <div>
-            <div className="mb-5 flex items-baseline justify-between border-b border-border/80 pb-3">
-              <span className="mono-data font-mono text-[12px] font-bold text-accent">
-                PHASE // {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="mono-label font-mono text-[11px] text-[var(--fg-dim)] transition-colors group-hover:text-accent">
-                {i < 2 ? "NEXT →" : "SHIP"}
-              </span>
-            </div>
-
             <h3
               className="h3-card font-serif text-fg transition-colors"
               style={{ fontSize: "clamp(24px, 2.2vw, 30px)" }}
@@ -107,14 +97,6 @@ function ScrollStageCard({ s, i, scrollYProgress }) {
               ))}
             </ul>
           </div>
-
-          {/* Bottom step tag */}
-          <div className="mt-8 flex items-center justify-between border-t border-border/80 pt-4 font-mono text-[11px] text-[var(--fg-dim)]">
-            <span>Deliverable ready</span>
-            <span className="transition-transform duration-300 group-hover:translate-x-1">
-              Step {i + 1} of 3 →
-            </span>
-          </div>
         </div>
       </TiltCard>
     </motion.div>
@@ -133,15 +115,6 @@ function MobileCard({ s, i }) {
       <TiltCard maxTilt={5}>
         <div className="group relative flex flex-col justify-between rounded-xl border border-border bg-[var(--bg-elev1)] p-6 transition-all duration-300">
           <div>
-            <div className="mb-4 flex items-baseline justify-between border-b border-border/80 pb-3">
-              <span className="mono-data font-mono text-[12px] font-bold text-accent">
-                PHASE // {String(i + 1).padStart(2, "0")}
-              </span>
-              <span className="mono-label font-mono text-[11px] text-[var(--fg-dim)]">
-                {i < 2 ? "NEXT →" : "SHIP"}
-              </span>
-            </div>
-
             <h3 className="h3-card font-serif text-fg text-2xl">
               {s.title}
             </h3>
@@ -162,11 +135,6 @@ function MobileCard({ s, i }) {
                 </li>
               ))}
             </ul>
-          </div>
-
-          <div className="mt-6 flex items-center justify-between border-t border-border/80 pt-3 font-mono text-[11px] text-[var(--fg-dim)]">
-            <span>Deliverable ready</span>
-            <span>Step {i + 1} of 3 →</span>
           </div>
         </div>
       </TiltCard>
@@ -204,7 +172,6 @@ export default function Services() {
         <div className="grid-bg pointer-events-none absolute inset-0" aria-hidden />
         <Container size="default" className="relative">
           <SectionHeading
-            index="05"
             eyebrow="Engagements"
             title="What I can do,"
             muted="and how I like to work."
@@ -244,7 +211,6 @@ export default function Services() {
         <Container size="default" className="relative">
           <div className="mb-6 flex flex-col items-start justify-between gap-4 md:flex-row md:items-end">
             <SectionHeading
-              index="05"
               eyebrow="Engagements"
               title="What I can do,"
               muted="and how I like to work."
@@ -260,7 +226,7 @@ export default function Services() {
                 <div className="flex items-center gap-2">
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" />
                   <span className="text-fg font-medium tracking-wider">
-                    PHASE 0{idx + 1} // {s.title.toUpperCase()}
+                    PHASE 0{idx + 1}
                   </span>
                 </div>
                 {idx < validServices.length - 1 && (
